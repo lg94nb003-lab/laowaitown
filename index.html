@@ -1221,23 +1221,39 @@
             display: flex; flex-direction: column; gap: 6px;
             transition: all .2s;
         }
+        /* 适用：绿调背景 */
         .nat-card.eligible {
-            border-color: rgba(139, 92, 246, 0.55);
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(99, 102, 241, 0.12));
-            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.12);
+            border-color: rgba(74, 222, 128, 0.55);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(16, 185, 129, 0.10));
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.14);
         }
-        .nat-card.ineligible { opacity: 0.55; }
+        /* 不适用：灰红调背景 */
+        .nat-card.ineligible {
+            border-color: rgba(244, 114, 128, 0.30);
+            background: rgba(60, 35, 45, 0.45);
+            box-shadow: none;
+        }
+        .nat-card.ineligible .nat-card-title { color: #d4a8b2; }
+        .nat-card.ineligible .nat-card-detail { color: rgba(225, 195, 200, 0.6); }
         .nat-card .nat-card-title {
             font-size: 12px; font-weight: 600; color: #c7b8ff; letter-spacing: .3px;
             display: flex; align-items: center; gap: 6px;
         }
         .nat-card .nat-card-status {
-            font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2;
+            font-size: 14px; font-weight: 700; line-height: 1.25; color: #fff;
         }
-        .nat-card.ineligible .nat-card-status { color: #9b96b8; }
+        .nat-card.eligible .nat-card-status { color: #86efac; }
+        .nat-card.ineligible .nat-card-status { color: #fca5a5; }
         .nat-card .nat-card-detail {
-            font-size: 12px; color: rgba(220, 215, 245, 0.7); line-height: 1.45;
+            font-size: 12px; color: rgba(220, 215, 245, 0.7); line-height: 1.55;
         }
+        /* 区域性卡内部的状态色点（代替 ✅/❌） */
+        .nat-dot {
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            margin-right: 8px; vertical-align: middle;
+        }
+        .nat-dot.ok { background: #4ade80; box-shadow: 0 0 6px rgba(74, 222, 128, 0.55); }
+        .nat-dot.no { background: rgba(244, 114, 128, 0.55); }
         .nat-card .nat-card-cta {
             margin-top: auto; align-self: flex-start;
             background: transparent; border: none; padding: 0;
@@ -3291,8 +3307,8 @@
                 {
                     title: isZh ? '免签入境' : 'Visa-Free Entry',
                     eligible: result.visaFree.eligible,
-                    statusOk: isZh ? `✅ 允许 ${result.visaFree.days} 天` : `✅ ${result.visaFree.days} days`,
-                    statusNo: isZh ? '❌ 暂不适用' : '❌ Not eligible',
+                    statusOk: isZh ? `允许 ${result.visaFree.days} 天` : `${result.visaFree.days} days`,
+                    statusNo: isZh ? '暂不适用' : 'Not eligible',
                     detail: result.visaFree.eligible
                         ? (isZh ? '无需签证，可从任意开放口岸入境' : 'No visa needed at any open port')
                         : (isZh ? '该国未列入 30 天免签名单' : 'Not on the 30-day visa-free list'),
@@ -3302,8 +3318,8 @@
                 {
                     title: isZh ? '240h 过境' : '240h Transit',
                     eligible: result.t240.eligible,
-                    statusOk: isZh ? `✅ 适用 (可停 ${result.t240.stayDays} 天)` : `✅ Up to ${result.t240.stayDays} days`,
-                    statusNo: isZh ? '❌ 暂不适用' : '❌ Not eligible',
+                    statusOk: isZh ? `适用 (可停 ${result.t240.stayDays} 天)` : `Up to ${result.t240.stayDays} days`,
+                    statusNo: isZh ? '暂不适用' : 'Not eligible',
                     detail: result.t240.eligible
                         ? (isZh
                             ? `${result.t240.provincesCount} 个省份 / ${result.t240.portsCount} 个口岸开放`
@@ -3315,7 +3331,7 @@
                 {
                     title: isZh ? '24h 过境' : '24h Transit',
                     eligible: result.t24.eligible,
-                    statusOk: isZh ? '✅ 世界各国适用' : '✅ Worldwide eligible',
+                    statusOk: isZh ? '世界各国适用' : 'Worldwide eligible',
                     statusNo: '❌',
                     detail: isZh ? '限在口岸限定区域内，需持联程票' : 'Stay within port restricted area, with onward ticket',
                     tab: 'transit24',
@@ -3325,21 +3341,21 @@
                     title: isZh ? '区域性免签' : 'Regional Visa-Free',
                     // 只要任一区域性政策适用就算 eligible（邮轮默认 true，故本卡 eligible 实际总为 true）
                     eligible: !!(result.regional.hainan || result.regional.asean || result.regional.hkmoTour || result.regional.cruise),
-                    statusOk: '✅',
-                    statusNo: '❌',
+                    statusOk: isZh ? '部分区域适用' : 'Some regions eligible',
+                    statusNo: isZh ? '暂不适用' : 'Not eligible',
                     detail: (function () {
                         const lines = [];
-                        const ok = '✅', no = '❌';
+                        const dot = (ok) => ok ? '<span class="nat-dot ok"></span>' : '<span class="nat-dot no"></span>';
                         if (isZh) {
-                            lines.push(`海南 ${result.regional.hainanDays} 天 ${result.regional.hainan ? ok : no}`);
-                            lines.push(`东盟·西双版纳/桂林 ${result.regional.aseanDays} 天 ${result.regional.asean ? ok : no}`);
-                            lines.push(`港澳→广东/海南团组 ${result.regional.hkmoTourDays} 天 ${result.regional.hkmoTour ? ok : no}`);
-                            lines.push(`邮轮团组 ${result.regional.cruiseDays} 天 ${result.regional.cruise ? ok : no}`);
+                            lines.push(`${dot(result.regional.hainan)}海南 ${result.regional.hainanDays} 天`);
+                            lines.push(`${dot(result.regional.asean)}东盟·西双版纳/桂林 ${result.regional.aseanDays} 天`);
+                            lines.push(`${dot(result.regional.hkmoTour)}港澳→广东/海南团组 ${result.regional.hkmoTourDays} 天`);
+                            lines.push(`${dot(result.regional.cruise)}邮轮团组 ${result.regional.cruiseDays} 天`);
                         } else {
-                            lines.push(`Hainan ${result.regional.hainanDays}d ${result.regional.hainan ? ok : no}`);
-                            lines.push(`ASEAN·Xishuangbanna/Guilin ${result.regional.aseanDays}d ${result.regional.asean ? ok : no}`);
-                            lines.push(`HK/Macao→Guangdong/Hainan tour ${result.regional.hkmoTourDays}d ${result.regional.hkmoTour ? ok : no}`);
-                            lines.push(`Cruise tour ${result.regional.cruiseDays}d ${result.regional.cruise ? ok : no}`);
+                            lines.push(`${dot(result.regional.hainan)}Hainan ${result.regional.hainanDays}d`);
+                            lines.push(`${dot(result.regional.asean)}ASEAN·Xishuangbanna/Guilin ${result.regional.aseanDays}d`);
+                            lines.push(`${dot(result.regional.hkmoTour)}HK/Macao→Guangdong/Hainan tour ${result.regional.hkmoTourDays}d`);
+                            lines.push(`${dot(result.regional.cruise)}Cruise tour ${result.regional.cruiseDays}d`);
                         }
                         return lines.join('<br>');
                     })(),
