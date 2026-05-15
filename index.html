@@ -1114,12 +1114,16 @@
         }
         .nat-suggestions {
             position: absolute; left: 0; right: 0; top: calc(100% + 4px);
-            max-height: 200px; overflow-y: auto;
+            max-height: 240px; overflow-y: auto;
             background: rgba(15, 17, 35, 0.98);
             border: 1px solid rgba(167, 139, 250, 0.25);
             border-radius: 10px;
             display: none; z-index: 5;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(167, 139, 250, 0.4) transparent;
         }
+        .nat-suggestions::-webkit-scrollbar { width: 6px; }
+        .nat-suggestions::-webkit-scrollbar-thumb { background: rgba(167, 139, 250, 0.4); border-radius: 3px; }
         .nat-suggestions.show { display: block; }
         .nat-suggestions div {
             padding: 8px 12px; font-size: 13px; cursor: pointer;
@@ -3184,13 +3188,15 @@
             const box = document.getElementById('nat-suggestions');
             if (!box) return;
             const kw = (keyword || '').trim().toLowerCase();
-            if (!kw) { box.classList.remove('show'); box.innerHTML = ''; return; }
             const all = natGetAllCandidates();
-            const matched = all.filter(c =>
-                c.en.toLowerCase().includes(kw) ||
-                (c.zh || '').includes(kw) ||
-                c.code.toLowerCase().startsWith(kw)
-            ).slice(0, 8);
+            // 空关键词时默认展示全部候选（可滚动），输入后筛选
+            const matched = !kw
+                ? all
+                : all.filter(c =>
+                    c.en.toLowerCase().includes(kw) ||
+                    (c.zh || '').includes(kw) ||
+                    c.code.toLowerCase().startsWith(kw)
+                );
             if (!matched.length) { box.classList.remove('show'); box.innerHTML = ''; return; }
             box.innerHTML = matched.map(c =>
                 `<div data-code="${c.code}">${c.en} <span style="opacity:.5">(${c.zh})</span></div>`
@@ -3230,6 +3236,7 @@
             const inp = document.getElementById('nat-search-input');
             if (inp) {
                 inp.addEventListener('input', e => __natRenderSuggestions(e.target.value));
+                inp.addEventListener('focus', e => __natRenderSuggestions(e.target.value));
                 inp.addEventListener('keydown', e => {
                     if (e.key === 'Enter') {
                         const first = document.querySelector('#nat-suggestions div');
