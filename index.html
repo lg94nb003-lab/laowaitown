@@ -3560,20 +3560,31 @@
                 });
             }
 
-            // 确认按钮：调用匹配 + 渲染卡片，然后关闭对话框
+            // 确认按钮：调用匹配 + 渲染卡片，写入 localStorage，然后关闭对话框
             const confirmBtn = document.getElementById('nat-confirm-btn');
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', () => {
                     if (!__natSelectedCode) return;
                     const result = matchAllPolicies(__natSelectedCode);
                     if (result) renderMatchResult(result);
+                    try { localStorage.setItem('lwt_nationality', __natSelectedCode); } catch (e) {}
                     closeNationalityDialog();
                 });
             }
 
-            // 首次访问自动弹出：Step 5 会接入 localStorage 判定，本 step 先延迟 1.5s 弹出，便于验收
+            // 初始化判定：有记忆 → 直接渲染卡片，不弹窗；没记忆 → 1.5s 后弹窗
             try {
-                if (!localStorage.getItem('lwt_nationality')) {
+                const saved = localStorage.getItem('lwt_nationality');
+                if (saved) {
+                    const r = matchAllPolicies(saved);
+                    if (r) {
+                        renderMatchResult(r);
+                    } else {
+                        // 记忆的 code 无效（被篡改/过时），清除后走首访流程
+                        localStorage.removeItem('lwt_nationality');
+                        setTimeout(openNationalityDialog, 1500);
+                    }
+                } else {
                     setTimeout(openNationalityDialog, 1500);
                 }
             } catch (e) { /* localStorage 不可用时静默 */ }
