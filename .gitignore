@@ -1,0 +1,28 @@
+# ===== 系统/编辑器临时文件 =====
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ===== Qoder 缓存（保留 wiki 和 specs，排除其他临时文件）=====
+.qoder/cache/
+.qoder/.tmp/
+
+# ===== 日志/构建产物 =====
+*.log
+node_modules/
+dist/
+build/
+
+# ===== 第三方 vendor 目录（体积大，单独管理）=====
+# 如果 vendor/ 内容很重要，删除下一行让其纳入版本控制
+# vendor/
+
+# ===== 备份文件 =====
+*.bak
+*.backup
+备份/
+backup/
