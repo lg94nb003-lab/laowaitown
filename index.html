@@ -1056,6 +1056,135 @@
             }
             .dock-card:hover { transform: translateY(-3px); }
         }
+
+        /* ===== F01 国籍智能匹配功能样式 ===== */
+        /* 遵循现有 .glass 、 购购-violet 色调、 12-16px 圆角、 响应式原则 */
+        .nat-overlay {
+            position: fixed; inset: 0; z-index: 1000;
+            background: rgba(8, 10, 25, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            transition: opacity .25s ease;
+        }
+        .nat-overlay.show { display: flex; opacity: 1; }
+        .nat-dialog {
+            width: 100%; max-width: 480px;
+            background: rgba(15, 17, 35, 0.92);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 18px;
+            padding: 24px 22px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+            transform: translateY(8px) scale(.98);
+            transition: transform .28s cubic-bezier(.2,.9,.3,1);
+        }
+        .nat-overlay.show .nat-dialog { transform: translateY(0) scale(1); }
+        .nat-dialog h3 {
+            font-size: 18px; font-weight: 700; margin: 0 0 4px;
+            display: flex; align-items: center; gap: 8px;
+            color: #f8fafc;
+        }
+        .nat-dialog .nat-subtitle {
+            font-size: 12px; color: #94a3b8; margin-bottom: 16px;
+        }
+        .nat-search {
+            position: relative; margin-bottom: 16px;
+        }
+        .nat-search input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 10px 12px 10px 38px;
+            font-size: 14px; color: #f8fafc;
+            outline: none;
+            transition: border-color .2s, background .2s;
+        }
+        .nat-search input:focus {
+            border-color: rgba(167, 139, 250, 0.6);
+            background: rgba(255,255,255,0.07);
+        }
+        .nat-search-icon {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            width: 16px; height: 16px; color: #94a3b8;
+            pointer-events: none;
+        }
+        .nat-suggestions {
+            position: absolute; left: 0; right: 0; top: calc(100% + 4px);
+            max-height: 200px; overflow-y: auto;
+            background: rgba(15, 17, 35, 0.98);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 10px;
+            display: none; z-index: 5;
+        }
+        .nat-suggestions.show { display: block; }
+        .nat-suggestions div {
+            padding: 8px 12px; font-size: 13px; cursor: pointer;
+            color: #e2e8f0;
+            transition: background .15s;
+        }
+        .nat-suggestions div:hover,
+        .nat-suggestions div.active {
+            background: rgba(167, 139, 250, 0.15);
+            color: #fff;
+        }
+        .nat-popular-label {
+            font-size: 11px; font-weight: 600; color: #94a3b8;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .nat-popular {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+        }
+        .nat-popular button {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 7px 11px;
+            font-size: 13px; color: #e2e8f0;
+            cursor: pointer;
+            transition: all .18s;
+        }
+        .nat-popular button:hover {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: translateY(-1px);
+        }
+        .nat-actions {
+            display: flex; gap: 10px; justify-content: flex-end;
+        }
+        .nat-btn {
+            padding: 9px 18px; border-radius: 9px;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all .18s;
+            border: 1px solid transparent;
+        }
+        .nat-btn-skip {
+            background: transparent; color: #94a3b8;
+            border-color: rgba(255,255,255,0.1);
+        }
+        .nat-btn-skip:hover { color: #f8fafc; border-color: rgba(255,255,255,0.25); }
+        .nat-btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #fff;
+        }
+        .nat-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4); }
+        .nat-btn-primary:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* 顶部匹配结果卡片区占位（Step 4 填充） */
+        #nat-result-zone {
+            margin-bottom: 20px;
+        }
+        #nat-result-zone:empty { display: none; }
+
+        /* 移动端适配 */
+        @media (max-width: 480px) {
+            .nat-dialog { padding: 20px 16px 16px; border-radius: 14px; }
+            .nat-popular button { font-size: 12px; padding: 6px 9px; }
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -1094,6 +1223,9 @@
 
         <!-- 语义化主内容区，聚合所有核心功能模块，利于 SEO / 无障碍 -->
         <main id="main-content" role="main">
+
+        <!-- F01 国籍智能匹配：顶部结果卡片占位区（由 JS 填充，空时隐藏）-->
+        <div id="nat-result-zone"></div>
 
         <!-- ========================================
            🛂 免签政策区 (VISA-FREE POLICY)
@@ -1752,6 +1884,40 @@
         </section>
 
         </main>
+
+        <!-- ========================================
+             F01 国籍选择对话框 (Nationality Dialog)
+             十为首次访问用户提供快速匹配免签政策的入口
+             ======================================== -->
+        <div id="nat-overlay" class="nat-overlay" role="dialog" aria-modal="true" aria-labelledby="nat-title" aria-hidden="true">
+            <div class="nat-dialog">
+                <h3 id="nat-title" data-i18n="natDialogTitle">🌍 Select Your Nationality</h3>
+                <p class="nat-subtitle" data-i18n="natDialogSubtitle">We'll instantly show which China visa-free policies apply to you.</p>
+
+                <div class="nat-search">
+                    <svg class="nat-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/></svg>
+                    <input id="nat-search-input" type="text" autocomplete="off" placeholder="Type country name…" data-i18n-placeholder="natSearchPh" />
+                    <div id="nat-suggestions" class="nat-suggestions"></div>
+                </div>
+
+                <div class="nat-popular-label" data-i18n="natPopularLabel">Popular</div>
+                <div class="nat-popular" id="nat-popular">
+                    <button data-code="US">🇺🇸 USA</button>
+                    <button data-code="GB">🇬🇧 UK</button>
+                    <button data-code="JP">🇯🇵 Japan</button>
+                    <button data-code="KR">🇰🇷 Korea</button>
+                    <button data-code="AU">🇦🇺 Australia</button>
+                    <button data-code="DE">🇩🇪 Germany</button>
+                    <button data-code="FR">🇫🇷 France</button>
+                    <button data-code="CA">🇨🇦 Canada</button>
+                </div>
+
+                <div class="nat-actions">
+                    <button class="nat-btn nat-btn-skip" onclick="closeNationalityDialog()" data-i18n="natSkip">Skip</button>
+                    <button class="nat-btn nat-btn-primary" id="nat-confirm-btn" disabled data-i18n="natConfirm">Confirm</button>
+                </div>
+            </div>
+        </div>
 
         <!-- 页脚 -->
         <footer class="mt-24 pb-12 text-center">
@@ -2971,6 +3137,138 @@
                     border: borderEligible
                 }
             };
+        }
+
+        // ----- F01 对话框控制 -----
+        // 汇总所有可选国家（3 个源去重）供搜索下拉使用
+        function natGetAllCandidates() {
+            const map = new Map();
+            const sources = [
+                ...(typeof visaFreeCountries     !== 'undefined' ? visaFreeCountries     : []),
+                ...(typeof transit240Countries   !== 'undefined' ? transit240Countries   : []),
+                ...(typeof hainan59Countries     !== 'undefined' ? hainan59Countries     : [])
+            ];
+            sources.forEach(c => {
+                if (c && c.code && !map.has(c.code)) map.set(c.code, c);
+            });
+            return Array.from(map.values()).sort((a, b) => a.en.localeCompare(b.en));
+        }
+
+        let __natSelectedCode = null;
+
+        function openNationalityDialog() {
+            const ov = document.getElementById('nat-overlay');
+            if (!ov) return;
+            ov.setAttribute('aria-hidden', 'false');
+            ov.classList.add('show');
+            const inp = document.getElementById('nat-search-input');
+            if (inp) { inp.value = ''; setTimeout(() => inp.focus(), 50); }
+            __natSetSelected(null);
+            __natRenderSuggestions('');
+        }
+
+        function closeNationalityDialog() {
+            const ov = document.getElementById('nat-overlay');
+            if (!ov) return;
+            ov.classList.remove('show');
+            ov.setAttribute('aria-hidden', 'true');
+        }
+
+        function __natSetSelected(code) {
+            __natSelectedCode = code;
+            const btn = document.getElementById('nat-confirm-btn');
+            if (btn) btn.disabled = !code;
+        }
+
+        function __natRenderSuggestions(keyword) {
+            const box = document.getElementById('nat-suggestions');
+            if (!box) return;
+            const kw = (keyword || '').trim().toLowerCase();
+            if (!kw) { box.classList.remove('show'); box.innerHTML = ''; return; }
+            const all = natGetAllCandidates();
+            const matched = all.filter(c =>
+                c.en.toLowerCase().includes(kw) ||
+                (c.zh || '').includes(kw) ||
+                c.code.toLowerCase().startsWith(kw)
+            ).slice(0, 8);
+            if (!matched.length) { box.classList.remove('show'); box.innerHTML = ''; return; }
+            box.innerHTML = matched.map(c =>
+                `<div data-code="${c.code}">${c.en} <span style="opacity:.5">(${c.zh})</span></div>`
+            ).join('');
+            box.classList.add('show');
+            box.querySelectorAll('div').forEach(el => {
+                el.addEventListener('click', () => {
+                    const code = el.getAttribute('data-code');
+                    const item = natGetAllCandidates().find(c => c.code === code);
+                    document.getElementById('nat-search-input').value = item ? item.en : '';
+                    box.classList.remove('show');
+                    __natSetSelected(code);
+                });
+            });
+        }
+
+        // 顶层初始化：绑定事件 + 首次访问自动弹出
+        function __natInit() {
+            const ov = document.getElementById('nat-overlay');
+            if (!ov) return;
+
+            // 热门按钮：点击即选中 + 填充搜索框
+            const popular = document.getElementById('nat-popular');
+            if (popular) {
+                popular.querySelectorAll('button').forEach(b => {
+                    b.addEventListener('click', () => {
+                        const code = b.getAttribute('data-code');
+                        __natSetSelected(code);
+                        const inp = document.getElementById('nat-search-input');
+                        if (inp) inp.value = b.textContent.trim().replace(/^[^\sA-Za-z]+\s*/, '');
+                        document.getElementById('nat-suggestions').classList.remove('show');
+                    });
+                });
+            }
+
+            // 搜索输入
+            const inp = document.getElementById('nat-search-input');
+            if (inp) {
+                inp.addEventListener('input', e => __natRenderSuggestions(e.target.value));
+                inp.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') {
+                        const first = document.querySelector('#nat-suggestions div');
+                        if (first) first.click();
+                    } else if (e.key === 'Escape') {
+                        closeNationalityDialog();
+                    }
+                });
+            }
+
+            // 点击遮罩空白区关闭
+            ov.addEventListener('click', e => {
+                if (e.target === ov) closeNationalityDialog();
+            });
+
+            // 确认按钮（Step 4 会接上匹配逻辑，本 step 先允许关闭）
+            const confirmBtn = document.getElementById('nat-confirm-btn');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', () => {
+                    if (!__natSelectedCode) return;
+                    // Step 4 这里调用 renderMatchResult(matchAllPolicies(__natSelectedCode))
+                    console.log('[F01] selected nationality =', __natSelectedCode, matchAllPolicies(__natSelectedCode));
+                    closeNationalityDialog();
+                });
+            }
+
+            // 首次访问自动弹出：Step 5 会接入 localStorage 判定，本 step 先延迟 1.5s 弹出，便于验收
+            try {
+                if (!localStorage.getItem('lwt_nationality')) {
+                    setTimeout(openNationalityDialog, 1500);
+                }
+            } catch (e) { /* localStorage 不可用时静默 */ }
+        }
+
+        // 由于本脚本位于 body 末尾，DOM 已就绪，可直接调用
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', __natInit);
+        } else {
+            __natInit();
         }
 
         // 签证计算器 - 鼠标滚轮处理
