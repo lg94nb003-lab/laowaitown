@@ -65,11 +65,24 @@
 
 ## 三、技术兜底
 
-为防止 AI 误改，本项目已部署 **Git pre-commit hook**：
-- 位置：`.git/hooks/pre-commit`
-- 行为：每次 `git commit` 时检查暂存改动是否触及上述 4 个数组。
-- 拦截条件：触及但 commit message 未含 `[approved-data-update]` → 拒绝提交。
-- 突破方式：用户亲自批准的更新，commit message 加上该标记即可通过。
+为防止 AI 误改，本项目已部署 **Git commit-msg hook**：
+- 位置：`scripts/hooks/commit-msg`（被 git 跟踪，可随仓库迁移）
+- 启用方式：执行一次 `git config core.hooksPath scripts/hooks` 即可生效（克隆新机器需重新执行）
+- 行为：每次 `git commit` 时检查暂存改动是否触及上述 4 个数组（通过 `{ code:'XX'` 行模式）
+- 拦截条件：触及但 commit message 未含 `[approved-data-update]` → 拒绝提交
+- 突破方式：用户亲自批准的更新，commit message 加上该标记即可通过
+
+### 自检命令
+```bash
+# 验证 hook 是否启用
+git config --get core.hooksPath   # 应返回 scripts/hooks
+
+# 模拟拦截（应失败）
+echo "// dummy" >> index.html  # 然后改任意 code:'XX' 行
+git add index.html
+git commit -m "test"             # 期望被拒绝
+git checkout -- index.html       # 撤销
+```
 
 ---
 
@@ -79,7 +92,7 @@
 
 1. 在本文件"受保护清单"表格中追加一行
 2. 在源码处添加 `🔒 PROTECTED DATA` 封条注释
-3. 更新 `.git/hooks/pre-commit` 中的检测正则
+3. 更新 `scripts/hooks/commit-msg` 中的检测正则
 4. 更新 Spec 的"不做什么"边界
 
 ---
@@ -89,3 +102,4 @@
 | 日期 | 变更 | 操作人 |
 |------|------|-------|
 | 2026-05-15 | 初始建立，覆盖 4 个免签数组 | 项目负责人 |
+| 2026-05-16 | hook 从 pre-commit 迁移到 commit-msg（可访问 commit message），路径从 `.git/hooks` 迁移到 `scripts/hooks`（纳入版本控制），拦截/授权两路径都已验证通过 | AI 助手 |

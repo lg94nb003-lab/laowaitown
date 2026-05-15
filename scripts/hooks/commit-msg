@@ -1,0 +1,62 @@
+#!/bin/sh
+# ============================================================
+# Commit-msg hook: 受保护数据守门员
+# 触及 4 个免签核心数组 + 没有 [approved-data-update] 标记 → 拒绝提交
+# 配套规则文件: .qoder/rules/protected-data.md
+# ============================================================
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE" 2>/dev/null)
+
+# 取暂存区针对 index.html 的 diff
+DIFF=$(git diff --cached --unified=0 -- index.html)
+
+if [ -z "$DIFF" ]; then
+    exit 0
+fi
+
+# 检测：diff 中是否含 +/- 行匹配 country 条目模式
+# 形如：    { code:'BR', zh:'巴西', en:'Brazil', ...
+HIT=$(printf "%s\n" "$DIFF" | grep -E "^[+-][[:space:]]*\{[[:space:]]*code:[[:space:]]*'[A-Z]{2}'" | head -5)
+
+if [ -z "$HIT" ]; then
+    exit 0
+fi
+
+# 触及了。检查授权标记
+case "$COMMIT_MSG" in
+    *"[approved-data-update]"*)
+        echo "[commit-msg] OK: protected data change with [approved-data-update] tag, allowed." >&2
+        exit 0
+        ;;
+esac
+
+# 拒绝
+echo "" >&2
+echo "X ============================================================" >&2
+echo "X  Protected data change BLOCKED" >&2
+echo "X ============================================================" >&2
+echo "" >&2
+echo "  This commit touches protected core visa-policy arrays:" >&2
+echo "  (visaFreeCountries / transit240Countries / transit240Provinces / hainan59Countries)" >&2
+echo "" >&2
+echo "  Touched lines (preview):" >&2
+echo "$HIT" | sed 's/^/    /' >&2
+echo "" >&2
+echo "  Per .qoder/rules/protected-data.md, only the human owner may approve." >&2
+echo "" >&2
+echo "  If this update IS authorized, append the tag to your commit message:" >&2
+echo "" >&2
+echo "      [approved-data-update]" >&2
+echo "" >&2
+echo "  Example:" >&2
+echo '      git commit -m "data(visa): add Brazil per 2026-05 policy [approved-data-update]"' >&2
+echo "" >&2
+echo "  To discard the staged change instead:" >&2
+echo "" >&2
+echo "      git reset HEAD index.html" >&2
+echo "      git checkout -- index.html" >&2
+echo "" >&2
+echo "X ============================================================" >&2
+echo "" >&2
+exit 1
