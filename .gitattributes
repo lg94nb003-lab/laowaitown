@@ -1,0 +1,2 @@
+# Force LF for shell hook scripts (Git on Windows auto-CRLF would break shebang)
+scripts/hooks/* text eol=lf
