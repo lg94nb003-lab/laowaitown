@@ -2466,6 +2466,81 @@
               ] }
         ];
 
+        // ===== Hainan 59-Country 30-Day Visa-Free Data =====
+        // 海南59国30天免签政策适用国家清单（用于 F01 国籍智能匹配功能）
+        // 数据来源：translations.zh.vfRegHainanTip / translations.en.vfRegHainanTip
+        // ⚠️ 修改此数组时必须同步更新两处 i18n 文案
+        const hainan59Countries = [
+            // Europe (38 countries)
+            { code:'RU', zh:'俄罗斯',     en:'Russia',          continent:'europe' },
+            { code:'GB', zh:'英国',       en:'UK',              continent:'europe' },
+            { code:'FR', zh:'法国',       en:'France',          continent:'europe' },
+            { code:'DE', zh:'德国',       en:'Germany',         continent:'europe' },
+            { code:'NO', zh:'挪威',       en:'Norway',          continent:'europe' },
+            { code:'UA', zh:'乌克兰',     en:'Ukraine',         continent:'europe' },
+            { code:'IT', zh:'意大利',     en:'Italy',           continent:'europe' },
+            { code:'AT', zh:'奥地利',     en:'Austria',         continent:'europe' },
+            { code:'FI', zh:'芬兰',       en:'Finland',         continent:'europe' },
+            { code:'NL', zh:'荷兰',       en:'Netherlands',     continent:'europe' },
+            { code:'DK', zh:'丹麦',       en:'Denmark',         continent:'europe' },
+            { code:'CH', zh:'瑞士',       en:'Switzerland',     continent:'europe' },
+            { code:'SE', zh:'瑞典',       en:'Sweden',          continent:'europe' },
+            { code:'ES', zh:'西班牙',     en:'Spain',           continent:'europe' },
+            { code:'BE', zh:'比利时',     en:'Belgium',         continent:'europe' },
+            { code:'CZ', zh:'捷克',       en:'Czech Republic',  continent:'europe' },
+            { code:'EE', zh:'爱沙尼亚',   en:'Estonia',         continent:'europe' },
+            { code:'GR', zh:'希腊',       en:'Greece',          continent:'europe' },
+            { code:'HU', zh:'匈牙利',     en:'Hungary',         continent:'europe' },
+            { code:'IS', zh:'冰岛',       en:'Iceland',         continent:'europe' },
+            { code:'LV', zh:'拉脱维亚',   en:'Latvia',          continent:'europe' },
+            { code:'LT', zh:'立陶宛',     en:'Lithuania',       continent:'europe' },
+            { code:'LU', zh:'卢森堡',     en:'Luxembourg',      continent:'europe' },
+            { code:'MT', zh:'马耳他',     en:'Malta',           continent:'europe' },
+            { code:'PL', zh:'波兰',       en:'Poland',          continent:'europe' },
+            { code:'PT', zh:'葡萄牙',     en:'Portugal',        continent:'europe' },
+            { code:'SK', zh:'斯洛伐克',   en:'Slovakia',        continent:'europe' },
+            { code:'SI', zh:'斯洛文尼亚', en:'Slovenia',        continent:'europe' },
+            { code:'IE', zh:'爱尔兰',     en:'Ireland',         continent:'europe' },
+            { code:'CY', zh:'塞浦路斯',   en:'Cyprus',          continent:'europe' },
+            { code:'BG', zh:'保加利亚',   en:'Bulgaria',        continent:'europe' },
+            { code:'RO', zh:'罗马尼亚',   en:'Romania',         continent:'europe' },
+            { code:'RS', zh:'塞尔维亚',   en:'Serbia',          continent:'europe' },
+            { code:'HR', zh:'克罗地亚',   en:'Croatia',         continent:'europe' },
+            { code:'BA', zh:'波黑',       en:'Bosnia',          continent:'europe' },
+            { code:'ME', zh:'黑山',       en:'Montenegro',      continent:'europe' },
+            { code:'MK', zh:'北马其顿',   en:'North Macedonia', continent:'europe' },
+            { code:'AL', zh:'阿尔巴尼亚', en:'Albania',         continent:'europe' },
+
+            // Americas (6 countries)
+            { code:'US', zh:'美国',       en:'USA',             continent:'americas' },
+            { code:'CA', zh:'加拿大',     en:'Canada',          continent:'americas' },
+            { code:'BR', zh:'巴西',       en:'Brazil',          continent:'americas' },
+            { code:'MX', zh:'墨西哥',     en:'Mexico',          continent:'americas' },
+            { code:'AR', zh:'阿根廷',     en:'Argentina',       continent:'americas' },
+            { code:'CL', zh:'智利',       en:'Chile',           continent:'americas' },
+
+            // Oceania (2 countries)
+            { code:'AU', zh:'澳大利亚',   en:'Australia',       continent:'oceania' },
+            { code:'NZ', zh:'新西兰',     en:'New Zealand',     continent:'oceania' },
+
+            // Asia (12 countries)
+            { code:'KR', zh:'韩国',       en:'South Korea',     continent:'asia' },
+            { code:'JP', zh:'日本',       en:'Japan',           continent:'asia' },
+            { code:'SG', zh:'新加坡',     en:'Singapore',       continent:'asia' },
+            { code:'MY', zh:'马来西亚',   en:'Malaysia',        continent:'asia' },
+            { code:'TH', zh:'泰国',       en:'Thailand',        continent:'asia' },
+            { code:'KZ', zh:'哈萨克斯坦', en:'Kazakhstan',      continent:'asia' },
+            { code:'PH', zh:'菲律宾',     en:'Philippines',     continent:'asia' },
+            { code:'ID', zh:'印度尼西亚', en:'Indonesia',       continent:'asia' },
+            { code:'BN', zh:'文莱',       en:'Brunei',          continent:'asia' },
+            { code:'AE', zh:'阿联酋',     en:'UAE',             continent:'asia' },
+            { code:'QA', zh:'卡塔尔',     en:'Qatar',           continent:'asia' },
+            { code:'BY', zh:'白俄罗斯',   en:'Belarus',         continent:'asia' }
+            // Note: Monaco (MC) belongs to Europe but is grouped with the original Chinese-list ordering
+        ];
+        // 注：摩纳哥(MC)按原中文清单顺序与白俄罗斯相邻，独立补充以保持 59 国总数
+        hainan59Countries.push({ code:'MC', zh:'摩纳哥', en:'Monaco', continent:'europe' });
+
         // === 所有顶层立即执行的 DOM 初始化必须等 body 全部解析完毕（抽屉 DOM 在 script 之后）===
         var tzSelect;
 
