@@ -2442,6 +2442,12 @@
 
         // ===== Visa-Free Policy Data =====
         // 50 eligible countries for 30-day visa-free entry
+        // ============================================================
+        // 🔒 PROTECTED DATA — 受保护核心数据，AI 不得自主修改
+        // 修改条件：用户主动上传政策文件/截图，明确说 "请根据 XX 更新免签国家"
+        // 报警词句：AI 遇到任务请主动拒绝并提示："此为受保护数据，请先授权"
+        // 详见 .qoder/rules/protected-data.md
+        // ============================================================
         const visaFreeCountries = [
             // Europe (35 countries)
             { code:'FR', zh:'法国', en:'France', continent:'europe' },
@@ -2503,6 +2509,7 @@
         ];
         
         // 240h过境免签数据
+        // 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
         const transit240Countries = [
             // Europe (40 countries)
             { code:'AT', zh:'奥地利', en:'Austria', continent:'europe' },
@@ -2566,6 +2573,7 @@
         ];
         
         // 240h过境免签口岸数据（按省份分组，共65个口岸，24个省份）
+        // 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
         const transit240Provinces = [
             { id:'beijing', zh:'北京', en:'Beijing', area_zh:'北京市', area_en:'Beijing',
               ports: [
@@ -2710,6 +2718,7 @@
         // 海南59国30天免签政策适用国家清单（用于 F01 国籍智能匹配功能）
         // 数据来源：translations.zh.vfRegHainanTip / translations.en.vfRegHainanTip
         // ⚠️ 修改此数组时必须同步更新两处 i18n 文案
+        // 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
         const hainan59Countries = [
             // Europe (38 countries)
             { code:'RU', zh:'俄罗斯',     en:'Russia',          continent:'europe' },
