@@ -3226,8 +3226,8 @@
             // 港澳→广东/海南 团组免签：与中国建交国均适用（绝大多数国家），仅排除少数未建交国
             const NO_DIPLOMATIC_TIE = ['BT','BZ','GT','HT','PY','VC','LC','KN','TV','MH','PW','VA','SZ'];
             const hkmoTour = NO_DIPLOMATIC_TIE.indexOf(code) < 0;
-            // 邮轮免签：网站政策描述为「多国」未列清单，不武断判定
-            const cruiseEligible = null;
+            // 邮轮免签：源文件表述为「外国旅游团(2人及以上)」，不限国籍，所有外国人均适用
+            const cruiseEligible = true;
 
             return {
                 code: code,
@@ -3323,8 +3323,8 @@
                 },
                 {
                     title: isZh ? '区域性免签' : 'Regional Visa-Free',
-                    // 只要任一区域性政策适用就算 eligible；邮轮不纳入判断（未列清单）
-                    eligible: !!(result.regional.hainan || result.regional.asean || result.regional.hkmoTour),
+                    // 只要任一区域性政策适用就算 eligible（邮轮默认 true，故本卡 eligible 实际总为 true）
+                    eligible: !!(result.regional.hainan || result.regional.asean || result.regional.hkmoTour || result.regional.cruise),
                     statusOk: '✅',
                     statusNo: '❌',
                     detail: (function () {
@@ -3334,12 +3334,12 @@
                             lines.push(`海南 ${result.regional.hainanDays} 天 ${result.regional.hainan ? ok : no}`);
                             lines.push(`东盟·西双版纳/桂林 ${result.regional.aseanDays} 天 ${result.regional.asean ? ok : no}`);
                             lines.push(`港澳→广东/海南团组 ${result.regional.hkmoTourDays} 天 ${result.regional.hkmoTour ? ok : no}`);
-                            lines.push(`邮轮团组 ${result.regional.cruiseDays} 天 ℹ️`);
+                            lines.push(`邮轮团组 ${result.regional.cruiseDays} 天 ${result.regional.cruise ? ok : no}`);
                         } else {
                             lines.push(`Hainan ${result.regional.hainanDays}d ${result.regional.hainan ? ok : no}`);
                             lines.push(`ASEAN·Xishuangbanna/Guilin ${result.regional.aseanDays}d ${result.regional.asean ? ok : no}`);
                             lines.push(`HK/Macao→Guangdong/Hainan tour ${result.regional.hkmoTourDays}d ${result.regional.hkmoTour ? ok : no}`);
-                            lines.push(`Cruise tour ${result.regional.cruiseDays}d ℹ️`);
+                            lines.push(`Cruise tour ${result.regional.cruiseDays}d ${result.regional.cruise ? ok : no}`);
                         }
                         return lines.join('<br>');
                     })(),
