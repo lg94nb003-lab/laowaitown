@@ -3316,21 +3316,22 @@
                 },
                 {
                     title: isZh ? '区域性免签' : 'Regional Visa-Free',
-                    eligible: result.regional.hainan || result.regional.cruise || result.regional.border,
+                    // 仅海南是硬数据判定；邮轮/陆路存在国别与场景限制，这里不武断出 ✅/❌，引导用户去专门 tab 查详情
+                    eligible: !!result.regional.hainan,
                     statusOk: '✅',
-                    statusNo: '❌',
+                    statusNo: 'ℹ️',
                     detail: (function () {
                         const lines = [];
                         if (isZh) {
                             lines.push(result.regional.hainan ? `海南 ${result.regional.hainanDays} 天 ✅` : '海南 ❌');
-                            lines.push(result.regional.cruise ? `邮轮 ${result.regional.cruiseDays} 天 ✅` : '邮轮 ❌');
-                            lines.push(result.regional.border ? '陆路边境 ✅' : '陆路边境 ❌');
+                            lines.push('邮轮 · 详情请查看');
+                            lines.push('陆路口岸 · 详情请查看');
                         } else {
                             lines.push(result.regional.hainan ? `Hainan ${result.regional.hainanDays}d ✅` : 'Hainan ❌');
-                            lines.push(result.regional.cruise ? `Cruise ${result.regional.cruiseDays}d ✅` : 'Cruise ❌');
-                            lines.push(result.regional.border ? 'Land border ✅' : 'Land border ❌');
+                            lines.push('Cruise · see details');
+                            lines.push('Land border · see details');
                         }
-                        return lines.join(' · ');
+                        return lines.join('<br>');
                     })(),
                     tab: 'regional',
                     cta: isZh ? '查看区域详情 →' : 'View regional details →'
