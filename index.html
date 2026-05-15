@@ -3252,6 +3252,19 @@
                 if (e.target === ov) closeNationalityDialog();
             });
 
+            // 点击对话框其他区域（标题/热门按钮/空白等）时收起下拉列表，让热门按钮可见
+            const dialogEl = document.getElementById('nat-dialog');
+            if (dialogEl) {
+                dialogEl.addEventListener('click', e => {
+                    const box = document.getElementById('nat-suggestions');
+                    const inputEl = document.getElementById('nat-search-input');
+                    if (!box || !box.classList.contains('show')) return;
+                    if (box.contains(e.target)) return;        // 点中候选项走其他逻辑
+                    if (inputEl && inputEl.contains(e.target)) return; // 点输入框保持展开
+                    box.classList.remove('show');
+                });
+            }
+
             // 确认按钮（Step 4 会接上匹配逻辑，本 step 先允许关闭）
             const confirmBtn = document.getElementById('nat-confirm-btn');
             if (confirmBtn) {
