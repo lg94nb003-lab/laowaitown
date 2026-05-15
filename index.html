@@ -2928,7 +2928,51 @@
         }
 
         // ===== 核心工具函数区 (CORE TOOL FUNCTIONS) =====
-        
+
+        // ----- F01 国籍智能匹配免签政策 -----
+        // 输入 ISO 国家代码（如 'US', 'JP'），返回该国公民在华可享受的所有免签政策匹配结果。
+        // 依赖数据：visaFreeCountries / transit240Countries / transit240Provinces / hainan59Countries
+        function matchAllPolicies(code) {
+            if (!code || typeof code !== 'string') return null;
+            code = code.toUpperCase();
+
+            // 1. 免签入境 (30 天)
+            const vf = visaFreeCountries.find(c => c.code === code);
+
+            // 2. 240h 过境免签
+            const t240 = transit240Countries.find(c => c.code === code);
+            const t240PortsCount = transit240Provinces.reduce((sum, p) => sum + (p.ports ? p.ports.length : 0), 0);
+            const t240ProvincesCount = transit240Provinces.length;
+
+            // 3. 24h 过境免签：世界各国人员均适用
+            //    (仅限不离开口岸限定区域，持联程票)
+
+            // 4. 区域性免签
+            const inHainan = !!hainan59Countries.find(c => c.code === code);
+            // 邮轮免签：外国旅游团(2人及以上)乘邮轮经中国旅行社接待均适用，不区分国籍
+            const cruiseEligible = true;
+            // 边境口岸免签主要面向特定特定邻国（如越南、俄罗斯、朋友邻邦），以陆路口岸为主，默认不判定适用，详情进面板查看
+            const borderEligible = false;
+
+            return {
+                code: code,
+                visaFree: vf
+                    ? { eligible: true,  days: 30, name: { zh: vf.zh, en: vf.en } }
+                    : { eligible: false, days: 0,  name: null },
+                t240: t240
+                    ? { eligible: true,  portsCount: t240PortsCount, provincesCount: t240ProvincesCount, stayDays: 10, name: { zh: t240.zh, en: t240.en } }
+                    : { eligible: false, portsCount: t240PortsCount, provincesCount: t240ProvincesCount, stayDays: 10, name: null },
+                t24: { eligible: true },
+                regional: {
+                    hainan: inHainan,
+                    hainanDays: 30,
+                    cruise: cruiseEligible,
+                    cruiseDays: 15,
+                    border: borderEligible
+                }
+            };
+        }
+
         // 签证计算器 - 鼠标滚轮处理
         function handleDateWheel(event, id) {
             event.preventDefault();
