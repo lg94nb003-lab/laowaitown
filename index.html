@@ -2204,7 +2204,14 @@
                 dockTz: '时区换算',
                 dockCurrency: '汇率换算',
                 dockPhrase: '便捷问答',
-                vfDisclaimer: '本平台免签政策信息整理自外交部、国家移民管理局等官方公开文件。政策可能调整或存在滞后，请以最新官方公告为准，出行前请向中国驻当地使领馆或航空公司确认。本平台不承担法律责任。'
+                vfDisclaimer: '本平台免签政策信息整理自外交部、国家移民管理局等官方公开文件。政策可能调整或存在滞后，请以最新官方公告为准，出行前请向中国驻当地使领馆或航空公司确认。本平台不承担法律责任。',
+                // F01 Nationality dialog
+                natDialogTitle: '🌍 选择你的国籍',
+                natDialogSubtitle: '我们将立即为你展示适用的中国免签政策。',
+                natSearchPh: '输入国家名称…',
+                natPopularLabel: '热门选择',
+                natSkip: '跳过',
+                natConfirm: '确认'
             },
             en: {
                 htmlLang: 'en',
@@ -2378,7 +2385,14 @@
                 dockTz: 'Timezone',
                 dockCurrency: 'Currency',
                 dockPhrase: 'Phrases',
-                vfDisclaimer: 'Visa-free policy info is compiled from publicly available official sources. Policies may change; always verify with the latest official announcements, your nearest Chinese embassy/consulate, or airline. This site assumes no legal liability.'
+                vfDisclaimer: 'Visa-free policy info is compiled from publicly available official sources. Policies may change; always verify with the latest official announcements, your nearest Chinese embassy/consulate, or airline. This site assumes no legal liability.',
+                // F01 Nationality dialog
+                natDialogTitle: '🌍 Select Your Nationality',
+                natDialogSubtitle: "We'll instantly show which China visa-free policies apply to you.",
+                natSearchPh: 'Type country name…',
+                natPopularLabel: 'Popular',
+                natSkip: 'Skip',
+                natConfirm: 'Confirm'
             }
         };
         
@@ -3117,6 +3131,14 @@
                 const key = el.getAttribute('data-i18n-placeholder');
                 if (t[key] !== undefined) el.placeholder = t[key];
             });
+
+            // F01 Step 6: 语言切换后，如果已选过国籍，用新语言重新渲染 4 张卡片
+            try {
+                const savedCode = localStorage.getItem('lwt_nationality');
+                if (savedCode && typeof window.__natRenderForCode === 'function') {
+                    window.__natRenderForCode(savedCode);
+                }
+            } catch (e) {}
         }
 
         function syncQuickTimezoneButtons() {
@@ -3247,7 +3269,7 @@
             if (!zone) return;
             if (!result) { zone.innerHTML = ''; return; }
 
-            const isZh = (typeof currentLanguage !== 'undefined' && currentLanguage === 'zh');
+            const isZh = (typeof currentLang !== 'undefined' && currentLang === 'zh');
             const code = result.code;
             const flag = __natFlag(code);
 
@@ -3347,7 +3369,14 @@
             const change = document.getElementById('nat-change-btn');
             if (change) change.addEventListener('click', () => openNationalityDialog());
 
-            if (window.__track) window.__track('nat_match_render', { code: code });
+            if (window.__track) {
+                window.__track('policy_matched', {
+                    code: code,
+                    visa_free: !!(result.visaFree && result.visaFree.eligible),
+                    t240: !!(result.t240 && result.t240.eligible),
+                    hainan: !!(result.regional && result.regional.hainan)
+                });
+            }
         }
 
         // 外部入口（供 Step 5 localStorage 记忆复现）
@@ -3560,11 +3589,14 @@
                 });
             }
 
-            // 确认按钮：调用匹配 + 渲染卡片，写入 localStorage，然后关闭对话框
+            // 确认按钮：调用匹配 + 渲染卡片，写入 localStorage，发 GA 事件，然后关闭对话框
             const confirmBtn = document.getElementById('nat-confirm-btn');
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', () => {
                     if (!__natSelectedCode) return;
+                    if (window.__track) {
+                        window.__track('nationality_selected', { code: __natSelectedCode });
+                    }
                     const result = matchAllPolicies(__natSelectedCode);
                     if (result) renderMatchResult(result);
                     try { localStorage.setItem('lwt_nationality', __natSelectedCode); } catch (e) {}
