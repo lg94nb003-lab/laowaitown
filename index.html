@@ -1184,6 +1184,76 @@
         }
         #nat-result-zone:empty { display: none; }
 
+        /* F01 Step 4: 匹配结果卡片样式 */
+        .nat-result-wrap {
+            background: rgba(15, 17, 35, 0.6);
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            border-radius: 18px;
+            padding: 18px 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nat-result-head {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+        }
+        .nat-result-head h4 {
+            margin: 0; font-size: 15px; font-weight: 600; color: #e9e6ff;
+        }
+        .nat-result-head h4 .nat-flag { margin-right: 6px; }
+        .nat-result-head .nat-change {
+            background: transparent; border: 1px solid rgba(167, 139, 250, 0.4);
+            color: rgba(199, 184, 255, 0.95); padding: 4px 12px;
+            border-radius: 999px; font-size: 12px; cursor: pointer;
+            transition: all .2s;
+        }
+        .nat-result-head .nat-change:hover {
+            background: rgba(139, 92, 246, 0.15); border-color: rgba(167, 139, 250, 0.7);
+        }
+        .nat-result-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+        }
+        .nat-card {
+            background: rgba(31, 26, 66, 0.55);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 14px;
+            padding: 14px 14px 12px;
+            display: flex; flex-direction: column; gap: 6px;
+            transition: all .2s;
+        }
+        .nat-card.eligible {
+            border-color: rgba(139, 92, 246, 0.55);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(99, 102, 241, 0.12));
+            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.12);
+        }
+        .nat-card.ineligible { opacity: 0.55; }
+        .nat-card .nat-card-title {
+            font-size: 12px; font-weight: 600; color: #c7b8ff; letter-spacing: .3px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .nat-card .nat-card-status {
+            font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2;
+        }
+        .nat-card.ineligible .nat-card-status { color: #9b96b8; }
+        .nat-card .nat-card-detail {
+            font-size: 12px; color: rgba(220, 215, 245, 0.7); line-height: 1.45;
+        }
+        .nat-card .nat-card-cta {
+            margin-top: auto; align-self: flex-start;
+            background: transparent; border: none; padding: 0;
+            color: #a78bfa; font-size: 12px; cursor: pointer;
+            text-decoration: underline; text-underline-offset: 2px;
+        }
+        .nat-card .nat-card-cta:hover { color: #c4b5fd; }
+        .nat-card.ineligible .nat-card-cta { display: none; }
+        @media (max-width: 900px) {
+            .nat-result-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .nat-result-grid { grid-template-columns: 1fr; gap: 10px; }
+            .nat-result-wrap { padding: 14px 14px; border-radius: 14px; }
+        }
+
         /* 移动端适配 */
         @media (max-width: 480px) {
             .nat-dialog { padding: 20px 16px 16px; border-radius: 14px; }
@@ -3143,6 +3213,140 @@
             };
         }
 
+        // ===== F01 Step 4: 结果卡片渲染 =====
+        // 常用国码转 emoji 国旗（fallback: 地球 emoji）
+        function __natFlag(code) {
+            if (!code || code.length !== 2) return '🌏';
+            try {
+                const A = 0x1F1E6;
+                return String.fromCodePoint(A + code.charCodeAt(0) - 65) +
+                       String.fromCodePoint(A + code.charCodeAt(1) - 65);
+            } catch (e) { return '🌏'; }
+        }
+
+        // 跳转到免签区某个 tab（平滑滚动 + 切换 tab）
+        function __natJumpToVfTab(tabName) {
+            if (typeof switchVfTab === 'function') switchVfTab(tabName);
+            const sec = document.getElementById('visa-free');
+            if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (window.__track) window.__track('nat_card_cta', { tab: tabName });
+        }
+
+        // 主渲染函数：将 matchAllPolicies 的结果填入 #nat-result-zone
+        function renderMatchResult(result) {
+            const zone = document.getElementById('nat-result-zone');
+            if (!zone) return;
+            if (!result) { zone.innerHTML = ''; return; }
+
+            const isZh = (typeof currentLanguage !== 'undefined' && currentLanguage === 'zh');
+            const code = result.code;
+            const flag = __natFlag(code);
+
+            // 取国名（优先 visaFree 里的，其次 t240，否则用 code）
+            let nameZh = code, nameEn = code;
+            if (result.visaFree && result.visaFree.name) { nameZh = result.visaFree.name.zh; nameEn = result.visaFree.name.en; }
+            else if (result.t240 && result.t240.name) { nameZh = result.t240.name.zh; nameEn = result.t240.name.en; }
+            const displayName = isZh ? nameZh : nameEn;
+
+            // 四张卡片文案（中英双语）
+            const cards = [
+                {
+                    title: isZh ? '免签入境' : 'Visa-Free Entry',
+                    eligible: result.visaFree.eligible,
+                    statusOk: isZh ? `✅ 允许 ${result.visaFree.days} 天` : `✅ ${result.visaFree.days} days`,
+                    statusNo: isZh ? '❌ 暂不适用' : '❌ Not eligible',
+                    detail: result.visaFree.eligible
+                        ? (isZh ? '无需签证，可从任意开放口岸入境' : 'No visa needed at any open port')
+                        : (isZh ? '该国未列入 30 天免签名单' : 'Not on the 30-day visa-free list'),
+                    tab: 'entry',
+                    cta: isZh ? '查看所有免签国家 →' : 'See all visa-free countries →'
+                },
+                {
+                    title: isZh ? '240h 过境' : '240h Transit',
+                    eligible: result.t240.eligible,
+                    statusOk: isZh ? `✅ 适用 (可停 ${result.t240.stayDays} 天)` : `✅ Up to ${result.t240.stayDays} days`,
+                    statusNo: isZh ? '❌ 暂不适用' : '❌ Not eligible',
+                    detail: result.t240.eligible
+                        ? (isZh
+                            ? `${result.t240.provincesCount} 个省份 / ${result.t240.portsCount} 个口岸开放`
+                            : `${result.t240.provincesCount} provinces / ${result.t240.portsCount} ports`)
+                        : (isZh ? '该国未列入 240h 过境名单' : 'Not on the 240h transit list'),
+                    tab: 'transit240',
+                    cta: isZh ? '查看口岸 / 区域 →' : 'View ports / regions →'
+                },
+                {
+                    title: isZh ? '24h 过境' : '24h Transit',
+                    eligible: result.t24.eligible,
+                    statusOk: isZh ? '✅ 世界各国适用' : '✅ Worldwide eligible',
+                    statusNo: '❌',
+                    detail: isZh ? '限在口岸限定区域内，需持联程票' : 'Stay within port restricted area, with onward ticket',
+                    tab: 'transit24',
+                    cta: isZh ? '查看详细要求 →' : 'See requirements →'
+                },
+                {
+                    title: isZh ? '区域性免签' : 'Regional Visa-Free',
+                    eligible: result.regional.hainan || result.regional.cruise || result.regional.border,
+                    statusOk: '✅',
+                    statusNo: '❌',
+                    detail: (function () {
+                        const lines = [];
+                        if (isZh) {
+                            lines.push(result.regional.hainan ? `海南 ${result.regional.hainanDays} 天 ✅` : '海南 ❌');
+                            lines.push(result.regional.cruise ? `邮轮 ${result.regional.cruiseDays} 天 ✅` : '邮轮 ❌');
+                            lines.push(result.regional.border ? '陆路边境 ✅' : '陆路边境 ❌');
+                        } else {
+                            lines.push(result.regional.hainan ? `Hainan ${result.regional.hainanDays}d ✅` : 'Hainan ❌');
+                            lines.push(result.regional.cruise ? `Cruise ${result.regional.cruiseDays}d ✅` : 'Cruise ❌');
+                            lines.push(result.regional.border ? 'Land border ✅' : 'Land border ❌');
+                        }
+                        return lines.join(' · ');
+                    })(),
+                    tab: 'regional',
+                    cta: isZh ? '查看区域详情 →' : 'View regional details →'
+                }
+            ];
+
+            const headTitle = isZh
+                ? `<span class="nat-flag">${flag}</span>${displayName} · 你适用的免签政策`
+                : `<span class="nat-flag">${flag}</span>${displayName} · Your visa-free options`;
+            const changeLabel = isZh ? '切换国籍' : 'Change';
+
+            zone.innerHTML = `
+                <div class="nat-result-wrap">
+                    <div class="nat-result-head">
+                        <h4>${headTitle}</h4>
+                        <button class="nat-change" id="nat-change-btn" type="button">${changeLabel}</button>
+                    </div>
+                    <div class="nat-result-grid">
+                        ${cards.map((c, i) => `
+                            <div class="nat-card ${c.eligible ? 'eligible' : 'ineligible'}" data-tab="${c.tab}">
+                                <div class="nat-card-title">${c.title}</div>
+                                <div class="nat-card-status">${c.eligible ? c.statusOk : c.statusNo}</div>
+                                <div class="nat-card-detail">${c.detail}</div>
+                                <button class="nat-card-cta" type="button" data-tab="${c.tab}">${c.cta}</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // 绑定卡片 CTA 点击
+            zone.querySelectorAll('.nat-card-cta').forEach(btn => {
+                btn.addEventListener('click', () => __natJumpToVfTab(btn.getAttribute('data-tab')));
+            });
+            // 绑定切换国籍按钮
+            const change = document.getElementById('nat-change-btn');
+            if (change) change.addEventListener('click', () => openNationalityDialog());
+
+            if (window.__track) window.__track('nat_match_render', { code: code });
+        }
+
+        // 外部入口（供 Step 5 localStorage 记忆复现）
+        window.__natRenderForCode = function (code) {
+            const r = matchAllPolicies(code);
+            if (r) renderMatchResult(r);
+        };
+
         // ----- F01 对话框控制 -----
         // 汇总所有可选国家（3 个源去重）供搜索下拉使用
         function natGetAllCandidates() {
@@ -3265,13 +3469,13 @@
                 });
             }
 
-            // 确认按钮（Step 4 会接上匹配逻辑，本 step 先允许关闭）
+            // 确认按钮：调用匹配 + 渲染卡片，然后关闭对话框
             const confirmBtn = document.getElementById('nat-confirm-btn');
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', () => {
                     if (!__natSelectedCode) return;
-                    // Step 4 这里调用 renderMatchResult(matchAllPolicies(__natSelectedCode))
-                    console.log('[F01] selected nationality =', __natSelectedCode, matchAllPolicies(__natSelectedCode));
+                    const result = matchAllPolicies(__natSelectedCode);
+                    if (result) renderMatchResult(result);
                     closeNationalityDialog();
                 });
             }
