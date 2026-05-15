@@ -3348,13 +3348,37 @@
         };
 
         // ----- F01 对话框控制 -----
-        // 汇总所有可选国家（3 个源去重）供搜索下拉使用
+        // 参考国家库：不在三大免签政策中、但常被查询的常见国家。
+        // 作为候选库兑底，让用户能查到“你不适用任何免签政策”的诚实结果
+        const natExtraCandidates = [
+            { code:'VN', zh:'越南',     en:'Vietnam' },
+            { code:'IN', zh:'印度',     en:'India' },
+            { code:'PK', zh:'巴基斯坦', en:'Pakistan' },
+            { code:'BD', zh:'孟加拉国', en:'Bangladesh' },
+            { code:'NP', zh:'尼泊尔',   en:'Nepal' },
+            { code:'LK', zh:'斯里兰卡', en:'Sri Lanka' },
+            { code:'LA', zh:'老挝',     en:'Laos' },
+            { code:'MM', zh:'缅甸',     en:'Myanmar' },
+            { code:'KH', zh:'柬埔寨',   en:'Cambodia' },
+            { code:'IR', zh:'伊朗',     en:'Iran' },
+            { code:'IL', zh:'以色列',   en:'Israel' },
+            { code:'TR', zh:'土耳其',   en:'Türkiye' },
+            { code:'EG', zh:'埃及',     en:'Egypt' },
+            { code:'ZA', zh:'南非',     en:'South Africa' },
+            { code:'NG', zh:'尼日利亚', en:'Nigeria' },
+            { code:'KE', zh:'肯尼亚',   en:'Kenya' },
+            { code:'MA', zh:'摩洛哥',   en:'Morocco' },
+            { code:'CN', zh:'中国',     en:'China' }
+        ];
+
+        // 汇总所有可选国家（4 个源去重）供搜索下拉使用
         function natGetAllCandidates() {
             const map = new Map();
             const sources = [
                 ...(typeof visaFreeCountries     !== 'undefined' ? visaFreeCountries     : []),
                 ...(typeof transit240Countries   !== 'undefined' ? transit240Countries   : []),
-                ...(typeof hainan59Countries     !== 'undefined' ? hainan59Countries     : [])
+                ...(typeof hainan59Countries     !== 'undefined' ? hainan59Countries     : []),
+                ...natExtraCandidates
             ];
             sources.forEach(c => {
                 if (c && c.code && !map.has(c.code)) map.set(c.code, c);
