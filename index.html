@@ -1275,6 +1275,91 @@
             .nat-dialog { padding: 20px 16px 16px; border-radius: 14px; }
             .nat-popular button { font-size: 12px; padding: 6px 9px; }
         }
+
+        /* ===== F01 Step 8: Tab 顶部国籍状态条 与 区域性卡状态化 ===== */
+        .vf-natbar {
+            display: flex; align-items: center; flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(167, 139, 250, 0.25);
+            background: rgba(15, 17, 35, 0.55);
+            font-size: 13px;
+        }
+        .vf-natbar.eligible {
+            border-color: rgba(74, 222, 128, 0.55);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(16, 185, 129, 0.08));
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.12);
+        }
+        .vf-natbar.ineligible {
+            border-color: rgba(244, 114, 128, 0.30);
+            background: rgba(60, 35, 45, 0.45);
+        }
+        .vf-natbar-flag { font-size: 18px; line-height: 1; }
+        .vf-natbar-name { font-weight: 600; color: #e9e6ff; }
+        .vf-natbar.eligible .vf-natbar-status { color: #86efac; font-weight: 700; }
+        .vf-natbar.ineligible .vf-natbar-status { color: #fca5a5; font-weight: 700; }
+        .vf-natbar-detail { color: rgba(220, 215, 245, 0.75); font-size: 12px; flex-basis: 100%; line-height: 1.55; }
+        .vf-natbar-actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+        .vf-natbar-btn {
+            padding: 5px 12px; border-radius: 999px;
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            background: transparent; color: rgba(199, 184, 255, 0.95);
+            font-size: 12px; cursor: pointer;
+            transition: all .2s;
+        }
+        .vf-natbar-btn:hover { background: rgba(139, 92, 246, 0.15); border-color: rgba(167, 139, 250, 0.7); }
+        .vf-natbar-btn.primary {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            border-color: transparent; color: #fff;
+        }
+        .vf-natbar-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4); }
+        .vf-natbar-static { font-size: 13px; }
+
+        /* 区域性免签 accordion 状态化 */
+        .accordion-item.eligible {
+            border-color: rgba(74, 222, 128, 0.55) !important;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.16), rgba(16, 185, 129, 0.06)) !important;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.10);
+        }
+        .accordion-item.ineligible {
+            border-color: rgba(244, 114, 128, 0.25) !important;
+            background: rgba(60, 35, 45, 0.35) !important;
+            opacity: 0.78;
+        }
+        .accordion-item.ineligible:hover { opacity: 0.95; }
+        .accordion-item.ineligible .accordion-header h4 { color: #d4a8b2; }
+        .accordion-status-dot {
+            display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+            margin-left: 8px; vertical-align: middle;
+        }
+        .accordion-status-dot.ok { background: #4ade80; box-shadow: 0 0 6px rgba(74, 222, 128, 0.55); }
+        .accordion-status-dot.no { background: rgba(244, 114, 128, 0.55); }
+
+        /* 区域摘要 chips（位于状态条内） */
+        .vf-regional-summary {
+            display: flex; flex-wrap: wrap; gap: 6px; flex-basis: 100%;
+            margin-top: 4px;
+        }
+        .vf-regional-summary-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 999px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(220, 215, 245, 0.85);
+        }
+        .vf-regional-summary-chip.ok {
+            border-color: rgba(74, 222, 128, 0.5);
+            background: rgba(34, 197, 94, 0.10);
+            color: #86efac;
+        }
+        .vf-regional-summary-chip.no {
+            border-color: rgba(244, 114, 128, 0.25);
+            background: rgba(60, 35, 45, 0.4);
+            color: #d4a8b2;
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -1353,6 +1438,9 @@
 
             <!-- Panel: Visa-Free Entry -->
             <div class="vf-panel active" id="vf-panel-entry">
+                <!-- F01 Tab1 国籍状态条占位（已选国籍时由 JS 填充） -->
+                <div id="vf-entry-natbar"></div>
+                <div id="vf-entry-form">
                 <!-- Continent Dropdown Selector -->
                 <div class="mb-4 relative" id="vf-selector-container">
                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1" data-i18n="vfSelectCountry">选择国籍</label>
@@ -1372,17 +1460,28 @@
                 </div>
                 
                 <div id="vf-entry-hint" class="info-tip" data-i18n="vfEntryHint">选择您的国籍查看免签政策</div>
+                </div><!-- /vf-entry-form -->
+
+                <!-- 政策原文（常驻展示，与 240h tab 样式一致） -->
+                <div class="mt-6 p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" data-i18n="vfEntryPolicyTitle">政策原文</p>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="vfEntryPolicyText">上述国家人员持普通护照来华经商、旅游观光、探亲访友、交流访问、过境不超过30日，可免签入境。停留时间自入境次日零时起算。</p>
+                </div>
             </div>
 
             <!-- Panel: 240h Transit -->
             <div class="vf-panel" id="vf-panel-transit240">
+                <!-- F01 Tab2 国籍状态条占位（已选国籍时由 JS 填充） -->
+                <div id="vf-240-natbar"></div>
                 <!-- 第一行：国家选择器（与免签入境同样的大洲分组下拉方式） -->
+                <div id="vf-240-country-row">
                 <div class="mb-4 relative" id="vf240-selector-container">
                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1" data-i18n="vf240SelectCountry">选择国籍 (55个适用国家)</label>
                     <div class="relative" id="vf240-selector-wrapper">
                         <input id="vf240-country-search" type="text" class="country-select w-64" placeholder="-- 输入国家名称或点击选择 --" data-i18n-placeholder="vf240SearchPlaceholder" oninput="search240Country(this.value)" onfocus="handle240InputFocus()" onclick="handle240InputFocus()" />
                     </div>
                 </div>
+                </div><!-- /vf-240-country-row -->
 
                 <!-- 第二行：省份和口岸选择 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -1425,6 +1524,11 @@
 
             <!-- Panel: 24h Transit -->
             <div class="vf-panel" id="vf-panel-transit24">
+                <!-- F01 Tab3 通用提示：与国籍无关，所有人均适用 -->
+                <div id="vf-24-natbar" class="vf-natbar eligible vf-natbar-static">
+                    <span class="vf-natbar-status">✓</span>
+                    <span data-i18n="vf24NatNoteAll">无论国籍均适用 · 持联程票即可</span>
+                </div>
                 <h3 class="text-lg font-bold mb-4 text-violet-400" data-i18n="vf24Title">24小时过境免签政策</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <div class="glass rounded-2xl p-4" style="background: rgba(15, 23, 42, 0.5);">
@@ -1490,9 +1594,11 @@
 
             <!-- Panel: Regional Policies -->
             <div class="vf-panel" id="vf-panel-regional">
-                <div class="space-y-4">
+                <!-- F01 Tab4 国籍状态条占位（已选国籍时由 JS 填充摘要） -->
+                <div id="vf-regional-natbar"></div>
+                <div class="space-y-4" id="vf-regional-list">
                     <!-- 1. 海南59国30天免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="hainan">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -1520,7 +1626,7 @@
                         </div>
                     </div>
                     <!-- 2. 邮轮免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="cruise">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -1547,7 +1653,7 @@
                         </div>
                     </div>
                     <!-- 3. 东盟入境西双版纳免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="xsbn">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -1575,7 +1681,7 @@
                         </div>
                     </div>
                     <!-- 4. 东盟入境桂林免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="guilin">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -1603,7 +1709,7 @@
                         </div>
                     </div>
                     <!-- 5. 港澳入境广东免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="gd-tour">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -1631,7 +1737,7 @@
                         </div>
                     </div>
                     <!-- 6. 港澳入境海南免签 -->
-                    <div class="accordion-item">
+                    <div class="accordion-item" data-region="hk-hainan-tour">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="flex items-center flex-1">
                                 <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
@@ -2227,7 +2333,30 @@
                 natSearchPh: '输入国家名称…',
                 natPopularLabel: '热门选择',
                 natSkip: '跳过',
-                natConfirm: '确认'
+                natConfirm: '确认',
+                // F01 Step 8: Tab 状态条文案
+                vfNatbarChange: '切换国籍',
+                vfNatbarClear: '清除',
+                vfEntryNatEligible: '适用 30 天单方面免签入境',
+                vfEntryNatIneligible: '该国未列入 30 天免签名单',
+                vfEntryNatEligibleDetail: '无需签证，持普通护照可从任意开放口岸入境，停留不超过 30 天。',
+                vfEntryNatIneligibleDetail: '请在入境前办妥中国签证，或查看下方过境免签与区域性免签是否适用。',
+                vf240NatEligible: '适用 240 小时过境免签（可停 10 天）',
+                vf240NatIneligible: '该国未列入 240h 过境免签名单',
+                vf240NatEligibleDetail: '请选择入境省份与口岸查看允许活动范围。',
+                vf240NatIneligibleDetail: '不妨考虑 24 小时过境免签（世界各国适用）或区域性团组免签。',
+                vf240SwitchTo24Cta: '查看 24h 过境免签 →',
+                vf24NatNoteAll: '无论国籍均适用 · 持联程票即可',
+                vfRegionalSummaryTitle: '你适用的区域性免签政策',
+                vfRegEligible: '适用',
+                vfRegIneligible: '不适用',
+                vfRegHainanLabel: '海南 30天',
+                vfRegCruiseLabel: '邮轮 15天',
+                vfRegXsbnLabel: '西双版纳 6天',
+                vfRegGuilinLabel: '桂林 6天',
+                vfRegGdLabel: '港澳→广东 6天',
+                vfRegHkHainanLabel: '港澳→海南 6天',
+                vfEntryPolicyTitle: '政策原文'
             },
             en: {
                 htmlLang: 'en',
@@ -2408,7 +2537,30 @@
                 natSearchPh: 'Type country name…',
                 natPopularLabel: 'Popular',
                 natSkip: 'Skip',
-                natConfirm: 'Confirm'
+                natConfirm: 'Confirm',
+                // F01 Step 8: Tab natbar copy
+                vfNatbarChange: 'Change',
+                vfNatbarClear: 'Clear',
+                vfEntryNatEligible: 'Eligible for 30-day visa-free entry',
+                vfEntryNatIneligible: 'Not on the 30-day visa-free list',
+                vfEntryNatEligibleDetail: 'No visa needed. Enter via any open port with an ordinary passport, stay up to 30 days.',
+                vfEntryNatIneligibleDetail: 'Please obtain a visa before entry, or check the transit/regional policies below.',
+                vf240NatEligible: 'Eligible for 240h transit (up to 10 days)',
+                vf240NatIneligible: 'Not on the 240h transit list',
+                vf240NatEligibleDetail: 'Select an entry province and port to view the allowed activity area.',
+                vf240NatIneligibleDetail: 'Try the 24h transit (eligible for all nationalities) or regional group policies instead.',
+                vf240SwitchTo24Cta: 'See 24h transit policy →',
+                vf24NatNoteAll: 'Eligible for all nationalities · With confirmed onward ticket',
+                vfRegionalSummaryTitle: 'Regional policies you may use',
+                vfRegEligible: 'Eligible',
+                vfRegIneligible: 'Not eligible',
+                vfRegHainanLabel: 'Hainan 30d',
+                vfRegCruiseLabel: 'Cruise 15d',
+                vfRegXsbnLabel: 'Xishuangbanna 6d',
+                vfRegGuilinLabel: 'Guilin 6d',
+                vfRegGdLabel: 'HK/MO→GD 6d',
+                vfRegHkHainanLabel: 'HK/MO→Hainan 6d',
+                vfEntryPolicyTitle: 'Policy Details'
             }
         };
         
@@ -3404,7 +3556,215 @@
                     hainan: !!(result.regional && result.regional.hainan)
                 });
             }
+
+            // F01 Step 8: 同步 4 个 tab 的状态条与列表
+            if (typeof syncTabsForCode === 'function') syncTabsForCode(code);
         }
+
+        // ===== F01 Step 8: 4 个 tab 与顶部国籍联动 =====
+        // 在指定占位 div 里渲染 HTML
+        function renderTabNatBar(panelId, html) {
+            const el = document.getElementById(panelId);
+            if (!el) return;
+            el.innerHTML = html || '';
+        }
+
+        // 恢复区域性免签 6 项的原始顺序与中性状态
+        function resetRegional() {
+            const list = document.getElementById('vf-regional-list');
+            if (!list) return;
+            const order = ['hainan','cruise','xsbn','guilin','gd-tour','hk-hainan-tour'];
+            const items = {};
+            list.querySelectorAll('.accordion-item').forEach(it => {
+                items[it.getAttribute('data-region')] = it;
+            });
+            order.forEach(key => {
+                const it = items[key];
+                if (!it) return;
+                it.classList.remove('eligible','ineligible');
+                const dot = it.querySelector('.accordion-status-dot');
+                if (dot) dot.remove();
+                list.appendChild(it);
+                const c = it.querySelector('.accordion-content');
+                const ch = it.querySelector('.accordion-chevron');
+                if (c) c.classList.remove('open');
+                if (ch) ch.classList.remove('rotated');
+            });
+        }
+
+        // 根据国籍为 6 个 accordion 染色并重排顺序（适用在前，不适用在后）
+        function sortAndStyleRegional(code) {
+            const list = document.getElementById('vf-regional-list');
+            if (!list || !code) return;
+            const r = (typeof matchAllPolicies === 'function') ? matchAllPolicies(code) : null;
+            if (!r || !r.regional) return;
+            const reg = r.regional;
+            const eligibleMap = {
+                'hainan':         !!reg.hainan,
+                'cruise':         !!reg.cruise,
+                'xsbn':           !!reg.asean,
+                'guilin':         !!reg.asean,
+                'gd-tour':        !!reg.hkmoTour,
+                'hk-hainan-tour': !!reg.hkmoTour
+            };
+            const items = Array.from(list.querySelectorAll('.accordion-item'));
+            items.forEach(it => {
+                const key = it.getAttribute('data-region');
+                const ok = !!eligibleMap[key];
+                it.classList.remove('eligible','ineligible');
+                it.classList.add(ok ? 'eligible' : 'ineligible');
+                const h4 = it.querySelector('.accordion-header h4');
+                if (h4) {
+                    let dot = h4.querySelector('.accordion-status-dot');
+                    if (!dot) {
+                        dot = document.createElement('span');
+                        dot.className = 'accordion-status-dot';
+                        h4.appendChild(dot);
+                    }
+                    dot.classList.toggle('ok', ok);
+                    dot.classList.toggle('no', !ok);
+                }
+                // 默认全部折叠
+                const c = it.querySelector('.accordion-content');
+                const ch = it.querySelector('.accordion-chevron');
+                if (c) c.classList.remove('open');
+                if (ch) ch.classList.remove('rotated');
+            });
+            // 重排：适用在前，不适用在后，组内保持原顺序
+            const eligible   = items.filter(it => it.classList.contains('eligible'));
+            const ineligible = items.filter(it => it.classList.contains('ineligible'));
+            eligible.concat(ineligible).forEach(it => list.appendChild(it));
+            // 默认展开适用列的第一项
+            if (eligible.length > 0) {
+                const first = eligible[0];
+                const c = first.querySelector('.accordion-content');
+                const ch = first.querySelector('.accordion-chevron');
+                if (c) c.classList.add('open');
+                if (ch) ch.classList.add('rotated');
+            }
+        }
+
+        // 清除所有 tab 状态条、还原原表单可见性
+        function clearTabsNatBar() {
+            ['vf-entry-natbar','vf-240-natbar','vf-regional-natbar'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = '';
+            });
+            const eForm = document.getElementById('vf-entry-form');
+            if (eForm) eForm.style.display = '';
+            const tRow = document.getElementById('vf-240-country-row');
+            if (tRow) tRow.style.display = '';
+            const tGrid = document.querySelector('#vf-panel-transit240 > .grid');
+            if (tGrid) tGrid.style.display = '';
+            const tHint = document.getElementById('vf-240-hint');
+            if (tHint) tHint.style.display = '';
+            resetRegional();
+        }
+
+        // 主入口：顶部选了国籍后同步 4 个 tab
+        function syncTabsForCode(code) {
+            if (!code) { clearTabsNatBar(); return; }
+            const r = (typeof matchAllPolicies === 'function') ? matchAllPolicies(code) : null;
+            if (!r) { clearTabsNatBar(); return; }
+
+            const isZh = (typeof currentLang !== 'undefined' && currentLang === 'zh');
+            const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
+            const flag = (typeof __natFlag === 'function') ? __natFlag(code) : '🌏';
+
+            // 取国名：优先 visaFree / t240 / 候选库
+            let nameZh = code, nameEn = code;
+            if (r.visaFree && r.visaFree.name) { nameZh = r.visaFree.name.zh; nameEn = r.visaFree.name.en; }
+            else if (r.t240 && r.t240.name) { nameZh = r.t240.name.zh; nameEn = r.t240.name.en; }
+            else if (typeof natExtraCandidates !== 'undefined' && Array.isArray(natExtraCandidates)) {
+                const ec = natExtraCandidates.find(c => c.code === code);
+                if (ec) { nameZh = ec.zh; nameEn = ec.en; }
+            }
+            const displayName = isZh ? nameZh : nameEn;
+            const changeLabel = t.vfNatbarChange || (isZh ? '切换国籍' : 'Change');
+            const head = '<span class="vf-natbar-flag">' + flag + '</span>' +
+                         '<span class="vf-natbar-name">' + displayName + '</span>';
+            const changeBtn = '<button class="vf-natbar-btn" type="button" onclick="openNationalityDialog()">' + changeLabel + '</button>';
+
+            // ===== Tab 1 免签入境 =====
+            const eOk = !!(r.visaFree && r.visaFree.eligible);
+            const eStatus = eOk ? (t.vfEntryNatEligible || '适用 30 天单方面免签入境')
+                                : (t.vfEntryNatIneligible || '该国未列入 30 天免签名单');
+            const eDetail = eOk ? (t.vfEntryNatEligibleDetail || '')
+                                : (t.vfEntryNatIneligibleDetail || '');
+            const eHtml = '<div class="vf-natbar ' + (eOk ? 'eligible' : 'ineligible') + '">' +
+                head +
+                '<span class="vf-natbar-status">' + eStatus + '</span>' +
+                '<div class="vf-natbar-actions">' + changeBtn + '</div>' +
+                (eDetail ? '<div class="vf-natbar-detail">' + eDetail + '</div>' : '') +
+                '</div>';
+            renderTabNatBar('vf-entry-natbar', eHtml);
+            const eForm = document.getElementById('vf-entry-form');
+            if (eForm) eForm.style.display = 'none';
+
+            // ===== Tab 2 240h 过境 =====
+            const tOk = !!(r.t240 && r.t240.eligible);
+            const tStatus = tOk ? (t.vf240NatEligible || '适用 240 小时过境免签（可停 10 天）')
+                                : (t.vf240NatIneligible || '该国未列入 240h 过境免签名单');
+            const tDetail = tOk ? (t.vf240NatEligibleDetail || '')
+                                : (t.vf240NatIneligibleDetail || '');
+            let tActions = changeBtn;
+            if (!tOk) {
+                const swText = t.vf240SwitchTo24Cta || '查看 24h 过境免签 →';
+                tActions = '<button class="vf-natbar-btn primary" type="button" onclick="switchVfTab(\'transit24\')">' + swText + '</button>' + tActions;
+            }
+            const tHtml = '<div class="vf-natbar ' + (tOk ? 'eligible' : 'ineligible') + '">' +
+                head +
+                '<span class="vf-natbar-status">' + tStatus + '</span>' +
+                '<div class="vf-natbar-actions">' + tActions + '</div>' +
+                (tDetail ? '<div class="vf-natbar-detail">' + tDetail + '</div>' : '') +
+                '</div>';
+            renderTabNatBar('vf-240-natbar', tHtml);
+            const tRow = document.getElementById('vf-240-country-row');
+            if (tRow) tRow.style.display = 'none';
+            const tGrid = document.querySelector('#vf-panel-transit240 > .grid');
+            const tHint = document.getElementById('vf-240-hint');
+            const tResult = document.getElementById('vf-240-result');
+            if (tOk) {
+                if (tGrid) tGrid.style.display = '';
+                if (tHint) tHint.style.display = '';
+                if (typeof select240CountryByCode === 'function') {
+                    try { select240CountryByCode(code); } catch (e) { /* 静默 */ }
+                }
+            } else {
+                if (tGrid) tGrid.style.display = 'none';
+                if (tHint) tHint.style.display = 'none';
+                if (tResult) tResult.classList.add('hidden');
+            }
+
+            // ===== Tab 4 区域性免签 =====
+            const reg = r.regional || {};
+            const summaryTitle = t.vfRegionalSummaryTitle || '你适用的区域性免签政策';
+            const chips = [
+                { ok: !!reg.hainan,   label: t.vfRegHainanLabel   || '海南 30天' },
+                { ok: !!reg.cruise,   label: t.vfRegCruiseLabel   || '邮轮 15天' },
+                { ok: !!reg.asean,    label: t.vfRegXsbnLabel     || '西双版纳 6天' },
+                { ok: !!reg.asean,    label: t.vfRegGuilinLabel   || '桂林 6天' },
+                { ok: !!reg.hkmoTour, label: t.vfRegGdLabel       || '港澳→广东 6天' },
+                { ok: !!reg.hkmoTour, label: t.vfRegHkHainanLabel || '港澳→海南 6天' }
+            ];
+            const chipsHtml = chips.map(function (c) {
+                return '<span class="vf-regional-summary-chip ' + (c.ok ? 'ok' : 'no') + '">' +
+                       (c.ok ? '●' : '○') + ' ' + c.label + '</span>';
+            }).join('');
+            const anyOk = chips.some(function (c) { return c.ok; });
+            const regHtml = '<div class="vf-natbar ' + (anyOk ? 'eligible' : 'ineligible') + '">' +
+                head +
+                '<span class="vf-natbar-status">' + summaryTitle + '</span>' +
+                '<div class="vf-natbar-actions">' + changeBtn + '</div>' +
+                '<div class="vf-regional-summary">' + chipsHtml + '</div>' +
+                '</div>';
+            renderTabNatBar('vf-regional-natbar', regHtml);
+            sortAndStyleRegional(code);
+        }
+
+        // 暴露到全局，便于其他路径调用
+        window.syncTabsForCode = syncTabsForCode;
+        window.clearTabsNatBar = clearTabsNatBar;
 
         // 外部入口（供 Step 5 localStorage 记忆复现）
         window.__natRenderForCode = function (code) {
