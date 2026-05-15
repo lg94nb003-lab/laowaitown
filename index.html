@@ -3220,10 +3220,14 @@
 
             // 4. 区域性免签
             const inHainan = !!hainan59Countries.find(c => c.code === code);
-            // 邮轮免签：外国旅游团(2人及以上)乘邮轮经中国旅行社接待均适用，不区分国籍
-            const cruiseEligible = true;
-            // 边境口岸免签主要面向特定特定邻国（如越南、俄罗斯、朋友邻邦），以陆路口岸为主，默认不判定适用，详情进面板查看
-            const borderEligible = false;
+            // 东盟10国 → 适用「西双版纳/桂林」入境免签 6 天
+            const ASEAN_10 = ['MY','ID','TH','PH','SG','BN','VN','LA','MM','KH'];
+            const inAsean = ASEAN_10.indexOf(code) >= 0;
+            // 港澳→广东/海南 团组免签：与中国建交国均适用（绝大多数国家），仅排除少数未建交国
+            const NO_DIPLOMATIC_TIE = ['BT','BZ','GT','HT','PY','VC','LC','KN','TV','MH','PW','VA','SZ'];
+            const hkmoTour = NO_DIPLOMATIC_TIE.indexOf(code) < 0;
+            // 邮轮免签：网站政策描述为「多国」未列清单，不武断判定
+            const cruiseEligible = null;
 
             return {
                 code: code,
@@ -3237,9 +3241,12 @@
                 regional: {
                     hainan: inHainan,
                     hainanDays: 30,
+                    asean: inAsean,
+                    aseanDays: 6,
+                    hkmoTour: hkmoTour,
+                    hkmoTourDays: 6,
                     cruise: cruiseEligible,
-                    cruiseDays: 15,
-                    border: borderEligible
+                    cruiseDays: 15
                 }
             };
         }
@@ -3316,20 +3323,23 @@
                 },
                 {
                     title: isZh ? '区域性免签' : 'Regional Visa-Free',
-                    // 仅海南是硬数据判定；邮轮/陆路存在国别与场景限制，这里不武断出 ✅/❌，引导用户去专门 tab 查详情
-                    eligible: !!result.regional.hainan,
+                    // 只要任一区域性政策适用就算 eligible；邮轮不纳入判断（未列清单）
+                    eligible: !!(result.regional.hainan || result.regional.asean || result.regional.hkmoTour),
                     statusOk: '✅',
-                    statusNo: 'ℹ️',
+                    statusNo: '❌',
                     detail: (function () {
                         const lines = [];
+                        const ok = '✅', no = '❌';
                         if (isZh) {
-                            lines.push(result.regional.hainan ? `海南 ${result.regional.hainanDays} 天 ✅` : '海南 ❌');
-                            lines.push('邮轮 · 详情请查看');
-                            lines.push('陆路口岸 · 详情请查看');
+                            lines.push(`海南 ${result.regional.hainanDays} 天 ${result.regional.hainan ? ok : no}`);
+                            lines.push(`东盟·西双版纳/桂林 ${result.regional.aseanDays} 天 ${result.regional.asean ? ok : no}`);
+                            lines.push(`港澳→广东/海南团组 ${result.regional.hkmoTourDays} 天 ${result.regional.hkmoTour ? ok : no}`);
+                            lines.push(`邮轮团组 ${result.regional.cruiseDays} 天 ℹ️`);
                         } else {
-                            lines.push(result.regional.hainan ? `Hainan ${result.regional.hainanDays}d ✅` : 'Hainan ❌');
-                            lines.push('Cruise · see details');
-                            lines.push('Land border · see details');
+                            lines.push(`Hainan ${result.regional.hainanDays}d ${result.regional.hainan ? ok : no}`);
+                            lines.push(`ASEAN·Xishuangbanna/Guilin ${result.regional.aseanDays}d ${result.regional.asean ? ok : no}`);
+                            lines.push(`HK/Macao→Guangdong/Hainan tour ${result.regional.hkmoTourDays}d ${result.regional.hkmoTour ? ok : no}`);
+                            lines.push(`Cruise tour ${result.regional.cruiseDays}d ℹ️`);
                         }
                         return lines.join('<br>');
                     })(),
