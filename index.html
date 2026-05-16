@@ -138,6 +138,62 @@
     }
     </script>
 
+    <!-- JSON-LD Structured Data: HowTo (Visa-Free Stay Calculator) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to use the China Visa-Free Stay Calculator",
+      "description": "Calculate your maximum visa-free stay in China and the latest legal exit date based on your entry date and the allowed stay duration, using the free LAOWAITOWN online calculator.",
+      "image": "https://laowaitown.com/logo.png",
+      "totalTime": "PT1M",
+      "supply": [
+        {
+          "@type": "HowToSupply",
+          "name": "Your planned entry date into China"
+        },
+        {
+          "@type": "HowToSupply",
+          "name": "The maximum stay days allowed by your visa-free policy (e.g. 30 days for most passports, 10 days for 240h transit visa-free)"
+        }
+      ],
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "LAOWAITOWN Visa-Free Stay Calculator",
+          "url": "https://laowaitown.com/#calculator"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Open the calculator",
+          "text": "Visit laowaitown.com and tap the 'Calculator' button on the bottom tools dock to launch the visa-free stay calculator. You can also open it directly via https://laowaitown.com/#calculator.",
+          "url": "https://laowaitown.com/#calculator"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Enter your entry date",
+          "text": "Pick the date you plan to enter China. The default value is today; you can fine-tune day by day or use the date picker to choose any future date."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Enter the allowed stay days",
+          "text": "Input the maximum stay length your visa-free policy permits: typically 30 days for ordinary passport holders from most visa-free countries, 15 days for some, or 240 hours (10 days) for the transit visa-free policy. The exact value for your nationality is shown in the visa-free policy lookup section."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Read the latest legal exit date",
+          "text": "The calculator instantly displays the latest legal exit date and a remaining-days countdown so you can book your onward flight before the deadline. Results update live as you adjust the entry date or stay length."
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- dayjs 本地化：本地优先，失败时后面脚本会退到 CDN 兑底 -->
@@ -1026,35 +1082,70 @@
             .tools-drawer-body { padding: 14px; }
             .tool-pane .tool-card,
             .tool-pane .tool-card-full { padding: 20px !important; border-radius: 24px !important; }
-            /* 移动端：托盘从右侧貌为底部一排 */
+            /* 移动端：托盘改为全宽贴底 Tab Bar，4 等分图标在上文字在下 */
             .tool-dock {
-                top: auto; right: auto;
-                left: 50%; bottom: 12px;
-                transform: translateX(-50%);
-                flex-direction: row;
-                gap: 8px;
-                padding: 6px 10px;
-                background: rgba(15, 23, 42, 0.88);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 18px;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                top: auto;
+                left: 0; right: 0; bottom: 0;
+                transform: none;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+                background: rgba(15, 23, 42, 0.92);
+                border: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 0;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.32);
+                transition: transform .28s cubic-bezier(.22, 1, .36, 1);
+                will-change: transform;
             }
+            .tool-dock.tool-dock--hidden { transform: translateY(110%); }
             .dock-card {
-                width: min(150px, 40vw); height: 58px;
-                padding: 0 10px 0 14px;
-                border-radius: 12px;
-                border-right: 1px solid rgba(255, 255, 255, 0.08);
+                position: relative;
+                width: auto; height: 56px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2px;
+                padding: 6px 4px;
+                background: transparent;
+                border: none;
+                border-radius: 10px;
                 box-shadow: none;
+                color: #94a3b8;
+                transition: transform .15s ease, background .2s ease, color .2s ease;
             }
-            .dock-card i { width: 22px; height: 22px; flex: 0 0 22px; }
-            .dock-card span { font-size: 12px; }
-            .dock-card::before {
-                left: 10%; right: 10%;
-                top: 0; bottom: auto;
-                width: auto; height: 3px;
+            .dock-card::before { display: none; }
+            .dock-card i { width: 20px; height: 20px; flex: 0 0 20px; }
+            .dock-card span {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.01em;
+                color: #cbd5e1;
+                line-height: 1.1;
+                max-width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
-            .dock-card:hover { transform: translateY(-3px); }
+            .dock-card:hover { transform: none; background: transparent; }
+            .dock-card:hover span { color: #cbd5e1; }
+            .dock-card:active {
+                transform: scale(0.94);
+                background: rgba(255, 255, 255, 0.06);
+            }
+            .dock-card.is-active { color: var(--accent); }
+            .dock-card.is-active span { color: #ffffff; }
+            .dock-card.is-active::after {
+                content: '';
+                position: absolute;
+                left: 30%; right: 30%; top: 0;
+                height: 3px;
+                border-radius: 0 0 3px 3px;
+                background: var(--accent);
+            }
         }
 
         /* ===== F01 国籍智能匹配功能样式 ===== */
@@ -1378,16 +1469,16 @@
         <!-- 顶栏：语言切换 + 小工具箱入口 -->
         <div class="flex justify-end items-center gap-3 mb-6 flex-wrap">
             <div class="lang-toggle inline-flex items-center rounded-full p-1">
-                <img src="logo.png" alt="LAOWAITOWN Logo" class="h-6 w-auto object-contain mr-2" />
                 <button id="lang-zh" onclick="setLanguage('zh')" class="px-4 py-2 rounded-full text-xs font-bold tracking-wide text-slate-300">中文</button>
                 <button id="lang-en" onclick="setLanguage('en')" class="active px-4 py-2 rounded-full text-xs font-bold tracking-wide text-slate-300">EN</button>
             </div>
         </div>
 
-        <!-- 页面头部（精简版：仅品牌 + 一句 slogan） -->
+        <!-- 页面头部（精简版：品牌 + 关键词副标题） -->
         <header class="mb-8 text-center animate-in">
-            <h1 id="page-title" class="text-3xl md:text-4xl font-black mb-2 tracking-tight brand-title">
-                LAOWAITOWN
+            <h1 id="page-title" class="mb-2">
+                <span class="block text-3xl md:text-4xl font-black tracking-tight brand-title">LAOWAITOWN</span>
+                <span class="block text-sm md:text-base font-semibold text-slate-200 mt-3 tracking-normal">China Visa-Free Policy Checker &amp; Travel Tools 2026</span>
             </h1>
             <p id="page-subtitle" class="text-slate-400 text-sm md:text-base max-w-xl mx-auto font-light">
                 One-stop China visa-free guide for travelers · Stay days · Timezone · FX · Phrases
@@ -2115,6 +2206,41 @@
             </div>
         </div>
 
+        <!-- ========================================
+             SEO Long-form Content (选中关键词的价值内容区，仅可见于默认 HTML，供搜索引擎抓取)
+             包含关键词：china visa free 2026 / 240 hour transit visa / hainan visa free / cruise visa free / china travel tools
+             ======================================== -->
+        <section id="seo-guide" class="max-w-4xl mx-auto mt-16 mb-12 px-4" aria-labelledby="seo-guide-title">
+            <div class="glass rounded-3xl p-6 md:p-10 text-slate-300 leading-relaxed text-sm md:text-base">
+                <h2 id="seo-guide-title" class="text-xl md:text-2xl font-bold text-white mb-4">China Visa-Free Policy 2026: A Complete Guide for Travelers</h2>
+                <p class="mb-4">Planning a trip to China? Whether you are a tourist, a business traveler, or just transiting through, China has dramatically expanded its visa-free entry policies in 2024–2026. This page consolidates every China visa-free policy that affects ordinary passport holders, plus the practical tools you need: a stay-days calculator, a 240-hour transit checker, a timezone converter, a currency converter, and a Chinese phrasebook. Everything is free, runs in your browser, and works on mobile.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">How Many Countries Are Visa-Free to China in 2026?</h2>
+                <p class="mb-4">As of 2026, China grants unilateral visa-free entry to citizens of more than 50 countries, including most of Europe (France, Germany, Italy, Spain, Netherlands, Belgium, Austria, Switzerland, Ireland, Portugal, Norway, Denmark, Finland, Sweden, Luxembourg), Australia, New Zealand, South Korea, Japan, Malaysia, Singapore, Thailand, and many others. Eligible travelers may stay up to 30 days for tourism, business, family visits, or transit, with no visa fee, no embassy appointment, and no advance application required. Use the <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">visa-free policy lookup</a> above to confirm eligibility for your passport.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">240-Hour Transit Visa-Free Policy Explained</h2>
+                <p class="mb-4">China's 240-hour (10-day) transit visa-free policy is one of the most generous transit programs in the world. Citizens of 54 eligible countries can transit through China for up to 240 hours when entering through any of 60+ designated air, sea, and rail ports, provided they hold a confirmed onward ticket to a third country or region. Once admitted, travelers may move freely between most provinces and major cities — including Beijing, Shanghai, Guangzhou, Chengdu, Xi'an, and Hangzhou — without applying for a separate visa.</p>
+                <p class="mb-4">Common eligible nationalities include the United States, United Kingdom, Canada, Australia, New Zealand, Russia, and most Schengen countries. The policy is ideal for travelers connecting between Europe and Asia, or for short stopovers en route to Japan, Korea, or Southeast Asia. The LAOWAITOWN <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">240h transit visa checker</a> shows real-time eligibility and the full list of approved entry/exit ports.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">24-Hour Transit Visa-Free Policy</h2>
+                <p class="mb-4">For travelers who do not qualify for the 240-hour policy, China offers a universal 24-hour transit visa-free option open to almost all nationalities. Holders of a confirmed onward ticket to a third country may stay for up to 24 hours without a visa, regardless of nationality. This is a useful fallback for short layovers when no other visa-free option applies.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">Hainan 30-Day Visa-Free Policy</h2>
+                <p class="mb-4">Hainan Province — China's tropical island and a popular beach destination — has its own dedicated visa-free policy. Tourists from 59 countries may enter Hainan and stay up to 30 days without a mainland visa, provided they arrive directly into Hainan and limit their activities to the island. The policy covers most major tourism source countries, including the US, UK, Canada, Australia, France, Germany, Russia, Japan, Korea, and many more.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">Cruise Tourism Visa-Free Policy</h2>
+                <p class="mb-4">Foreign tourist groups arriving in China by cruise ship through any of 13 designated cruise ports — including Shanghai, Tianjin, Qingdao, Xiamen, Guangzhou, and Sanya — may disembark and tour visa-free for up to 15 days. The policy covers all nationalities and applies to organized tour groups, making cruise visits one of the most flexible ways to experience multiple Chinese cities in a single trip.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">How to Use the Visa-Free Stay Calculator</h2>
+                <p class="mb-4">Open the <a href="#calculator" class="text-indigo-400 hover:text-indigo-300 underline">visa-free stay calculator</a> from the bottom tools dock or directly via this deep link. Enter your planned entry date and the maximum stay your visa-free policy allows (typically 30 days for ordinary passport holders, 10 days for the 240-hour transit policy, or 15 days for cruise tourism). The calculator instantly shows your latest legal exit date and a remaining-days countdown so you can book your onward flight before the deadline.</p>
+
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">Other Free Tools for Travelers in China</h2>
+                <p class="mb-4">Beyond visa-free policies, LAOWAITOWN offers a <a href="#timezone" class="text-indigo-400 hover:text-indigo-300 underline">timezone converter</a> for coordinating meetings between China Standard Time (CST, UTC+8) and your home timezone, a <a href="#currency" class="text-indigo-400 hover:text-indigo-300 underline">currency converter</a> with live exchange rates between CNY and 30+ major currencies, and a <a href="#phrasebook" class="text-indigo-400 hover:text-indigo-300 underline">Chinese phrasebook</a> covering everyday scenarios from airports and taxis to restaurants and shopping. The <a href="#life-in-china" class="text-indigo-400 hover:text-indigo-300 underline">Life in China</a> guide explains how foreigners can use WeChat Pay and Alipay (now both supporting Visa, Mastercard, Amex, and JCB), how to get a SIM card, and the legal essentials every visitor should know.</p>
+
+                <p class="mt-6 text-xs text-slate-500">All policy data on this site is updated for 2026 and verified against official sources. Visa-free rules can change at short notice — always confirm the latest requirements with the Chinese embassy or consulate in your country before booking travel.</p>
+            </div>
+        </section>
+
         <!-- 页脚 -->
         <footer class="mt-24 pb-12 text-center">
             <div class="flex justify-center space-x-6 mb-6 opacity-40">
@@ -2163,7 +2289,7 @@
                 currencyLoading: '获取汇率中...',
                 currencyAction: '获取汇率',
                 headerBadge: 'Travel Smart',
-                pageTitle: 'LAOWAITOWN',
+                pageTitle: '<span class="block text-3xl md:text-4xl font-black tracking-tight brand-title">LAOWAITOWN</span><span class="block text-sm md:text-base font-semibold text-slate-200 mt-3 tracking-normal">中国免签政策一站查询 · 来华旅行工具 2026</span>',
                 pageSubtitle: '外国人来华免签政策一站查 · 停留期 / 时区 / 汇率 / 常用问答',
                 visaTitle: '签证停留期',
                 visaEntryLabel: '入境日期',
@@ -2367,7 +2493,7 @@
                 currencyLoading: 'Loading rates...',
                 currencyAction: 'Get Exchange Rate',
                 headerBadge: 'Travel Smart',
-                pageTitle: 'LAOWAITOWN',
+                pageTitle: '<span class="block text-3xl md:text-4xl font-black tracking-tight brand-title">LAOWAITOWN</span><span class="block text-sm md:text-base font-semibold text-slate-200 mt-3 tracking-normal">China Visa-Free Policy Checker &amp; Travel Tools 2026</span>',
                 pageSubtitle: 'One-stop China visa-free guide for travelers · Stay days · Timezone · FX · Phrases',
                 visaTitle: 'Visa Stay Calculator',
                 visaEntryLabel: 'Entry Date',
@@ -5306,6 +5432,15 @@
 
             // GA4 埋点：工具打开（签证/时区/汇率/便捷问答使用次数）
             if (window.__track) window.__track('tool_open', { tool: name });
+
+            // 同步底部 dock 激活态：高亮当前工具按钮
+            try {
+                document.querySelectorAll('#tool-dock .dock-card').forEach(btn => {
+                    const isActive = btn.getAttribute('data-tool') === name;
+                    btn.classList.toggle('is-active', isActive);
+                    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+            } catch (e) { /* 静默 */ }
         }
         function closeTool() {
             const d = document.getElementById('tools-drawer');
@@ -5318,6 +5453,13 @@
             if (!panelOpen && !fsOpen && !addOpen) {
                 document.body.style.overflow = '';
             }
+            // 清除底部 dock 的激活态
+            try {
+                document.querySelectorAll('#tool-dock .dock-card.is-active').forEach(btn => {
+                    btn.classList.remove('is-active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
+            } catch (e) { /* 静默 */ }
         }
         // 旧名别名，避免漏改的入口报错
         window.openToolsDrawer = openTool;
@@ -5336,6 +5478,35 @@
         } else {
             qpRenderScenes();
         }
+
+        // 移动端底部 dock：向下滚动隐藏，向上滚动显现
+        (function initDockScrollHide(){
+            if (!window.matchMedia('(max-width: 768px)').matches) return;
+            const dock = document.getElementById('tool-dock');
+            if (!dock) return;
+            let lastY = window.scrollY, ticking = false;
+            const threshold = 6;
+            function onScroll(){
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    const y = window.scrollY;
+                    const dy = y - lastY;
+                    if (Math.abs(dy) > threshold) {
+                        // 抽屉打开时不隐藏，避免误触感
+                        const drawer = document.getElementById('tools-drawer');
+                        const drawerOpen = drawer && !drawer.classList.contains('hidden');
+                        if (!drawerOpen) {
+                            if (dy > 0 && y > 80) dock.classList.add('tool-dock--hidden');
+                            else dock.classList.remove('tool-dock--hidden');
+                        }
+                        lastY = y;
+                    }
+                    ticking = false;
+                });
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+        })();
     </script>
 
     <!-- 免签政策下拉菜单（放在body最外层，避免被卡片裁剪） -->
@@ -5470,17 +5641,17 @@
     </div>
 
     <!-- 右侧浮牌托盘：4 个工具入口 -->
-    <nav id="tool-dock" class="tool-dock" aria-label="Tools Dock">
-        <button type="button" class="dock-card" data-theme="sky"     onclick="openTool('visa')">
+    <nav id="tool-dock" class="tool-dock" role="tablist" aria-label="Tools Dock">
+        <button type="button" class="dock-card" data-tool="visa"     data-theme="sky"     aria-pressed="false" onclick="openTool('visa')">
             <i data-lucide="calendar-range"></i><span data-i18n="dockVisa">签证停留期</span>
         </button>
-        <button type="button" class="dock-card" data-theme="indigo"  onclick="openTool('tz')">
+        <button type="button" class="dock-card" data-tool="tz"       data-theme="indigo"  aria-pressed="false" onclick="openTool('tz')">
             <i data-lucide="globe"></i><span data-i18n="dockTz">时区换算</span>
         </button>
-        <button type="button" class="dock-card" data-theme="emerald" onclick="openTool('currency')">
+        <button type="button" class="dock-card" data-tool="currency" data-theme="emerald" aria-pressed="false" onclick="openTool('currency')">
             <i data-lucide="coins"></i><span data-i18n="dockCurrency">汇率换算</span>
         </button>
-        <button type="button" class="dock-card" data-theme="violet"  onclick="openTool('phrase')">
+        <button type="button" class="dock-card" data-tool="phrase"   data-theme="violet"  aria-pressed="false" onclick="openTool('phrase')">
             <i data-lucide="message-square"></i><span data-i18n="dockPhrase">便捷问答</span>
         </button>
     </nav>
@@ -5732,6 +5903,38 @@
         // 下拉菜单 HTML 在主脚本之后才渲染，需在此处再次应用翻译，确保大洲选项首次显示即为英文
         applyTranslations();
         lucide.createIcons();
+    </script>
+
+    <!-- 深链路由：根据 URL hash 自动打开对应工具抽屉，配合 sitemap 中的锚点 deep links 与 HowTo 结构化数据 -->
+    <script>
+    (function initToolHashRouter(){
+        // hash 别名 -> openTool 内部 name；保留对未匹配 hash 的零干预
+        var map = {
+            'calculator': 'visa',
+            'visa-calculator': 'visa',
+            'stay-calculator': 'visa',
+            'timezone': 'tz',
+            'tz': 'tz',
+            'currency': 'currency',
+            'fx': 'currency',
+            'phrase': 'phrase',
+            'phrasebook': 'phrase'
+        };
+        function route(){
+            var raw = (location.hash || '').replace(/^#/, '').toLowerCase();
+            if (!raw) return;
+            var tool = map[raw];
+            if (tool && typeof window.openTool === 'function') {
+                try { window.openTool(tool); } catch (e) { /* 静默 */ }
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function(){ setTimeout(route, 0); });
+        } else {
+            setTimeout(route, 0);
+        }
+        window.addEventListener('hashchange', route);
+    })();
     </script>
 
 </body>
