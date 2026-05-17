@@ -20,7 +20,13 @@ window.LWNavData = {
         { href: '/visa/240-hour-transit-visa.html',   label: '240h Transit Visa' },
         { href: '/visa/24-hour-transit-visa.html',    label: '24h Transit Visa' },
         { href: '/visa/hainan-visa-free.html',        label: 'Hainan 30-Day' },
-        { href: '/visa/cruise-visa-free.html',        label: 'Cruise Visa-Free' }
+        { href: '/visa/cruise-visa-free.html',        label: 'Cruise Visa-Free' },
+        { href: '/visa/visa-types-comparison.html',   label: 'Visa Types L/M/Z/X/S/Q/K' },
+        { href: '/visa/residence-permit.html',        label: 'Residence Permit' },
+        { href: '/visa/permanent-residence.html',     label: 'Permanent Residence' },
+        { href: '/visa/arrival-card.html',            label: 'Arrival Card' },
+        { href: '/visa/entry-medical-exam.html',      label: 'Entry Medical Exam' },
+        { href: '/visa/visa-extension-overstay.html', label: 'Extension & Overstay' }
     ]
 };
 
@@ -93,6 +99,75 @@ window.LWPolicyStatus = {
         sources: [
             'National Immigration Administration (NIA)',
             'State Council Information Office'
+        ]
+    },
+
+    'visa-types-comparison': {
+        effectiveSince: '2025-10-01',
+        changelog: [
+            { date: '2025-10-01', text: 'New K visa added for young foreign STEM talent (State Council decision Aug 2025)', isNew: true },
+            { date: '2024-09-01', text: 'M visa validity extended; L visa application process simplified' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'Ministry of Foreign Affairs (MFA) Consular Department',
+            'State Council Gazette'
+        ]
+    },
+
+    'visa-residence-permit': {
+        effectiveSince: '2024-07-01',
+        changelog: [
+            { date: '2024-07-01', text: 'Online pre-application extended to all major cities' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'Public Security Bureau Exit & Entry Administration (EEA)'
+        ]
+    },
+
+    'visa-permanent-residence': {
+        effectiveSince: '2024-12-01',
+        changelog: [
+            { date: '2024-12-01', text: 'New 5-year validity format introduced; foreign-talent criteria relaxed' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'State Council'
+        ]
+    },
+
+    'visa-arrival-card': {
+        effectiveSince: '2023-08-01',
+        changelog: [
+            { date: '2023-08-01', text: 'Digital arrival card introduced alongside paper form (customs fingertip mini-program)' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'General Administration of Customs (GAC)'
+        ]
+    },
+
+    'visa-entry-medical-exam': {
+        effectiveSince: '2024-01-01',
+        changelog: [
+            { date: '2024-01-01', text: 'List of approved medical institutions updated' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'National Health Commission (NHC)',
+            'International Travel Healthcare Center (ITHC)'
+        ]
+    },
+
+    'visa-extension-overstay': {
+        effectiveSince: '2024-05-01',
+        changelog: [
+            { date: '2024-05-01', text: 'Overstay fine structure clarified (¥500/day, capped at ¥10,000); extension window unified' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'Public Security Bureau Exit & Entry Administration (EEA)'
         ]
     }
     /* Other pages will be added as they are built */
