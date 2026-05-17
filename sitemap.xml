@@ -64,4 +64,36 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- F03: Visa sub-pages (batch 1) -->
+  <url>
+    <loc>https://laowaitown.com/visa/visa-free-entry.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://laowaitown.com/visa/240-hour-transit-visa.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://laowaitown.com/visa/24-hour-transit-visa.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://laowaitown.com/visa/hainan-visa-free.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://laowaitown.com/visa/cruise-visa-free.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
