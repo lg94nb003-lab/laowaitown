@@ -194,12 +194,12 @@
     }
     </script>
 
+    <!-- Tailwind CSS（本地编译产出） -->
+    <link rel="stylesheet" href="style.css">
+
     <!-- DNS 预连接：加速第三方 CDN 加载 -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- dayjs 本地化：本地优先，失败时后面脚本会退到 CDN 兑底 -->
     <script src="vendor/dayjs/dayjs.min.js" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js'"></script>
