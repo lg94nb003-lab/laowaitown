@@ -1292,7 +1292,7 @@
             margin: 0; font-size: 22px; font-weight: 700; color: #e9e6ff;
             flex: 1; text-align: center; letter-spacing: 0.3px;
         }
-        .nat-result-head h4 .nat-flag { margin-right: 8px; font-size: 26px; vertical-align: middle; }
+        
         .nat-result-head .nat-change {
             background: transparent; border: 1px solid rgba(167, 139, 250, 0.4);
             color: rgba(199, 184, 255, 0.95); padding: 4px 12px;
@@ -1388,7 +1388,7 @@
             border-color: rgba(244, 114, 128, 0.30);
             background: rgba(60, 35, 45, 0.45);
         }
-        .vf-natbar-flag { font-size: 18px; line-height: 1; }
+        
         .vf-natbar-name { font-weight: 600; color: #e9e6ff; }
         .vf-natbar.eligible .vf-natbar-status { color: #86efac; font-weight: 700; }
         .vf-natbar.ineligible .vf-natbar-status { color: #fca5a5; font-weight: 700; }
@@ -3573,12 +3573,15 @@
 
             const isZh = (typeof currentLang !== 'undefined' && currentLang === 'zh');
             const code = result.code;
-            const flag = __natFlag(code);
 
-            // 取国名（优先 visaFree 里的，其次 t240，否则用 code）
+            // 取国名（优先 visaFree / t240 / 候选库，否则用 code）
             let nameZh = code, nameEn = code;
             if (result.visaFree && result.visaFree.name) { nameZh = result.visaFree.name.zh; nameEn = result.visaFree.name.en; }
             else if (result.t240 && result.t240.name) { nameZh = result.t240.name.zh; nameEn = result.t240.name.en; }
+            else if (typeof natExtraCandidates !== 'undefined' && Array.isArray(natExtraCandidates)) {
+                const ec = natExtraCandidates.find(c => c.code === code);
+                if (ec) { nameZh = ec.zh; nameEn = ec.en; }
+            }
             const displayName = isZh ? nameZh : nameEn;
 
             // 四张卡片文案（中英双语）
@@ -3796,7 +3799,6 @@
 
             const isZh = (typeof currentLang !== 'undefined' && currentLang === 'zh');
             const t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : {};
-            const flag = (typeof __natFlag === 'function') ? __natFlag(code) : '🌏';
 
             // 取国名：优先 visaFree / t240 / 候选库
             let nameZh = code, nameEn = code;
