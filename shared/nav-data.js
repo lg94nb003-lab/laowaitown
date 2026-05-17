@@ -138,13 +138,15 @@ window.LWPolicyStatus = {
     },
 
     'visa-arrival-card': {
-        effectiveSince: '2023-08-01',
+        effectiveSince: '2025-11-20',
         changelog: [
-            { date: '2023-08-01', text: 'Digital arrival card introduced alongside paper form (customs fingertip mini-program)' }
+            { date: '2025-11-20', text: 'NIA online arrival card filling system launched (s.nia.gov.cn) — fill in 24 h before entry, no more paper at most ports', isNew: true },
+            { date: '2023-08-01', text: 'Customs digital health declaration applet updated for fingertip filing' }
         ],
         sources: [
             'National Immigration Administration (NIA)',
-            'General Administration of Customs (GAC)'
+            'General Administration of Customs (GAC)',
+            'NIA Online Arrival Card portal (s.nia.gov.cn)'
         ]
     },
 
