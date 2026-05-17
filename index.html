@@ -1286,12 +1286,13 @@
         }
         .nat-result-head {
             display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+            flex-wrap: wrap; gap: 8px; margin-bottom: 14px; position: relative;
         }
         .nat-result-head h4 {
-            margin: 0; font-size: 15px; font-weight: 600; color: #e9e6ff;
+            margin: 0; font-size: 22px; font-weight: 700; color: #e9e6ff;
+            flex: 1; text-align: center; letter-spacing: 0.3px;
         }
-        .nat-result-head h4 .nat-flag { margin-right: 6px; }
+        .nat-result-head h4 .nat-flag { margin-right: 8px; font-size: 26px; vertical-align: middle; }
         .nat-result-head .nat-change {
             background: transparent; border: 1px solid rgba(167, 139, 250, 0.4);
             color: rgba(199, 184, 255, 0.95); padding: 4px 12px;
@@ -3643,8 +3644,8 @@
             ];
 
             const headTitle = isZh
-                ? `<span class="nat-flag">${flag}</span>${displayName} · 你适用的免签政策`
-                : `<span class="nat-flag">${flag}</span>${displayName} · Your visa-free options`;
+                ? `<span class="nat-flag">${flag}</span>你适用的免签政策`
+                : `<span class="nat-flag">${flag}</span>Your visa-free options`;
             const changeLabel = isZh ? '切换国籍' : 'Change';
 
             zone.innerHTML = `
