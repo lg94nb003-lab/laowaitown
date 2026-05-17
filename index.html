@@ -1491,6 +1491,16 @@
             </p>
         </header>
 
+        <!-- F03: 6 类导航入口（多页面架构起步，目前仅 Visa 类有子页） -->
+        <nav class="lw-cat-nav max-w-4xl mx-auto mb-8 flex flex-wrap justify-center gap-2 md:gap-3" aria-label="Site categories">
+            <a href="/visa/" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-violet-300 border border-violet-500/30 hover:bg-violet-500/10 transition" data-i18n="catVisa">Visa Policies</a>
+            <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catLife">Life Services</a>
+            <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catTravel">Travel</a>
+            <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catBusiness">Business</a>
+            <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catStudy">Study</a>
+            <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catLegal">Legal</a>
+        </nav>
+
         <!-- 🛠️ 原核心工具区已收入 body 尾部的『小工具箱』抽屉 (#tools-drawer) -->
 
         <!-- 语义化主内容区，聚合所有核心功能模块，利于 SEO / 无障碍 -->
@@ -1564,6 +1574,11 @@
                     <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" data-i18n="vfEntryPolicyTitle">政策原文</p>
                     <p class="text-xs text-slate-400 leading-relaxed" data-i18n="vfEntryPolicyText">上述国家人员持普通护照来华经商、旅游观光、探亲访友、交流访问、过境不超过30日，可免签入境。停留时间自入境次日零时起算。</p>
                 </div>
+
+                <!-- F03: 详细解读链接 -->
+                <div class="mt-4 text-right">
+                    <a href="/visa/visa-free-entry.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
+                </div>
             </div>
 
             <!-- Panel: 240h Transit -->
@@ -1616,6 +1631,11 @@
                 <div class="mt-6 p-4 bg-slate-800/50 rounded-xl border border-slate-700/50">
                     <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" data-i18n="vf240PolicyTitle">政策原文</p>
                     <p class="text-xs text-slate-400 leading-relaxed" data-i18n="vf240PolicyText">目前，中国已对美国、俄罗斯、英国等55国实施240小时过境免签政策，相关国家人员持本人有效国际旅行证件和确定日期及行程的联程客票，从中国过境前往第三国或地区，可从24个省份65个开放口岸中的任一口岸免签入境，并在规定区域停留活动不超过10天。停留期间可从事旅游、商务、访问、探亲等活动，工作、学习、新闻采访等需事先批准的活动仍应办妥签证。</p>
+                </div>
+
+                <!-- F03: 详细解读链接 -->
+                <div class="mt-4 text-right">
+                    <a href="/visa/240-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
                 </div>
             </div>
 
@@ -1687,6 +1707,11 @@
                     <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" data-i18n="vf24PolicyTitle">政策原文</p>
                     <p class="text-xs text-slate-400 leading-relaxed" data-i18n="vf24PolicyText">中国所有对外开放口岸对世界各国人员实施24小时过境免签政策。外国人持本人有效国际旅行证件和定妥座位的联程客票搭乘国际航行的航空器、船舶、列车从中国过境前往第三国或地区，在中国境内停留不超过24小时且不离开口岸限定区域的，可免办签证；如需离开口岸限定区域，应当向口岸出入境边防检查机关申请办理临时入境许可。</p>
                 </div>
+
+                <!-- F03: 详细解读链接 -->
+                <div class="mt-4 text-right">
+                    <a href="/visa/24-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
+                </div>
             </div>
 
             <!-- Panel: Regional Policies -->
@@ -1719,6 +1744,9 @@
                                     </div>
                                 </div>
                                 <div class="info-tip mt-3" data-i18n="vfRegHainanTip">适用国家：俄罗斯、英国、法国、德国、挪威、乌克兰、意大利、奥地利、芬兰、荷兰、丹麦、瑞士、瑞典、西班牙、比利时、捷克、爱沙尼亚、希腊、匈牙利、冰岛、拉脱维亚、立陶宛、卢森堡、马耳他、波兰、葡萄牙、斯洛伐克、斯洛文尼亚、爱尔兰、塞浦路斯、保加利亚、罗马尼亚、塞尔维亚、克罗地亚、波黑、黑山、北马其顿、阿尔巴尼亚、美国、加拿大、巴西、墨西哥、阿根廷、智利、澳大利亚、新西兰、韩国、日本、新加坡、马来西亚、泰国、哈萨克斯坦、菲律宾、印度尼西亚、文莱、阿联酋、卡塔尔、摩纳哥、白俄罗斯</div>
+                                <div class="mt-3 text-right">
+                                    <a href="/visa/hainan-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Hainan full guide →</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1746,6 +1774,9 @@
                                     </div>
                                 </div>
                                 <div class="info-tip mt-3" data-i18n="vfRegCruiseTip">邮轮口岸城市：天津、大连、上海、连云港、温州、舟山、厦门、青岛、广州、深圳、北海、海口、三亚</div>
+                                <div class="mt-3 text-right">
+                                    <a href="/visa/cruise-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Cruise full guide →</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2221,20 +2252,20 @@
                 <h2 id="seo-guide-title" class="text-xl md:text-2xl font-bold text-white mb-4">China Visa-Free Policy 2026: A Complete Guide for Travelers</h2>
                 <p class="mb-4">Planning a trip to China? Whether you are a tourist, a business traveler, or just transiting through, China has dramatically expanded its visa-free entry policies in 2024–2026. This page consolidates every China visa-free policy that affects ordinary passport holders, plus the practical tools you need: a stay-days calculator, a 240-hour transit checker, a timezone converter, a currency converter, and a Chinese phrasebook. Everything is free, runs in your browser, and works on mobile.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">How Many Countries Are Visa-Free to China in 2026?</h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/visa-free-entry.html" class="hover:text-violet-300 transition">How Many Countries Are Visa-Free to China in 2026? →</a></h2>
                 <p class="mb-4">As of 2026, China grants unilateral visa-free entry to citizens of more than 50 countries, including most of Europe (France, Germany, Italy, Spain, Netherlands, Belgium, Austria, Switzerland, Ireland, Portugal, Norway, Denmark, Finland, Sweden, Luxembourg), Australia, New Zealand, South Korea, Japan, Malaysia, Singapore, Thailand, and many others. Eligible travelers may stay up to 30 days for tourism, business, family visits, or transit, with no visa fee, no embassy appointment, and no advance application required. Use the <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">visa-free policy lookup</a> above to confirm eligibility for your passport.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">240-Hour Transit Visa-Free Policy Explained</h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/240-hour-transit-visa.html" class="hover:text-violet-300 transition">240-Hour Transit Visa-Free Policy Explained →</a></h2>
                 <p class="mb-4">China's 240-hour (10-day) transit visa-free policy is one of the most generous transit programs in the world. Citizens of 54 eligible countries can transit through China for up to 240 hours when entering through any of 60+ designated air, sea, and rail ports, provided they hold a confirmed onward ticket to a third country or region. Once admitted, travelers may move freely between most provinces and major cities — including Beijing, Shanghai, Guangzhou, Chengdu, Xi'an, and Hangzhou — without applying for a separate visa.</p>
                 <p class="mb-4">Common eligible nationalities include the United States, United Kingdom, Canada, Australia, New Zealand, Russia, and most Schengen countries. The policy is ideal for travelers connecting between Europe and Asia, or for short stopovers en route to Japan, Korea, or Southeast Asia. The LAOWAITOWN <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">240h transit visa checker</a> shows real-time eligibility and the full list of approved entry/exit ports.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">24-Hour Transit Visa-Free Policy</h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/24-hour-transit-visa.html" class="hover:text-violet-300 transition">24-Hour Transit Visa-Free Policy →</a></h2>
                 <p class="mb-4">For travelers who do not qualify for the 240-hour policy, China offers a universal 24-hour transit visa-free option open to almost all nationalities. Holders of a confirmed onward ticket to a third country may stay for up to 24 hours without a visa, regardless of nationality. This is a useful fallback for short layovers when no other visa-free option applies.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">Hainan 30-Day Visa-Free Policy</h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/hainan-visa-free.html" class="hover:text-violet-300 transition">Hainan 30-Day Visa-Free Policy →</a></h2>
                 <p class="mb-4">Hainan Province — China's tropical island and a popular beach destination — has its own dedicated visa-free policy. Tourists from 59 countries may enter Hainan and stay up to 30 days without a mainland visa, provided they arrive directly into Hainan and limit their activities to the island. The policy covers most major tourism source countries, including the US, UK, Canada, Australia, France, Germany, Russia, Japan, Korea, and many more.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">Cruise Tourism Visa-Free Policy</h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/cruise-visa-free.html" class="hover:text-violet-300 transition">Cruise Tourism Visa-Free Policy →</a></h2>
                 <p class="mb-4">Foreign tourist groups arriving in China by cruise ship through any of 13 designated cruise ports — including Shanghai, Tianjin, Qingdao, Xiamen, Guangzhou, and Sanya — may disembark and tour visa-free for up to 15 days. The policy covers all nationalities and applies to organized tour groups, making cruise visits one of the most flexible ways to experience multiple Chinese cities in a single trip.</p>
 
                 <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">How to Use the Visa-Free Stay Calculator</h2>
