@@ -2190,14 +2190,14 @@
 
                 <div class="nat-popular-label" data-i18n="natPopularLabel">Popular</div>
                 <div class="nat-popular" id="nat-popular">
-                    <button data-code="US">🇺🇸 USA</button>
-                    <button data-code="GB">🇬🇧 UK</button>
-                    <button data-code="JP">🇯🇵 Japan</button>
-                    <button data-code="KR">🇰🇷 Korea</button>
-                    <button data-code="AU">🇦🇺 Australia</button>
-                    <button data-code="DE">🇩🇪 Germany</button>
-                    <button data-code="FR">🇫🇷 France</button>
-                    <button data-code="CA">🇨🇦 Canada</button>
+                    <button data-code="US">USA</button>
+                    <button data-code="GB">UK</button>
+                    <button data-code="JP">Japan</button>
+                    <button data-code="KR">Korea</button>
+                    <button data-code="AU">Australia</button>
+                    <button data-code="DE">Germany</button>
+                    <button data-code="FR">France</button>
+                    <button data-code="CA">Canada</button>
                 </div>
 
                 <div class="nat-actions">
@@ -3808,8 +3808,7 @@
             }
             const displayName = isZh ? nameZh : nameEn;
             const changeLabel = t.vfNatbarChange || (isZh ? '切换国籍' : 'Change');
-            const head = '<span class="vf-natbar-flag">' + flag + '</span>' +
-                         '<span class="vf-natbar-name">' + displayName + '</span>';
+            const head = '<span class="vf-natbar-name">' + displayName + '</span>';
             const changeBtn = '<button class="vf-natbar-btn" type="button" onclick="openNationalityDialog()">' + changeLabel + '</button>';
 
             // ===== Tab 1 免签入境 =====
