@@ -46,8 +46,56 @@ window.LWPolicyStatus = {
             'National Immigration Administration (NIA)',
             'China Consular Service'
         ]
+    },
+
+    'visa-visa-free-entry': {
+        effectiveSince: '2024-11-01',
+        changelog: [
+            { date: '2024-11-01', text: 'Country list expanded to 50' },
+            { date: '2024-07-01', text: 'Stay duration extended from 15 to 30 days' },
+            { date: '2023-12-01', text: 'Initial unilateral visa-free pilot launched' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'Ministry of Foreign Affairs (MFA)',
+            'China Consular Service'
+        ]
+    },
+
+    'visa-24-hour-transit': {
+        effectiveSince: '1990-01-01',
+        changelog: [
+            { date: '1990-01-01', text: 'Long-standing universal 24-hour transit policy' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'China Consular Service'
+        ]
+    },
+
+    'visa-hainan-visa-free': {
+        effectiveSince: '2018-05-01',
+        changelog: [
+            { date: '2024-02-09', text: 'Country list expanded to 59 nations' },
+            { date: '2018-05-01', text: 'Stay duration expanded to 30 days for all eligible nationals' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'Hainan Provincial Government'
+        ]
+    },
+
+    'visa-cruise-visa-free': {
+        effectiveSince: '2024-05-15',
+        changelog: [
+            { date: '2024-05-15', text: 'Initial 15-day cruise tourism visa-free policy launched at 13 ports' }
+        ],
+        sources: [
+            'National Immigration Administration (NIA)',
+            'State Council Information Office'
+        ]
     }
-    /* Other 60 pages will be added as they are built */
+    /* Other pages will be added as they are built */
 };
 
 /* Disclaimer shown on every sub-page (legal protection from "impersonation" claims) */
