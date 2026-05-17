@@ -3065,7 +3065,7 @@
         // ⚠️ 修改此数组时必须同步更新两处 i18n 文案
         // 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
         const hainan59Countries = [
-            // Europe (38 countries)
+            // Europe (39 countries)
             { code:'RU', zh:'俄罗斯',     en:'Russia',          continent:'europe' },
             { code:'GB', zh:'英国',       en:'UK',              continent:'europe' },
             { code:'FR', zh:'法国',       en:'France',          continent:'europe' },
@@ -3104,6 +3104,7 @@
             { code:'ME', zh:'黑山',       en:'Montenegro',      continent:'europe' },
             { code:'MK', zh:'北马其顿',   en:'North Macedonia', continent:'europe' },
             { code:'AL', zh:'阿尔巴尼亚', en:'Albania',         continent:'europe' },
+            { code:'BY', zh:'白俄罗斯',   en:'Belarus',         continent:'europe' },
 
             // Americas (6 countries)
             { code:'US', zh:'美国',       en:'USA',             continent:'americas' },
@@ -3117,7 +3118,7 @@
             { code:'AU', zh:'澳大利亚',   en:'Australia',       continent:'oceania' },
             { code:'NZ', zh:'新西兰',     en:'New Zealand',     continent:'oceania' },
 
-            // Asia (12 countries)
+            // Asia (11 countries)
             { code:'KR', zh:'韩国',       en:'South Korea',     continent:'asia' },
             { code:'JP', zh:'日本',       en:'Japan',           continent:'asia' },
             { code:'SG', zh:'新加坡',     en:'Singapore',       continent:'asia' },
@@ -3128,11 +3129,10 @@
             { code:'ID', zh:'印度尼西亚', en:'Indonesia',       continent:'asia' },
             { code:'BN', zh:'文莱',       en:'Brunei',          continent:'asia' },
             { code:'AE', zh:'阿联酋',     en:'UAE',             continent:'asia' },
-            { code:'QA', zh:'卡塔尔',     en:'Qatar',           continent:'asia' },
-            { code:'BY', zh:'白俄罗斯',   en:'Belarus',         continent:'asia' }
+            { code:'QA', zh:'卡塔尔',     en:'Qatar',           continent:'asia' }
             // Note: Monaco (MC) belongs to Europe but is grouped with the original Chinese-list ordering
         ];
-        // 注：摩纳哥(MC)按原中文清单顺序与白俄罗斯相邻，独立补充以保持 59 国总数
+        // 注：摩纳哥(MC)在原中文清单中为单独补充项，独立 push 以保持 59 国总数
         hainan59Countries.push({ code:'MC', zh:'摩纳哥', en:'Monaco', continent:'europe' });
 
         // === 所有顶层立即执行的 DOM 初始化必须等 body 全部解析完毕（抽屉 DOM 在 script 之后）===
