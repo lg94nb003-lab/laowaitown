@@ -151,14 +151,15 @@ window.LWPolicyStatus = {
     },
 
     'visa-entry-medical-exam': {
-        effectiveSince: '2024-01-01',
+        effectiveSince: '2025-11-01',
         changelog: [
-            { date: '2024-01-01', text: 'List of approved medical institutions updated' }
+            { date: '2025-11-01', text: 'Foreigner Physical Examination Form template republished by Chinese embassies (PDF, 2025-11)', isNew: true },
+            { date: '2024-01-01', text: 'List of approved ITHC medical institutions updated' }
         ],
         sources: [
-            'National Immigration Administration (NIA)',
+            'General Administration of Customs (GAC) International Travel Healthcare Centers',
             'National Health Commission (NHC)',
-            'International Travel Healthcare Center (ITHC)'
+            'Chinese Embassy Foreigner Physical Examination Form (2025-11)'
         ]
     },
 
