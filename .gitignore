@@ -33,3 +33,8 @@ backup/
 !.dev.vars.example
 .env*
 !.env.example
+
+# ===== 测试截图（不入库）=====
+afghanistan_fullpage.png
+algeria_fullpage.png
+cambodia_fullpage.png

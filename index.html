@@ -194,6 +194,11 @@
     }
     </script>
 
+    <!-- DNS 预连接：加速第三方 CDN 加载 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- dayjs 本地化：本地优先，失败时后面脚本会退到 CDN 兑底 -->
@@ -308,12 +313,12 @@
             background-image: 
                 radial-gradient(at 0% 0%, rgba(129, 140, 248, 0.15) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
             color: #f8fafc;
             min-height: 100vh;
         }
         .glass {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
+            background: rgba(17, 24, 39, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
@@ -323,36 +328,14 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* LAOWAITOWN 科技感标题样式 */
+        /* LAOWAITOWN 科技感标题样式
+           性能优化：移除无限循环 gradientShift 动画与 ::after blur(20px) 光晕
+           保留多彩渐变文字本身（静态），低端设备首屏 CPU 负载显著下降 */
         .brand-title {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
-            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientShift 6s ease infinite;
             letter-spacing: -0.02em;
-            position: relative;
-            will-change: background-position;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .brand-title::after {
-            content: 'LAOWAITOWN';
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 6s ease infinite;
-            filter: blur(20px);
-            opacity: 0.3;
-            z-index: -1;
         }
         .tool-card {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -417,9 +400,8 @@
             gap: 1.25rem; /* space-y-5 */
         }
         .lang-toggle {
-            background: rgba(15, 23, 42, 0.72);
+            background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
         }
         .lang-toggle button {
             transition: background 0.2s ease, color 0.2s ease;
@@ -584,7 +566,7 @@
             width: 20px; height: 20px; border-radius: 0.5rem;
             border: 2px solid rgba(255, 255, 255, 0.15);
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s; flex-shrink: 0; margin-top: 2px;
+            transition: background 0.2s, border-color 0.2s; flex-shrink: 0; margin-top: 2px;
         }
         .legal-item.checked .legal-check {
             background: rgba(52, 211, 153, 0.2);
@@ -725,9 +707,7 @@
         .qp-panel-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 10000;
             display: flex; align-items: center; justify-content: center;
             padding: 1rem;
@@ -914,7 +894,7 @@
             border: 1px solid rgba(99, 102, 241, 0.35);
             color: #c7d2fe; font-size: 12px; font-weight: 700;
             letter-spacing: 0.04em; cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
         .btn-tools-open:hover {
             background: rgba(99, 102, 241, 0.22);
@@ -926,9 +906,7 @@
 
         .tools-drawer {
             position: fixed; inset: 0;
-            background: rgba(2, 6, 23, 0.62);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(2, 6, 23, 0.88);
             z-index: 9500;
             display: flex; justify-content: flex-end;
             transition: opacity 240ms ease;
@@ -960,7 +938,7 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: #cbd5e1; cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
         .tools-drawer-close:hover {
             background: rgba(239, 68, 68, 0.15);
@@ -988,7 +966,7 @@
             font-size: 12px; font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s ease;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
         .tools-tab:hover { background: rgba(255, 255, 255, 0.08); color: #e2e8f0; }
         .tools-tab.active {
@@ -1011,7 +989,7 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #cbd5e1; cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
         }
         .tools-drawer-floating-close:hover {
             background: rgba(239, 68, 68, 0.18);
@@ -1041,12 +1019,10 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-right: none;
             border-radius: 14px 0 0 14px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             color: #cbd5e1;
             cursor: pointer;
             box-shadow: -6px 6px 20px rgba(0, 0, 0, 0.28);
-            transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, color 260ms ease, background 260ms ease;
+            transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, color 260ms ease;
             overflow: hidden;
         }
         .dock-card::before {
@@ -1095,8 +1071,6 @@
                 border: none;
                 border-top: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: 0;
-                backdrop-filter: blur(14px);
-                -webkit-backdrop-filter: blur(14px);
                 box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.32);
                 transition: transform .28s cubic-bezier(.22, 1, .36, 1);
                 will-change: transform;
@@ -1152,9 +1126,7 @@
         /* 遵循现有 .glass 、 购购-violet 色调、 12-16px 圆角、 响应式原则 */
         .nat-overlay {
             position: fixed; inset: 0; z-index: 1000;
-            background: rgba(8, 10, 25, 0.55);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(8, 10, 25, 0.88);
             display: none;
             align-items: center; justify-content: center;
             padding: 16px;
@@ -1219,7 +1191,6 @@
         .nat-suggestions div {
             padding: 8px 12px; font-size: 13px; cursor: pointer;
             color: #e2e8f0;
-            transition: background .15s;
         }
         .nat-suggestions div:hover,
         .nat-suggestions div.active {
@@ -1241,7 +1212,7 @@
             padding: 7px 11px;
             font-size: 13px; color: #e2e8f0;
             cursor: pointer;
-            transition: all .18s;
+            transition: background .18s, border-color .18s, transform .18s;
         }
         .nat-popular button:hover {
             background: rgba(167, 139, 250, 0.15);
@@ -1254,7 +1225,7 @@
         .nat-btn {
             padding: 9px 18px; border-radius: 9px;
             font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all .18s;
+            cursor: pointer; transition: background .18s, border-color .18s, transform .18s;
             border: 1px solid transparent;
         }
         .nat-btn-skip {
@@ -1277,12 +1248,10 @@
 
         /* F01 Step 4: 匹配结果卡片样式 */
         .nat-result-wrap {
-            background: rgba(15, 17, 35, 0.6);
+            background: rgba(15, 17, 35, 0.88);
             border: 1px solid rgba(167, 139, 250, 0.25);
             border-radius: 18px;
             padding: 18px 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
         .nat-result-head {
             display: flex; align-items: center; justify-content: space-between;
@@ -1297,7 +1266,7 @@
             background: transparent; border: 1px solid rgba(167, 139, 250, 0.4);
             color: rgba(199, 184, 255, 0.95); padding: 4px 12px;
             border-radius: 999px; font-size: 12px; cursor: pointer;
-            transition: all .2s;
+            transition: background .2s, border-color .2s;
         }
         .nat-result-head .nat-change:hover {
             background: rgba(139, 92, 246, 0.15); border-color: rgba(167, 139, 250, 0.7);
@@ -1311,7 +1280,7 @@
             border-radius: 14px;
             padding: 14px 14px 12px;
             display: flex; flex-direction: column; gap: 6px;
-            transition: all .2s;
+            transition: background .2s, border-color .2s;
         }
         /* 适用：绿调背景 */
         .nat-card.eligible {
@@ -1399,7 +1368,7 @@
             border: 1px solid rgba(167, 139, 250, 0.4);
             background: transparent; color: rgba(199, 184, 255, 0.95);
             font-size: 12px; cursor: pointer;
-            transition: all .2s;
+            transition: background .2s, border-color .2s;
         }
         .vf-natbar-btn:hover { background: rgba(139, 92, 246, 0.15); border-color: rgba(167, 139, 250, 0.7); }
         .vf-natbar-btn.primary {
@@ -1451,6 +1420,42 @@
             border-color: rgba(244, 114, 128, 0.25);
             background: rgba(60, 35, 45, 0.4);
             color: #d4a8b2;
+        }
+
+        /* ========================================
+           ⚡ 移动端性能优化（Mobile Perf）
+           - 关闭所有 backdrop-filter blur，避免滚动时像素级模糊运算
+           - 用半透明纯色背景兜底，视觉一致性可接受
+           - 给主要滚动容器开启 iOS 动量滚动
+           ======================================== */
+        @media (max-width: 768px) {
+            .glass,
+            .lang-toggle,
+            .qp-panel-overlay,
+            .tools-drawer,
+            .nat-overlay,
+            .nat-result-wrap,
+            .dock-card,
+            .tool-dock {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            .glass             { background: rgba(17, 24, 39, 0.94); }
+            .lang-toggle       { background: rgba(15, 23, 42, 0.95); }
+            .qp-panel-overlay  { background: rgba(0, 0, 0, 0.85); }
+            .tools-drawer      { background: rgba(2, 6, 23, 0.88); }
+            .nat-overlay       { background: rgba(8, 10, 25, 0.85); }
+            .nat-result-wrap   { background: rgba(15, 17, 35, 0.85); }
+
+            /* iOS 动量滚动，移动端长列表/弹层滑动手感更顺 */
+            .country-grid,
+            .qp-panel-body,
+            .nat-suggestions,
+            .tools-drawer-body,
+            .tools-tabs,
+            .vf-tabs {
+                -webkit-overflow-scrolling: touch;
+            }
         }
     </style>
 </head>
@@ -3687,8 +3692,10 @@
                 });
             }
 
-            // F01 Step 8: 同步 4 个 tab 的状态条与列表
-            if (typeof syncTabsForCode === 'function') syncTabsForCode(code);
+            // F01 Step 8: 同步 4 个 tab 的状态条与列表（异步执行，避免阻塞用户操作）
+            if (typeof syncTabsForCode === 'function') {
+                requestAnimationFrame(() => syncTabsForCode(code));
+            }
         }
 
         // ===== F01 Step 8: 4 个 tab 与顶部国籍联动 =====
@@ -3984,6 +3991,8 @@
 
         // 汇总所有可选国家（4 个源去重）供搜索下拉使用
         function natGetAllCandidates() {
+            // 性能优化：缓存合并去重+排序结果，避免每次调用都重新计算
+            if (natGetAllCandidates._cache) return natGetAllCandidates._cache;
             const map = new Map();
             const sources = [
                 ...(typeof visaFreeCountries     !== 'undefined' ? visaFreeCountries     : []),
@@ -3994,7 +4003,8 @@
             sources.forEach(c => {
                 if (c && c.code && !map.has(c.code)) map.set(c.code, c);
             });
-            return Array.from(map.values()).sort((a, b) => a.en.localeCompare(b.en));
+            natGetAllCandidates._cache = Array.from(map.values()).sort((a, b) => a.en.localeCompare(b.en));
+            return natGetAllCandidates._cache;
         }
 
         let __natSelectedCode = null;
@@ -4028,9 +4038,9 @@
             if (!box) return;
             const kw = (keyword || '').trim().toLowerCase();
             const all = natGetAllCandidates();
-            // 空关键词时默认展示全部候选（可滚动），输入后筛选
+            // 空关键词时默认展示前 30 条（减少 DOM 节点），输入后筛选全部候选
             const matched = !kw
-                ? all
+                ? all.slice(0, 30)
                 : all.filter(c =>
                     c.en.toLowerCase().includes(kw) ||
                     (c.zh || '').includes(kw) ||
@@ -4041,15 +4051,19 @@
                 `<div data-code="${c.code}">${c.en} <span style="opacity:.5">(${c.zh})</span></div>`
             ).join('');
             box.classList.add('show');
-            box.querySelectorAll('div').forEach(el => {
-                el.addEventListener('click', () => {
-                    const code = el.getAttribute('data-code');
+            // 事件委托：父级一次绑定，而不是每个 div 单独绑定
+            if (!box.__delegated) {
+                box.__delegated = true;
+                box.addEventListener('click', function (e) {
+                    const div = e.target.closest('[data-code]');
+                    if (!div) return;
+                    const code = div.getAttribute('data-code');
                     const item = natGetAllCandidates().find(c => c.code === code);
                     document.getElementById('nat-search-input').value = item ? item.en : '';
                     box.classList.remove('show');
                     __natSetSelected(code);
                 });
-            });
+            }
         }
 
         // 顶层初始化：绑定事件 + 首次访问自动弹出
@@ -4682,21 +4696,23 @@
 
         // 页面滚动时自动关闭所有国籍选择框的下拉（符合 Google / 百度 / GitHub 等主流站点的交互习惯）
         // 注：只监听 window 滚动，下拉内部自己的滚动不会冒泡到这里，不会误关
-        window.addEventListener('scroll', function () {
-            [
-                'vf-continent-dropdown',
-                'vf-countries-dropdown',
-                'vf-search-results',
-                'vf240-continent-dropdown',
-                'vf240-countries-dropdown',
-                'vf240-search-results'
-            ].forEach(function (id) {
-                const el = document.getElementById(id);
-                if (el && !el.classList.contains('hidden')) {
-                    el.classList.add('hidden');
-                }
-            });
-        }, { passive: true });
+        // 性能优化：缓存 DOM 引用 + rAF 节流，避免每帧都查询 DOM
+        (function initDropdownScrollClose() {
+            const ids = ['vf-continent-dropdown','vf-countries-dropdown','vf-search-results',
+                         'vf240-continent-dropdown','vf240-countries-dropdown','vf240-search-results'];
+            const els = ids.map(id => document.getElementById(id)).filter(Boolean);
+            let ticking = false;
+            window.addEventListener('scroll', function () {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                    els.forEach(el => {
+                        if (!el.classList.contains('hidden')) el.classList.add('hidden');
+                    });
+                    ticking = false;
+                });
+            }, { passive: true });
+        })();
 
         // 选择国家查看免签政策
         function selectVfCountry(code) {
