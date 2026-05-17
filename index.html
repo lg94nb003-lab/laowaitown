@@ -535,6 +535,74 @@
             text-transform: uppercase; letter-spacing: 0.1em;
         }
 
+        /* F04: Category nav hover dropdown (Visa Policies → 11 sub-pages) */
+        .lw-cat-item { position: relative; display: inline-block; }
+        .lw-cat-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-6px);
+            width: min(720px, calc(100vw - 24px));
+            background: rgba(15, 23, 42, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+            z-index: 60;
+        }
+        .lw-cat-item:hover > .lw-cat-dropdown,
+        .lw-cat-item:focus-within > .lw-cat-dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+        }
+        .lw-cat-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 0; right: 0; height: 8px;
+        }
+        .lw-cat-dd-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .lw-cat-dd-grid { grid-template-columns: 1fr; }
+        }
+        .lw-cat-dd-item {
+            display: block;
+            padding: 0.625rem 0.75rem;
+            border-radius: 0.75rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        .lw-cat-dd-item:hover {
+            background: rgba(139, 92, 246, 0.12);
+            border-color: rgba(139, 92, 246, 0.35);
+            transform: translateY(-1px);
+        }
+        .lw-cat-dd-item .ddt { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.125rem; }
+        .lw-cat-dd-item .ddt i { width: 14px; height: 14px; color: rgb(167, 139, 250); flex-shrink: 0; }
+        .lw-cat-dd-item .ddt span { font-size: 0.8125rem; font-weight: 700; color: #fff; }
+        .lw-cat-dd-item .ddd { font-size: 0.6875rem; color: rgb(148, 163, 184); line-height: 1.4; }
+        .lw-cat-dd-item:hover .ddt span { color: rgb(196, 181, 253); }
+        .lw-cat-dd-group {
+            font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            color: rgb(167, 139, 250); padding: 0 0.25rem; margin-bottom: 0.375rem;
+        }
+        .lw-cat-dd-section + .lw-cat-dd-section { margin-top: 0.875rem; }
+
         /* Country grid */
         .country-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -1491,9 +1559,67 @@
             </p>
         </header>
 
-        <!-- F03: 6 类导航入口（多页面架构起步，目前仅 Visa 类有子页） -->
+        <!-- F03+F04: 6 类导航入口 + Visa Policies 悬停下拉菜单（11 个子页） -->
         <nav class="lw-cat-nav max-w-4xl mx-auto mb-8 flex flex-wrap justify-center gap-2 md:gap-3" aria-label="Site categories">
-            <a href="/visa/" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-violet-300 border border-violet-500/30 hover:bg-violet-500/10 transition" data-i18n="catVisa">Visa Policies</a>
+            <div class="lw-cat-item">
+                <a href="#visa-free" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-violet-300 border border-violet-500/30 hover:bg-violet-500/10 transition inline-block" data-i18n="catVisa">Visa Policies</a>
+                <div class="lw-cat-dropdown" role="menu" aria-label="China visa guides">
+                    <div class="lw-cat-dd-section">
+                        <div class="lw-cat-dd-group">Visa-Free &amp; Transit</div>
+                        <div class="lw-cat-dd-grid">
+                            <a href="visa/visa-free-entry.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="globe"></i><span>Visa-Free Entry</span></div>
+                                <div class="ddd">70+ countries, 15–30 days. Full eligibility list.</div>
+                            </a>
+                            <a href="visa/240-hour-transit-visa.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="plane"></i><span>240-Hour Transit</span></div>
+                                <div class="ddd">54 countries, 10 days, 60 designated ports.</div>
+                            </a>
+                            <a href="visa/24-hour-transit-visa.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="clock"></i><span>24-Hour Transit</span></div>
+                                <div class="ddd">All passports, no airport-area exit.</div>
+                            </a>
+                            <a href="visa/hainan-visa-free.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="palmtree"></i><span>Hainan 30-Day</span></div>
+                                <div class="ddd">59 countries, Hainan only, no mainland visa.</div>
+                            </a>
+                            <a href="visa/cruise-visa-free.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="ship"></i><span>Cruise Visa-Free</span></div>
+                                <div class="ddd">Group cruise tourists, 15 days, coastal cities.</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="lw-cat-dd-section">
+                        <div class="lw-cat-dd-group">Long-Term Stay &amp; Compliance</div>
+                        <div class="lw-cat-dd-grid">
+                            <a href="visa/visa-types-comparison.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="layers"></i><span>Visa Types Compared</span></div>
+                                <div class="ddd">L/M/F/Z/X/S/Q + new K visa (2025-10-01).</div>
+                            </a>
+                            <a href="visa/residence-permit.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="id-card"></i><span>Residence Permit</span></div>
+                                <div class="ddd">Apply within 30 days. Z/X1/Q1/S1/R/K visas.</div>
+                            </a>
+                            <a href="visa/permanent-residence.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="award"></i><span>Permanent Residence</span></div>
+                                <div class="ddd">China Green Card. 4 tracks, 10-year validity.</div>
+                            </a>
+                            <a href="visa/arrival-card.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="clipboard-list"></i><span>Arrival Card</span></div>
+                                <div class="ddd">Online filing live 2025-11-20 at s.nia.gov.cn.</div>
+                            </a>
+                            <a href="visa/entry-medical-exam.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="stethoscope"></i><span>Entry Medical Exam</span></div>
+                                <div class="ddd">ITHC booking, tests, cost ¥500–700.</div>
+                            </a>
+                            <a href="visa/visa-extension-overstay.html" class="lw-cat-dd-item" role="menuitem">
+                                <div class="ddt"><i data-lucide="alarm-clock"></i><span>Extension &amp; Overstay</span></div>
+                                <div class="ddd">Extend 7d before. Overstay ¥500/day, cap ¥10k.</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catLife">Life Services</a>
             <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catTravel">Travel</a>
             <a href="#" class="px-4 py-2 rounded-full text-xs md:text-sm font-semibold glass text-slate-400 border border-slate-700/50 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon" data-i18n="catBusiness">Business</a>
@@ -1577,7 +1703,7 @@
 
                 <!-- F03: 详细解读链接 -->
                 <div class="mt-4 text-right">
-                    <a href="/visa/visa-free-entry.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
+                    <a href="visa/visa-free-entry.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
                 </div>
             </div>
 
@@ -1635,7 +1761,7 @@
 
                 <!-- F03: 详细解读链接 -->
                 <div class="mt-4 text-right">
-                    <a href="/visa/240-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
+                    <a href="visa/240-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
                 </div>
             </div>
 
@@ -1710,7 +1836,7 @@
 
                 <!-- F03: 详细解读链接 -->
                 <div class="mt-4 text-right">
-                    <a href="/visa/24-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
+                    <a href="visa/24-hour-transit-visa.html" class="text-xs md:text-sm font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Read full guide →</a>
                 </div>
             </div>
 
@@ -1745,7 +1871,7 @@
                                 </div>
                                 <div class="info-tip mt-3" data-i18n="vfRegHainanTip">适用国家：俄罗斯、英国、法国、德国、挪威、乌克兰、意大利、奥地利、芬兰、荷兰、丹麦、瑞士、瑞典、西班牙、比利时、捷克、爱沙尼亚、希腊、匈牙利、冰岛、拉脱维亚、立陶宛、卢森堡、马耳他、波兰、葡萄牙、斯洛伐克、斯洛文尼亚、爱尔兰、塞浦路斯、保加利亚、罗马尼亚、塞尔维亚、克罗地亚、波黑、黑山、北马其顿、阿尔巴尼亚、美国、加拿大、巴西、墨西哥、阿根廷、智利、澳大利亚、新西兰、韩国、日本、新加坡、马来西亚、泰国、哈萨克斯坦、菲律宾、印度尼西亚、文莱、阿联酋、卡塔尔、摩纳哥、白俄罗斯</div>
                                 <div class="mt-3 text-right">
-                                    <a href="/visa/hainan-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Hainan full guide →</a>
+                                    <a href="visa/hainan-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Hainan full guide →</a>
                                 </div>
                             </div>
                         </div>
@@ -1775,7 +1901,7 @@
                                 </div>
                                 <div class="info-tip mt-3" data-i18n="vfRegCruiseTip">邮轮口岸城市：天津、大连、上海、连云港、温州、舟山、厦门、青岛、广州、深圳、北海、海口、三亚</div>
                                 <div class="mt-3 text-right">
-                                    <a href="/visa/cruise-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Cruise full guide →</a>
+                                    <a href="visa/cruise-visa-free.html" class="text-xs font-semibold text-violet-300 hover:text-violet-200 underline underline-offset-4">Cruise full guide →</a>
                                 </div>
                             </div>
                         </div>
@@ -1893,89 +2019,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </article>
-
-        <!-- F04: More China Visa Guides (钉在免签政策区底部) -->
-        <article class="tool-card-full module-violet glass rounded-[2.5rem] p-8 flex flex-col mt-6 animate-in" style="animation-delay: 0.15s; overflow: visible;">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center">
-                    <div class="p-3.5 rounded-2xl bg-violet-500/10 text-violet-400 mr-4">
-                        <i data-lucide="book-open" class="w-6 h-6"></i>
-                    </div>
-                    <h2 class="text-xl font-bold" data-i18n="vfMoreTitle">More China Visa Guides</h2>
-                </div>
-            </div>
-            <p class="text-xs md:text-sm text-slate-400 mb-5 leading-relaxed" data-i18n="vfMoreDesc">Beyond visa-free entry: long-term stay, documents and compliance — staying more than 30 days, working, studying or settling down in China? These six guides cover everything from picking the right visa code to handling overstays.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-
-                <a href="/visa/visa-types-comparison.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="layers" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Visa Types Compared</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">L / M / F / Z / X / S / Q + new <strong>K visa</strong> (since 1 Oct 2025). 17 categories side by side.</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
-                <a href="/visa/residence-permit.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="id-card" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Residence Permit</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">Apply within <strong>30 days</strong> of entry on Z / X1 / Q1 / S1 / R / K visas. Documents, fees, renewal.</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
-                <a href="/visa/permanent-residence.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="award" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Permanent Residence (Green Card)</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">4 eligibility tracks: investment / talent / family / contribution. 10-year validity (2024 redesign).</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
-                <a href="/visa/arrival-card.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="clipboard-list" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Arrival Card &amp; Customs</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">NIA online filing live <strong>2025-11-20</strong> at <em>s.nia.gov.cn</em>. All 3 entry forms walked through.</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
-                <a href="/visa/entry-medical-exam.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="stethoscope" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Entry Medical Exam</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">ITHC booking, tests, cost <strong>¥500–700</strong>. How to validate an overseas report.</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
-                <a href="/visa/visa-extension-overstay.html" class="glass rounded-2xl p-4 hover:bg-violet-500/5 transition group" style="background: rgba(15, 23, 42, 0.5);">
-                    <div class="flex items-center mb-2">
-                        <div class="w-9 h-9 rounded-lg bg-violet-500/10 text-violet-400 flex items-center justify-center mr-3">
-                            <i data-lucide="alarm-clock" class="w-4 h-4"></i>
-                        </div>
-                        <h3 class="font-bold text-sm group-hover:text-violet-300">Extension &amp; Overstay</h3>
-                    </div>
-                    <p class="text-xs text-slate-400 mb-2">Extend 7 days before expiry. Overstay = <strong>¥500/day, cap ¥10,000</strong>. 2025-08-14 revisions.</p>
-                    <span class="text-xs font-semibold text-violet-300 group-hover:text-violet-200">Read full guide →</span>
-                </a>
-
             </div>
         </article>
         </section>
@@ -2335,20 +2378,20 @@
                 <h2 id="seo-guide-title" class="text-xl md:text-2xl font-bold text-white mb-4">China Visa-Free Policy 2026: A Complete Guide for Travelers</h2>
                 <p class="mb-4">Planning a trip to China? Whether you are a tourist, a business traveler, or just transiting through, China has dramatically expanded its visa-free entry policies in 2024–2026. This page consolidates every China visa-free policy that affects ordinary passport holders, plus the practical tools you need: a stay-days calculator, a 240-hour transit checker, a timezone converter, a currency converter, and a Chinese phrasebook. Everything is free, runs in your browser, and works on mobile.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/visa-free-entry.html" class="hover:text-violet-300 transition">How Many Countries Are Visa-Free to China in 2026? →</a></h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="visa/visa-free-entry.html" class="hover:text-violet-300 transition">How Many Countries Are Visa-Free to China in 2026? →</a></h2>
                 <p class="mb-4">As of 2026, China grants unilateral visa-free entry to citizens of more than 50 countries, including most of Europe (France, Germany, Italy, Spain, Netherlands, Belgium, Austria, Switzerland, Ireland, Portugal, Norway, Denmark, Finland, Sweden, Luxembourg), Australia, New Zealand, South Korea, Japan, Malaysia, Singapore, Thailand, and many others. Eligible travelers may stay up to 30 days for tourism, business, family visits, or transit, with no visa fee, no embassy appointment, and no advance application required. Use the <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">visa-free policy lookup</a> above to confirm eligibility for your passport.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/240-hour-transit-visa.html" class="hover:text-violet-300 transition">240-Hour Transit Visa-Free Policy Explained →</a></h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="visa/240-hour-transit-visa.html" class="hover:text-violet-300 transition">240-Hour Transit Visa-Free Policy Explained →</a></h2>
                 <p class="mb-4">China's 240-hour (10-day) transit visa-free policy is one of the most generous transit programs in the world. Citizens of 54 eligible countries can transit through China for up to 240 hours when entering through any of 60+ designated air, sea, and rail ports, provided they hold a confirmed onward ticket to a third country or region. Once admitted, travelers may move freely between most provinces and major cities — including Beijing, Shanghai, Guangzhou, Chengdu, Xi'an, and Hangzhou — without applying for a separate visa.</p>
                 <p class="mb-4">Common eligible nationalities include the United States, United Kingdom, Canada, Australia, New Zealand, Russia, and most Schengen countries. The policy is ideal for travelers connecting between Europe and Asia, or for short stopovers en route to Japan, Korea, or Southeast Asia. The LAOWAITOWN <a href="#visa-free" class="text-indigo-400 hover:text-indigo-300 underline">240h transit visa checker</a> shows real-time eligibility and the full list of approved entry/exit ports.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/24-hour-transit-visa.html" class="hover:text-violet-300 transition">24-Hour Transit Visa-Free Policy →</a></h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="visa/24-hour-transit-visa.html" class="hover:text-violet-300 transition">24-Hour Transit Visa-Free Policy →</a></h2>
                 <p class="mb-4">For travelers who do not qualify for the 240-hour policy, China offers a universal 24-hour transit visa-free option open to almost all nationalities. Holders of a confirmed onward ticket to a third country may stay for up to 24 hours without a visa, regardless of nationality. This is a useful fallback for short layovers when no other visa-free option applies.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/hainan-visa-free.html" class="hover:text-violet-300 transition">Hainan 30-Day Visa-Free Policy →</a></h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="visa/hainan-visa-free.html" class="hover:text-violet-300 transition">Hainan 30-Day Visa-Free Policy →</a></h2>
                 <p class="mb-4">Hainan Province — China's tropical island and a popular beach destination — has its own dedicated visa-free policy. Tourists from 59 countries may enter Hainan and stay up to 30 days without a mainland visa, provided they arrive directly into Hainan and limit their activities to the island. The policy covers most major tourism source countries, including the US, UK, Canada, Australia, France, Germany, Russia, Japan, Korea, and many more.</p>
 
-                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="/visa/cruise-visa-free.html" class="hover:text-violet-300 transition">Cruise Tourism Visa-Free Policy →</a></h2>
+                <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3"><a href="visa/cruise-visa-free.html" class="hover:text-violet-300 transition">Cruise Tourism Visa-Free Policy →</a></h2>
                 <p class="mb-4">Foreign tourist groups arriving in China by cruise ship through any of 13 designated cruise ports — including Shanghai, Tianjin, Qingdao, Xiamen, Guangzhou, and Sanya — may disembark and tour visa-free for up to 15 days. The policy covers all nationalities and applies to organized tour groups, making cruise visits one of the most flexible ways to experience multiple Chinese cities in a single trip.</p>
 
                 <h2 class="text-lg md:text-xl font-bold text-white mt-8 mb-3">How to Use the Visa-Free Stay Calculator</h2>
