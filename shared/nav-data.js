@@ -164,13 +164,15 @@ window.LWPolicyStatus = {
     },
 
     'visa-extension-overstay': {
-        effectiveSince: '2024-05-01',
+        effectiveSince: '2025-08-14',
         changelog: [
+            { date: '2025-08-14', text: 'State Council revised Exit-Entry Administration Regulations (Article 21 expanded grounds for refusal)', isNew: true },
             { date: '2024-05-01', text: 'Overstay fine structure clarified (¥500/day, capped at ¥10,000); extension window unified' }
         ],
         sources: [
             'National Immigration Administration (NIA)',
-            'Public Security Bureau Exit & Entry Administration (EEA)'
+            'Public Security Bureau Exit & Entry Administration (EEA)',
+            'State Council Decision on Revising Exit-Entry Administration Regulations (2025-08-14)'
         ]
     }
     /* Other pages will be added as they are built */
