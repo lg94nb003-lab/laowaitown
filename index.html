@@ -3644,8 +3644,8 @@
             ];
 
             const headTitle = isZh
-                ? `<span class="nat-flag">${flag}</span>你适用的免签政策`
-                : `<span class="nat-flag">${flag}</span>Your visa-free options`;
+                ? `${displayName} · 你适用的免签政策`
+                : `${displayName} · Your visa-free options`;
             const changeLabel = isZh ? '切换国籍' : 'Change';
 
             zone.innerHTML = `
