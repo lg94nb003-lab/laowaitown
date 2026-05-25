@@ -380,6 +380,7 @@
             transition: background 0.2s, border-color 0.2s;
         }
         .lw-tool:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.1); }
+        .lw-tool.active { background: var(--accent-soft); border-color: var(--accent); }
         .lw-tool-icon {
             width: 34px; height: 34px;
             border-radius: 50%;
@@ -395,6 +396,382 @@
             color: var(--text-secondary);
             text-align: center;
             line-height: 1.2;
+        }
+
+        /* ====== Tool Panel ====== */
+        .lw-tool-panel {
+            width: 100%;
+            padding: 24px;
+            border-radius: 24px;
+            background: rgba(17, 24, 39, 0.92);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 20px 40px -24px rgba(0,0,0,0.75);
+            text-align: left;
+            box-sizing: border-box;
+        }
+        .lw-tool-panel-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .lw-tool-panel-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0 0 4px;
+        }
+        .lw-tool-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .lw-tool-title-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 16px;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .lw-tool-panel-desc {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        .lw-tool-close {
+            border: 1px solid var(--surface-border);
+            background: var(--surface);
+            color: var(--text-secondary);
+            border-radius: 999px;
+            width: 28px;
+            height: 28px;
+            line-height: 1;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .lw-tool-close:hover { color: var(--text-primary); border-color: var(--accent); }
+        .lw-field label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 0 0 6px;
+        }
+        .lw-field input {
+            width: 100%;
+            height: 48px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 0 12px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .lw-field input:focus { border-color: var(--accent); }
+        .lw-date-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 54px;
+            padding: 0 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.8);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .lw-date-pill:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(124,110,240,0.12);
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .lw-date-segment {
+            width: 54px;
+            height: 36px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 17px;
+            font-weight: 800;
+            text-align: center;
+            outline: none;
+        }
+        .lw-field .lw-date-segment {
+            width: 58px;
+            height: 38px;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            font-size: 17px;
+            flex: 0 0 58px;
+        }
+        .lw-field .lw-date-segment.month,
+        .lw-field .lw-date-segment.day {
+            width: 42px;
+            flex-basis: 42px;
+        }
+        .lw-date-segment::-webkit-outer-spin-button,
+        .lw-date-segment::-webkit-inner-spin-button,
+        .lw-stay-wrap input::-webkit-outer-spin-button,
+        .lw-stay-wrap input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .lw-date-segment,
+        .lw-stay-wrap input {
+            -moz-appearance: textfield;
+        }
+        .lw-date-sep {
+            color: var(--text-tertiary);
+            font-weight: 800;
+        }
+        .lw-stay-wrap {
+            position: relative;
+            margin-top: 14px;
+        }
+        .lw-stay-unit {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        .lw-stay-wrap input { padding-right: 58px; }
+        .lw-quick-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0;
+        }
+        .lw-quick-days button {
+            border: 1px solid var(--surface-border);
+            background: var(--surface);
+            color: var(--text-secondary);
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .lw-quick-days button:hover,
+        .lw-quick-days button.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--text-primary);
+        }
+        .lw-calc-result {
+            min-height: 104px;
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 24px;
+            background: rgba(56, 189, 248, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .lw-calc-result-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: rgba(56, 189, 248, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+        .lw-calc-result-date {
+            font-size: 24px;
+            font-weight: 800;
+            color: #38bdf8;
+            line-height: 1.2;
+        }
+        .lw-calc-note {
+            margin-top: 8px;
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--text-tertiary);
+        }
+        .lw-calc-error {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--dot-red);
+        }
+        .lw-tool-action {
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(99,102,241,0.18);
+        }
+        .lw-tool-action:hover { filter: brightness(1.08); }
+        .lw-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .lw-field select,
+        .lw-field textarea {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 12px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .lw-field select { height: 48px; }
+        .lw-field textarea {
+            min-height: 104px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .lw-field select:focus,
+        .lw-field textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(124,110,240,0.12);
+        }
+        .lw-tool-swap {
+            width: 38px;
+            height: 38px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15,23,42,0.9);
+            color: var(--dot-green);
+            font-weight: 800;
+            cursor: pointer;
+            display: block;
+            margin: 12px auto 0;
+        }
+        .lw-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .lw-info-card {
+            border-radius: 16px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255,255,255,0.035);
+            padding: 13px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+        .lw-info-card strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        .lw-info-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .lw-info-card a:hover { text-decoration: underline; }
+        .lw-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .lw-list-item {
+            border-radius: 14px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255,255,255,0.03);
+            padding: 12px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.55;
+        }
+        .lw-list-item strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+        .lw-phrase-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+        .lw-phrase-zh {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.45;
+        }
+        .lw-phrase-en {
+            color: var(--text-tertiary);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+        .lw-copy-btn,
+        .lw-link-btn {
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text-secondary);
+            padding: 8px 10px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .lw-copy-btn:hover,
+        .lw-link-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .lw-tool-note {
+            margin-top: 10px;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        .lw-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 22px;
+            transform: translateX(-50%);
+            z-index: 500;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.96);
+            border: 1px solid var(--surface-border);
+            color: var(--text-primary);
+            font-size: 12px;
+            box-shadow: 0 16px 32px rgba(0,0,0,0.35);
         }
 
         /* ====== Search Hint ====== */
@@ -447,6 +824,10 @@
             .lw-tool { padding: 10px 2px 6px; border-radius: 10px; }
             .lw-tool-icon { width: 28px; height: 28px; font-size: 13px; }
             .lw-tool-name { font-size: 9px; }
+            .lw-calc-grid { grid-template-columns: 1fr; }
+            .lw-tool-panel { padding: 16px; }
+            .lw-form-row,
+            .lw-mini-grid { grid-template-columns: 1fr; }
             .lw-pill { font-size: 10px; padding: 4px 9px; }
             .lw-240h-tab { font-size: 10px; padding: 5px 10px; }
         }
@@ -500,6 +881,7 @@
 
         <!-- Tool Grid -->
         <div class="lw-tools" id="tool-grid"></div>
+        <div class="lw-tool-panel hidden" id="tool-panel"></div>
 
         <!-- Footer -->
         <footer class="lw-footer">© 2024 LAOWAITOWN. Policy data verified against official sources.</footer>
@@ -518,20 +900,56 @@
         let currentLang = 'en';
         let selectedCountry = null; // { code, zh, en, flag }
         let sugIndex = -1;
+        let currencyCache = {};
+        let currencyDebounceTimer = null;
 
         // ====== Tools Data ======
         const TOOLS = [
-            { icon: '📅', name: 'Stay Calc', href: '#' },
-            { icon: '💱', name: 'Currency', href: '#' },
-            { icon: '🕐', name: 'Timezone', href: '#' },
-            { icon: '💬', name: 'Phrases', href: '#' },
-            { icon: '🌤', name: 'Weather', href: '#' },
-            { icon: '🚨', name: 'Emergency', href: '#' },
-            { icon: '📶', name: 'SIM Card', href: '#' },
-            { icon: '🔒', name: 'VPN Info', href: '#' },
-            { icon: '🗣', name: 'Translate', href: '#' },
-            { icon: '🗺', name: 'Maps', href: '#' }
+            { id: 'stay', icon: '📅', name: 'Stay Calc' },
+            { id: 'currency', icon: '💱', name: 'Currency' },
+            { id: 'timezone', icon: '🕐', name: 'Timezone' },
+            { id: 'phrases', icon: '💬', name: 'Phrases' },
+            { id: 'weather', icon: '🌤', name: 'Weather' },
+            { id: 'emergency', icon: '🚨', name: 'Emergency' },
+            { id: 'sim', icon: '📶', name: 'SIM Card' },
+            { id: 'vpn', icon: '🔒', name: 'VPN Info' },
+            { id: 'translate', icon: '🗣', name: 'Translate' },
+            { id: 'maps', icon: '🗺', name: 'Maps' }
         ];
+
+        const CURRENCIES = ['CNY','USD','EUR','JPY','GBP','HKD','THB','AUD','SGD','KRW','CAD'];
+        const USD_RATES = { USD:1, CNY:7.2, EUR:0.92, JPY:155, GBP:0.79, HKD:7.8, THB:36, AUD:1.52, SGD:1.34, KRW:1360, CAD:1.36 };
+
+        const PHRASE_SCENES = [
+            { id:'arrival', icon:'🛂', en:'Arrival', zh:'入境', phrases:[
+                ['请问入境检查在哪里？','Where is immigration control?'],
+                ['我来中国旅游。','I am visiting China for tourism.'],
+                ['这是我的返程/联程机票。','This is my return/onward ticket.']
+            ]},
+            { id:'taxi', icon:'🚕', en:'Taxi', zh:'打车', phrases:[
+                ['请带我去这个地址。','Please take me to this address.'],
+                ['可以用支付宝或微信支付吗？','Can I pay with Alipay or WeChat Pay?'],
+                ['请在这里停车。','Please stop here.']
+            ]},
+            { id:'hotel', icon:'🏨', en:'Hotel', zh:'酒店', phrases:[
+                ['我有一个预订。','I have a reservation.'],
+                ['请帮我办理住宿登记。','Please help me with accommodation registration.'],
+                ['可以寄存行李吗？','Can I store my luggage?']
+            ]},
+            { id:'food', icon:'🍜', en:'Food', zh:'吃饭', phrases:[
+                ['请问有英文菜单吗？','Do you have an English menu?'],
+                ['不要辣，谢谢。','No spicy food, please.'],
+                ['请打包。','Please pack it to go.']
+            ]},
+            { id:'emergency', icon:'🚨', en:'Emergency', zh:'应急', phrases:[
+                ['请帮我报警。','Please help me call the police.'],
+                ['我需要去医院。','I need to go to a hospital.'],
+                ['我迷路了，请帮帮我。','I am lost. Please help me.']
+            ]}
+        ];
+
+        const CITY_WEATHER = ['Beijing','Shanghai','Guangzhou','Shenzhen','Chengdu','Hangzhou','Xi’an','Kunming'];
+        const MAP_CITIES = ['Beijing','Shanghai','Guangzhou','Shenzhen','Chengdu','Hangzhou'];
 
         // ====== Purpose Data ======
         const PURPOSES = [
@@ -634,11 +1052,760 @@
         function renderTools() {
             const grid = document.getElementById('tool-grid');
             grid.innerHTML = TOOLS.map(t => `
-                <a class="lw-tool" href="${t.href}">
+                <button class="lw-tool" type="button" data-tool="${t.id}" onclick="openTool('${t.id}')">
                     <div class="lw-tool-icon">${t.icon}</div>
                     <div class="lw-tool-name">${t.name}</div>
-                </a>
+                </button>
             `).join('');
+        }
+
+        // ====== Tool Panels ======
+        window.openTool = function(toolId) {
+            const panel = document.getElementById('tool-panel');
+            const html = renderTool(toolId);
+            if (!panel || !html) {
+                showToolToast(currentLang === 'zh' ? '这个小工具正在建设中。' : 'This tool is coming soon.');
+                return;
+            }
+            panel.innerHTML = html;
+            panel.classList.remove('hidden');
+            document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.toggle('active', btn.dataset.tool === toolId));
+            initTool(toolId);
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            __track('open_tool', { tool: toolId });
+        };
+
+        function renderTool(toolId) {
+            const map = {
+                stay: renderStayTool,
+                currency: renderCurrencyTool,
+                timezone: renderTimezoneTool,
+                phrases: renderPhrasesTool,
+                weather: renderWeatherTool,
+                emergency: renderEmergencyTool,
+                sim: renderSimTool,
+                vpn: renderVpnTool,
+                translate: renderTranslateTool,
+                maps: renderMapsTool
+            };
+            return map[toolId] ? map[toolId]() : '';
+        }
+
+        function initTool(toolId) {
+            if (toolId === 'stay') calculateStay();
+            if (toolId === 'timezone') convertTimezone();
+            if (toolId === 'currency') {
+                const from = document.getElementById('from-currency');
+                const to = document.getElementById('to-currency');
+                if (from) from.value = 'CNY';
+                if (to) to.value = 'USD';
+                convertCurrency();
+            }
+            if (toolId === 'phrases') selectPhraseScene('arrival');
+            if (toolId === 'weather') updateWeatherLinks();
+        }
+
+        function toolShell(icon, titleEn, titleZh, descEn, descZh, body) {
+            return `
+                <div class="lw-tool-panel-head">
+                    <div class="lw-tool-title-row">
+                        <span class="lw-tool-title-icon">${icon}</span>
+                        <div>
+                            <h2 class="lw-tool-panel-title">${currentLang === 'zh' ? titleZh : titleEn}</h2>
+                            <p class="lw-tool-panel-desc">${currentLang === 'zh' ? descZh : descEn}</p>
+                        </div>
+                    </div>
+                    <button class="lw-tool-close" type="button" onclick="closeTool()" aria-label="Close">x</button>
+                </div>
+                ${body}
+            `;
+        }
+
+        function renderStayTool() {
+            const today = new Date();
+            return toolShell(
+                '📅',
+                'Visa Stay Calculator',
+                '签证停留期',
+                'Enter your China entry date and allowed stay length to calculate the latest exit date.',
+                '输入入境日期和允许停留天数，计算最晚离境日期。',
+                `
+                <div class="lw-field">
+                    <label>${currentLang === 'zh' ? '入境日期' : 'Entry date'}</label>
+                    <div class="lw-date-pill">
+                        <input id="visa-year" class="lw-date-segment" type="text" inputmode="numeric" value="${today.getFullYear()}" oninput="calculateStay()" onblur="normalizeDateSegment('visa-year')" onwheel="handleDateWheel(event, 'visa-year')">
+                        <span class="lw-date-sep">-</span>
+                        <input id="visa-month" class="lw-date-segment month" type="text" inputmode="numeric" value="${String(today.getMonth() + 1).padStart(2, '0')}" oninput="calculateStay()" onblur="normalizeDateSegment('visa-month')" onwheel="handleDateWheel(event, 'visa-month')">
+                        <span class="lw-date-sep">-</span>
+                        <input id="visa-day" class="lw-date-segment day" type="text" inputmode="numeric" value="${String(today.getDate()).padStart(2, '0')}" oninput="calculateStay()" onblur="normalizeDateSegment('visa-day')" onwheel="handleDateWheel(event, 'visa-day')">
+                    </div>
+                </div>
+                <div class="lw-quick-days">
+                    ${[-2,-1,0,1].map(offset => `<button type="button" onclick="setQuickEntryDate(${offset})">${quickDateLabel(offset)}</button>`).join('')}
+                </div>
+                <div class="lw-field lw-stay-wrap">
+                    <label for="stay-days">${currentLang === 'zh' ? '可停留天数' : 'Allowed stay'}</label>
+                    <input id="stay-days" type="number" min="1" max="365" value="30" oninput="calculateStay()" onwheel="handleStayDaysWheel(event)">
+                    <span class="lw-stay-unit">${currentLang === 'zh' ? '天' : 'Days'}</span>
+                </div>
+                <div class="lw-quick-days">
+                    ${[10,15,30,60,90,180].map(days => `<button type="button" data-days="${days}" onclick="setStayDays(${days})">${days} ${currentLang === 'zh' ? '天' : 'days'}</button>`).join('')}
+                </div>
+                <div class="lw-calc-result" id="stay-result">
+                    <div class="lw-calc-result-label">${currentLang === 'zh' ? '最晚离境日期' : 'Latest exit date'}</div>
+                    <div class="lw-calc-result-date" id="stay-result-date"></div>
+                    <div class="lw-calc-note" id="stay-result-note"></div>
+                </div>
+                <div class="lw-calc-error hidden" id="stay-error"></div>
+                <button class="lw-tool-action" type="button" onclick="calculateStay()">${currentLang === 'zh' ? '立即计算' : 'Calculate now'}</button>
+                `
+            );
+        }
+
+        function renderTimezoneTool() {
+            const now = new Date();
+            const options = (typeof tzs !== 'undefined' ? tzs : []).map(t =>
+                `<option value="${t.value}" ${t.value === 'Asia/Shanghai' ? 'selected' : ''}>${currentLang === 'zh' ? t.zh : t.en}</option>`
+            ).join('');
+            return toolShell(
+                '🕐',
+                'Timezone Converter',
+                '时区转换',
+                'Convert your local time into China time or another common timezone.',
+                '把本地时间换算成中国时间或常用目的地时区。',
+                `
+                <div class="lw-field">
+                    <label>${currentLang === 'zh' ? '原始时间' : 'Source time'}</label>
+                    <div class="lw-date-pill">
+                        <input id="source-year" class="lw-date-segment" type="text" inputmode="numeric" value="${now.getFullYear()}" oninput="convertTimezone()" onwheel="handleSourceDateWheel(event, 'source-year')">
+                        <span class="lw-date-sep">-</span>
+                        <input id="source-month" class="lw-date-segment month" type="text" inputmode="numeric" value="${String(now.getMonth() + 1).padStart(2, '0')}" oninput="convertTimezone()" onwheel="handleSourceDateWheel(event, 'source-month')">
+                        <span class="lw-date-sep">-</span>
+                        <input id="source-day" class="lw-date-segment day" type="text" inputmode="numeric" value="${String(now.getDate()).padStart(2, '0')}" oninput="convertTimezone()" onwheel="handleSourceDateWheel(event, 'source-day')">
+                        <span class="lw-date-sep">|</span>
+                        <input id="source-hh" class="lw-date-segment day" type="text" inputmode="numeric" value="${String(now.getHours()).padStart(2, '0')}" oninput="convertTimezone()" onwheel="handleTimeWheel(event, 'source-hh')">
+                        <span class="lw-date-sep">:</span>
+                        <input id="source-mm" class="lw-date-segment day" type="text" inputmode="numeric" value="${String(now.getMinutes()).padStart(2, '0')}" oninput="convertTimezone()" onwheel="handleTimeWheel(event, 'source-mm')">
+                    </div>
+                </div>
+                <div class="lw-field" style="margin-top:14px;">
+                    <label for="target-tz">${currentLang === 'zh' ? '目标时区' : 'Target timezone'}</label>
+                    <select id="target-tz" onchange="convertTimezone()">${options}</select>
+                </div>
+                <div class="lw-quick-days">
+                    ${['Asia/Shanghai','Europe/London','America/New_York','Asia/Tokyo'].map(tz => `<button type="button" onclick="setTargetTimezone('${tz}')">${tz.split('/').pop().replace('_',' ')}</button>`).join('')}
+                </div>
+                <div class="lw-calc-result">
+                    <div class="lw-calc-result-label">${currentLang === 'zh' ? '转换结果' : 'Converted time'}</div>
+                    <div class="lw-calc-result-date" id="timezone-result">--</div>
+                    <div class="lw-calc-note">${currentLang === 'zh' ? '原始时间按你当前设备本地时区理解。' : 'The source time is interpreted in your device local timezone.'}</div>
+                </div>
+                <button class="lw-tool-action" type="button" onclick="convertTimezone()">${currentLang === 'zh' ? '转换时区' : 'Convert time'}</button>
+                `
+            );
+        }
+
+        function renderCurrencyTool() {
+            const options = CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('');
+            return toolShell(
+                '💱',
+                'Currency Converter',
+                '汇率换算',
+                'Use live exchange rates when available, with a built-in estimate as fallback.',
+                '优先使用实时汇率，网络不可用时使用内置估算汇率兜底。',
+                `
+                <div class="lw-form-row">
+                    <div class="lw-field">
+                        <label for="currency-amount">${currentLang === 'zh' ? '金额' : 'Amount'}</label>
+                        <input id="currency-amount" type="number" value="100" min="0" oninput="debouncedConvertCurrency()">
+                    </div>
+                    <div class="lw-field">
+                        <label for="from-currency">${currentLang === 'zh' ? '从' : 'From'}</label>
+                        <select id="from-currency" onchange="convertCurrency()">${options}</select>
+                    </div>
+                </div>
+                <button class="lw-tool-swap" type="button" onclick="swapCurrency()">↕</button>
+                <div class="lw-field">
+                    <label for="to-currency">${currentLang === 'zh' ? '到' : 'To'}</label>
+                    <select id="to-currency" onchange="convertCurrency()">${options}</select>
+                </div>
+                <div class="lw-quick-days">
+                    ${[100,500,2000,5000,10000].map(n => `<button type="button" onclick="setCurrencyAmount(${n})">${n}</button>`).join('')}
+                </div>
+                <div class="lw-calc-result">
+                    <div class="lw-calc-result-label" id="currency-result-label">${currentLang === 'zh' ? '兑换结果' : 'Converted amount'}</div>
+                    <div class="lw-calc-result-date" id="currency-result">--</div>
+                    <div class="lw-calc-note" id="currency-note"></div>
+                </div>
+                <button class="lw-tool-action" type="button" onclick="convertCurrency()"><span id="currency-btn-text">${currentLang === 'zh' ? '获取汇率' : 'Get rate'}</span></button>
+                `
+            );
+        }
+
+        function renderPhrasesTool() {
+            return toolShell(
+                '💬',
+                'Quick Phrases',
+                '常用短语',
+                'Tap a scene, then copy a Chinese phrase for taxi, hotel, food, arrival, or emergency.',
+                '选择场景，复制打车、酒店、吃饭、入境、应急常用中文短语。',
+                `
+                <div class="lw-quick-days">
+                    ${PHRASE_SCENES.map(s => `<button type="button" data-phrase-scene="${s.id}" onclick="selectPhraseScene('${s.id}')">${s.icon} ${currentLang === 'zh' ? s.zh : s.en}</button>`).join('')}
+                </div>
+                <div class="lw-list" id="phrase-list"></div>
+                `
+            );
+        }
+
+        function renderWeatherTool() {
+            return toolShell(
+                '🌤',
+                'Weather Lookup',
+                '天气查询',
+                'Choose a China city and open a forecast search in a new tab.',
+                '选择中国城市，一键打开天气预报搜索。',
+                `
+                <div class="lw-field">
+                    <label for="weather-city">${currentLang === 'zh' ? '城市' : 'City'}</label>
+                    <input id="weather-city" type="text" value="Shanghai" oninput="updateWeatherLinks()">
+                </div>
+                <div class="lw-quick-days">${CITY_WEATHER.map(c => `<button type="button" onclick="setWeatherCity('${c}')">${c}</button>`).join('')}</div>
+                <div class="lw-mini-grid" id="weather-links"></div>
+                <div class="lw-tool-note">${currentLang === 'zh' ? '天气数据来自你选择打开的外部天气服务。' : 'Weather data is provided by the external service you open.'}</div>
+                `
+            );
+        }
+
+        function renderEmergencyTool() {
+            return toolShell(
+                '🚨',
+                'Emergency',
+                '应急电话',
+                'China emergency numbers and a quick card you can show to local staff.',
+                '中国常用应急电话，以及可展示给现场人员看的求助短句。',
+                `
+                <div class="lw-mini-grid">
+                    ${[
+                        ['110','Police / 报警'],
+                        ['120','Ambulance / 急救'],
+                        ['119','Fire / 火警'],
+                        ['12367','Immigration service / 移民管理咨询']
+                    ].map(([num,label]) => `<div class="lw-info-card"><strong>${num}</strong>${label}<br><a href="tel:${num}">${currentLang === 'zh' ? '拨打' : 'Call'}</a></div>`).join('')}
+                </div>
+                <div class="lw-list">
+                    <div class="lw-list-item"><strong>我需要帮助 / I need help</strong>请帮我联系警察或医院。 Please help me contact the police or a hospital.</div>
+                    <div class="lw-list-item"><strong>护照丢失 / Passport lost</strong>我的护照丢了，需要联系大使馆。 My passport is lost. I need to contact my embassy.</div>
+                </div>
+                `
+            );
+        }
+
+        function renderSimTool() {
+            return toolShell(
+                '📶',
+                'SIM Card Guide',
+                '手机卡指南',
+                'Compare airport SIM, carrier store SIM, and eSIM options for China travel.',
+                '对比机场卡、运营商门店卡和 eSIM，帮你快速判断怎么联网。',
+                `
+                <div class="lw-mini-grid">
+                    <div class="lw-info-card"><strong>Airport SIM</strong>${currentLang === 'zh' ? '最快，价格通常较高。适合短途旅行。' : 'Fastest setup, usually pricier. Good for short trips.'}</div>
+                    <div class="lw-info-card"><strong>Carrier store</strong>${currentLang === 'zh' ? '需要护照实名，套餐更稳定。' : 'Passport real-name registration, better for longer stays.'}</div>
+                    <div class="lw-info-card"><strong>eSIM</strong>${currentLang === 'zh' ? '提前购买方便，但部分手机/网络不支持。' : 'Convenient before arrival, but device/network support varies.'}</div>
+                    <div class="lw-info-card"><strong>Bring passport</strong>${currentLang === 'zh' ? '线下办卡通常必须携带护照原件。' : 'Physical passport is usually required for local SIM registration.'}</div>
+                </div>
+                `
+            );
+        }
+
+        function renderVpnTool() {
+            return toolShell(
+                '🔒',
+                'VPN Info',
+                'VPN 信息',
+                'A practical pre-arrival checklist for accessing your usual services while traveling.',
+                '来华前网络访问准备清单，帮助你提前安排常用服务。',
+                `
+                <div class="lw-list">
+                    <div class="lw-list-item"><strong>${currentLang === 'zh' ? '出发前准备' : 'Before departure'}</strong>${currentLang === 'zh' ? '在到达中国前安装、登录并测试你需要的网络工具。' : 'Install, sign in, and test any access tools you rely on before arriving in China.'}</div>
+                    <div class="lw-list-item"><strong>${currentLang === 'zh' ? '准备备选联系方式' : 'Backup contacts'}</strong>${currentLang === 'zh' ? '保存酒店、同行人、学校或公司的电话和地址。' : 'Save hotel, companion, school, or company phone numbers and addresses offline.'}</div>
+                    <div class="lw-list-item"><strong>${currentLang === 'zh' ? '合规提醒' : 'Compliance note'}</strong>${currentLang === 'zh' ? '请遵守当地法律法规和服务条款。' : 'Follow local laws and the terms of services you use.'}</div>
+                </div>
+                `
+            );
+        }
+
+        function renderTranslateTool() {
+            return toolShell(
+                '🗣',
+                'Translate',
+                '翻译助手',
+                'Prepare text and open it in Google Translate or Baidu Translate.',
+                '输入文本，一键打开 Google 翻译或百度翻译。',
+                `
+                <div class="lw-field">
+                    <label for="translate-text">${currentLang === 'zh' ? '要翻译的文本' : 'Text to translate'}</label>
+                    <textarea id="translate-text" placeholder="${currentLang === 'zh' ? '输入要翻译的话...' : 'Type what you want to translate...'}"></textarea>
+                </div>
+                <div class="lw-mini-grid" style="grid-template-columns:1fr 1fr;">
+                    <button class="lw-tool-action" type="button" onclick="openTranslate('google')">Google</button>
+                    <button class="lw-tool-action" type="button" onclick="openTranslate('baidu')">Baidu</button>
+                </div>
+                <div class="lw-tool-note">${currentLang === 'zh' ? '会在新标签页打开外部翻译服务。' : 'Opens an external translation service in a new tab.'}</div>
+                `
+            );
+        }
+
+        function renderMapsTool() {
+            return toolShell(
+                '🗺',
+                'Maps',
+                '地图导航',
+                'Search a city or address in Apple Maps, Google Maps, or Baidu Maps.',
+                '输入城市或地址，在 Apple、Google 或百度地图中搜索。',
+                `
+                <div class="lw-field">
+                    <label for="map-query">${currentLang === 'zh' ? '地点' : 'Place'}</label>
+                    <input id="map-query" type="text" value="Shanghai Pudong Airport" oninput="refreshMapLinks()">
+                </div>
+                <div class="lw-quick-days">${MAP_CITIES.map(c => `<button type="button" onclick="setMapQuery('${c}')">${c}</button>`).join('')}</div>
+                <div class="lw-mini-grid" id="map-links">${buildMapLinks('Shanghai Pudong Airport')}</div>
+                `
+            );
+        }
+
+        window.closeTool = function() {
+            document.getElementById('tool-panel').classList.add('hidden');
+            document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.remove('active'));
+        };
+
+        window.convertTimezone = function() {
+            const y = parseInt((document.getElementById('source-year') || {}).value, 10);
+            const m = parseInt((document.getElementById('source-month') || {}).value, 10);
+            const d = parseInt((document.getElementById('source-day') || {}).value, 10);
+            const hh = parseInt((document.getElementById('source-hh') || {}).value, 10);
+            const mm = parseInt((document.getElementById('source-mm') || {}).value, 10);
+            const targetTz = (document.getElementById('target-tz') || {}).value || 'Asia/Shanghai';
+            const out = document.getElementById('timezone-result');
+            if (!out || !Number.isFinite(y) || !Number.isFinite(m) || !Number.isFinite(d) || !Number.isFinite(hh) || !Number.isFinite(mm)) return;
+
+            const source = new Date(y, m - 1, d, hh, mm, 0);
+            if (Number.isNaN(source.getTime())) {
+                out.textContent = '--';
+                return;
+            }
+            try {
+                const fmt = new Intl.DateTimeFormat(currentLang === 'zh' ? 'zh-CN' : 'en-CA', {
+                    timeZone: targetTz,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                out.textContent = fmt.format(source).replace(',', '');
+            } catch (e) {
+                out.textContent = currentLang === 'zh' ? '无法转换' : 'Unable to convert';
+            }
+        };
+
+        window.setTargetTimezone = function(timezone) {
+            const select = document.getElementById('target-tz');
+            if (!select) return;
+            select.value = timezone;
+            convertTimezone();
+        };
+
+        window.handleSourceDateWheel = function(event, id) {
+            event.preventDefault();
+            const input = document.getElementById(id);
+            if (!input) return;
+            const delta = event.deltaY < 0 ? 1 : -1;
+            let value = parseInt(input.value, 10);
+            if (!Number.isFinite(value)) return;
+            if (id.includes('year')) {
+                value = Math.min(2099, Math.max(1900, value + delta));
+                input.value = String(value);
+            } else if (id.includes('month')) {
+                value += delta;
+                if (value > 12) value = 1;
+                if (value < 1) value = 12;
+                input.value = String(value).padStart(2, '0');
+                clampSourceDayToMonth();
+            } else if (id.includes('day')) {
+                const y = parseInt(document.getElementById('source-year').value, 10);
+                const m = parseInt(document.getElementById('source-month').value, 10);
+                const max = getDaysInMonth(y, m);
+                value += delta;
+                if (value > max) value = 1;
+                if (value < 1) value = max;
+                input.value = String(value).padStart(2, '0');
+            }
+            convertTimezone();
+        };
+
+        window.handleTimeWheel = function(event, id) {
+            event.preventDefault();
+            const input = document.getElementById(id);
+            if (!input) return;
+            const delta = event.deltaY < 0 ? 1 : -1;
+            let value = parseInt(input.value, 10);
+            if (!Number.isFinite(value)) return;
+            const max = id.includes('hh') ? 23 : 59;
+            value += delta;
+            if (value > max) value = 0;
+            if (value < 0) value = max;
+            input.value = String(value).padStart(2, '0');
+            convertTimezone();
+        };
+
+        function clampSourceDayToMonth() {
+            const y = parseInt((document.getElementById('source-year') || {}).value, 10);
+            const m = parseInt((document.getElementById('source-month') || {}).value, 10);
+            const day = document.getElementById('source-day');
+            if (!day) return;
+            const max = getDaysInMonth(y, m);
+            const value = parseInt(day.value, 10);
+            if (Number.isFinite(value) && value > max) day.value = String(max).padStart(2, '0');
+        }
+
+        window.debouncedConvertCurrency = function() {
+            clearTimeout(currencyDebounceTimer);
+            currencyDebounceTimer = setTimeout(convertCurrency, 300);
+        };
+
+        window.setCurrencyAmount = function(amount) {
+            const input = document.getElementById('currency-amount');
+            if (!input) return;
+            input.value = amount;
+            convertCurrency();
+        };
+
+        window.swapCurrency = function() {
+            const from = document.getElementById('from-currency');
+            const to = document.getElementById('to-currency');
+            if (!from || !to) return;
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convertCurrency();
+        };
+
+        window.convertCurrency = async function() {
+            const amount = Number((document.getElementById('currency-amount') || {}).value);
+            const from = (document.getElementById('from-currency') || {}).value || 'CNY';
+            const to = (document.getElementById('to-currency') || {}).value || 'USD';
+            const out = document.getElementById('currency-result');
+            const note = document.getElementById('currency-note');
+            const btn = document.getElementById('currency-btn-text');
+            if (!out || !note || !Number.isFinite(amount) || amount <= 0) return;
+
+            if (btn) btn.textContent = currentLang === 'zh' ? '获取中...' : 'Loading...';
+            let rate = currencyCache[from] && currencyCache[from][to];
+            let source = 'live';
+            if (!rate) {
+                try {
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), 6000);
+                    const response = await fetch(`https://open.er-api.com/v6/latest/${from}`, { signal: controller.signal });
+                    clearTimeout(timer);
+                    const data = await response.json();
+                    if (data && data.result === 'success' && data.rates) {
+                        currencyCache[from] = data.rates;
+                        rate = data.rates[to];
+                    }
+                } catch (e) {
+                    source = 'estimate';
+                }
+            }
+            if (!rate) {
+                source = 'estimate';
+                rate = (USD_RATES[to] || 1) / (USD_RATES[from] || 1);
+            }
+            const result = amount * rate;
+            out.textContent = `${to} ${result.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            note.textContent = source === 'live'
+                ? (currentLang === 'zh' ? `实时汇率：1 ${from} = ${rate.toFixed(4)} ${to}` : `Live rate: 1 ${from} = ${rate.toFixed(4)} ${to}`)
+                : (currentLang === 'zh' ? '网络不可用，当前为内置估算汇率。' : 'Network unavailable; showing built-in estimate.');
+            if (btn) btn.textContent = currentLang === 'zh' ? '刷新汇率' : 'Refresh rate';
+        };
+
+        window.selectPhraseScene = function(sceneId) {
+            const scene = PHRASE_SCENES.find(s => s.id === sceneId) || PHRASE_SCENES[0];
+            const list = document.getElementById('phrase-list');
+            if (!list || !scene) return;
+            document.querySelectorAll('[data-phrase-scene]').forEach(btn => btn.classList.toggle('active', btn.dataset.phraseScene === scene.id));
+            list.innerHTML = scene.phrases.map(([zh, en]) => `
+                <div class="lw-list-item lw-phrase-row">
+                    <div>
+                        <div class="lw-phrase-zh">${zh}</div>
+                        <div class="lw-phrase-en">${en}</div>
+                    </div>
+                    <button class="lw-copy-btn" type="button" onclick="copyToolText('${escapeAttr(zh)}')">${currentLang === 'zh' ? '复制' : 'Copy'}</button>
+                </div>
+            `).join('');
+        };
+
+        window.copyToolText = function(text) {
+            const decoded = decodeHtml(text);
+            try {
+                navigator.clipboard.writeText(decoded).then(() => showToolToast(currentLang === 'zh' ? '已复制' : 'Copied'));
+            } catch (e) {
+                showToolToast(decoded);
+            }
+        };
+
+        window.setWeatherCity = function(city) {
+            const input = document.getElementById('weather-city');
+            if (!input) return;
+            input.value = city;
+            updateWeatherLinks();
+        };
+
+        window.updateWeatherLinks = function() {
+            const city = ((document.getElementById('weather-city') || {}).value || 'Shanghai').trim();
+            const wrap = document.getElementById('weather-links');
+            if (!wrap) return;
+            const q = encodeURIComponent(`${city} China weather`);
+            wrap.innerHTML = `
+                <a class="lw-link-btn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}">Google Weather</a>
+                <a class="lw-link-btn" target="_blank" rel="noopener" href="https://www.bing.com/search?q=${q}">Bing Weather</a>
+            `;
+        };
+
+        window.openTranslate = function(service) {
+            const text = ((document.getElementById('translate-text') || {}).value || '').trim();
+            const encoded = encodeURIComponent(text || (currentLang === 'zh' ? '你好，请帮我。' : 'Hello, please help me.'));
+            const url = service === 'baidu'
+                ? `https://fanyi.baidu.com/#auto/zh/${encoded}`
+                : `https://translate.google.com/?sl=auto&tl=zh-CN&text=${encoded}&op=translate`;
+            window.open(url, '_blank', 'noopener');
+        };
+
+        window.setMapQuery = function(query) {
+            const input = document.getElementById('map-query');
+            if (!input) return;
+            input.value = query;
+            refreshMapLinks();
+        };
+
+        window.refreshMapLinks = function() {
+            const input = document.getElementById('map-query');
+            const links = document.getElementById('map-links');
+            if (!input || !links) return;
+            links.innerHTML = buildMapLinks(input.value);
+        };
+
+        function buildMapLinks(query) {
+            const q = encodeURIComponent(query || 'Shanghai');
+            return `
+                <a class="lw-link-btn" target="_blank" rel="noopener" href="https://maps.apple.com/?q=${q}">Apple Maps</a>
+                <a class="lw-link-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">Google Maps</a>
+                <a class="lw-link-btn" target="_blank" rel="noopener" href="https://map.baidu.com/search/${q}">Baidu Maps</a>
+                <button class="lw-link-btn" type="button" onclick="setMapQuery((document.getElementById('map-query') || {}).value)">Refresh</button>
+            `;
+        }
+
+        function escapeAttr(text) {
+            return String(text).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function decodeHtml(text) {
+            const div = document.createElement('div');
+            div.innerHTML = text;
+            return div.textContent || text;
+        }
+
+        function showToolToast(message) {
+            let toast = document.getElementById('lw-tool-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'lw-tool-toast';
+                toast.className = 'lw-toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            clearTimeout(showToolToast.timer);
+            showToolToast.timer = setTimeout(() => toast.classList.add('hidden'), 1800);
+        }
+
+        window.setStayDays = function(days) {
+            const input = document.getElementById('stay-days');
+            if (!input) return;
+            input.value = days;
+            calculateStay();
+        };
+
+        window.setQuickEntryDate = function(offsetDays) {
+            const date = addDays(new Date(), offsetDays);
+            const year = document.getElementById('visa-year');
+            const month = document.getElementById('visa-month');
+            const day = document.getElementById('visa-day');
+            if (!year || !month || !day) return;
+            year.value = date.getFullYear();
+            month.value = String(date.getMonth() + 1).padStart(2, '0');
+            day.value = String(date.getDate()).padStart(2, '0');
+            calculateStay();
+        };
+
+        window.handleDateWheel = function(event, id) {
+            event.preventDefault();
+            const input = document.getElementById(id);
+            if (!input) return;
+            const delta = event.deltaY < 0 ? 1 : -1;
+            let value = parseInt(input.value, 10);
+            if (!Number.isFinite(value)) return;
+
+            if (id === 'visa-year') {
+                value = Math.min(2099, Math.max(1900, value + delta));
+                input.value = String(value);
+                clampVisaDayToMonth();
+            } else if (id === 'visa-month') {
+                value += delta;
+                if (value > 12) value = 1;
+                if (value < 1) value = 12;
+                input.value = String(value).padStart(2, '0');
+                clampVisaDayToMonth();
+            } else if (id === 'visa-day') {
+                const year = parseInt(document.getElementById('visa-year').value, 10);
+                const month = parseInt(document.getElementById('visa-month').value, 10);
+                const max = getDaysInMonth(year, month);
+                value += delta;
+                if (value > max) value = 1;
+                if (value < 1) value = max;
+                input.value = String(value).padStart(2, '0');
+            }
+
+            input.style.transform = delta > 0 ? 'translateY(-2px)' : 'translateY(2px)';
+            setTimeout(() => { input.style.transform = 'translateY(0)'; }, 120);
+            calculateStay();
+        };
+
+        window.handleStayDaysWheel = function(event) {
+            event.preventDefault();
+            const input = document.getElementById('stay-days');
+            if (!input) return;
+            const delta = event.deltaY < 0 ? 1 : -1;
+            const current = parseInt(input.value, 10);
+            const next = Math.min(365, Math.max(1, (Number.isFinite(current) ? current : 30) + delta));
+            input.value = String(next);
+            input.style.transform = delta > 0 ? 'translateY(-2px)' : 'translateY(2px)';
+            setTimeout(() => { input.style.transform = 'translateY(0)'; }, 120);
+            calculateStay();
+        };
+
+        window.normalizeDateSegment = function(id) {
+            const input = document.getElementById(id);
+            if (!input) return;
+            let value = parseInt(input.value, 10);
+            if (!Number.isFinite(value)) return;
+            if (id === 'visa-year') {
+                value = Math.min(2099, Math.max(1900, value));
+                input.value = String(value);
+            } else if (id === 'visa-month') {
+                value = Math.min(12, Math.max(1, value));
+                input.value = String(value).padStart(2, '0');
+                clampVisaDayToMonth();
+            } else if (id === 'visa-day') {
+                const year = parseInt(document.getElementById('visa-year').value, 10);
+                const month = parseInt(document.getElementById('visa-month').value, 10);
+                const max = getDaysInMonth(year, month);
+                value = Math.min(max, Math.max(1, value));
+                input.value = String(value).padStart(2, '0');
+            }
+            calculateStay();
+        };
+
+        window.calculateStay = function() {
+            const yearInput = document.getElementById('visa-year');
+            const monthInput = document.getElementById('visa-month');
+            const dayInput = document.getElementById('visa-day');
+            const daysInput = document.getElementById('stay-days');
+            const resultDate = document.getElementById('stay-result-date');
+            const resultNote = document.getElementById('stay-result-note');
+            const error = document.getElementById('stay-error');
+            if (!yearInput || !monthInput || !dayInput || !daysInput || !resultDate || !resultNote || !error) return;
+
+            const entryDate = parseDateParts(yearInput.value, monthInput.value, dayInput.value);
+            const stayDays = parseInt(daysInput.value, 10);
+            if (!entryDate || !Number.isFinite(stayDays) || stayDays < 1) {
+                error.textContent = currentLang === 'zh' ? '请输入有效的入境日期和停留天数。' : 'Please enter a valid entry date and stay length.';
+                error.classList.remove('hidden');
+                resultDate.textContent = '--';
+                resultNote.textContent = '';
+                return;
+            }
+
+            const exitDate = addDays(entryDate, stayDays);
+            const locale = currentLang === 'zh' ? 'zh-CN' : 'en-US';
+            resultDate.textContent = exitDate.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
+            resultNote.textContent = currentLang === 'zh'
+                ? `按入境次日零时起算，入境日 ${formatDateDisplay(entryDate)}，可停留 ${stayDays} 天。出行前仍请以官方口岸/使领馆要求为准。`
+                : `Calculated from midnight after entry: entry date ${formatDateDisplay(entryDate)}, allowed stay ${stayDays} days. Always verify final requirements with official authorities before travel.`;
+            error.classList.add('hidden');
+
+            document.querySelectorAll('.lw-quick-days button').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.days, 10) === stayDays);
+            });
+        };
+
+        function clampVisaDayToMonth() {
+            const year = parseInt(document.getElementById('visa-year').value, 10);
+            const month = parseInt(document.getElementById('visa-month').value, 10);
+            const dayInput = document.getElementById('visa-day');
+            if (!dayInput || !Number.isFinite(year) || !Number.isFinite(month)) return;
+            const max = getDaysInMonth(year, month);
+            const day = parseInt(dayInput.value, 10);
+            if (Number.isFinite(day) && day > max) dayInput.value = String(max).padStart(2, '0');
+        }
+
+        function getDaysInMonth(year, month) {
+            if (!Number.isFinite(year) || !Number.isFinite(month) || month < 1 || month > 12) return 31;
+            return new Date(year, month, 0).getDate();
+        }
+
+        function quickDateLabel(offsetDays) {
+            if (currentLang === 'zh') {
+                if (offsetDays === -2) return '前天';
+                if (offsetDays === -1) return '昨天';
+                if (offsetDays === 0) return '今天';
+                if (offsetDays === 1) return '明天';
+            }
+            if (offsetDays === -2) return '-2d';
+            if (offsetDays === -1) return 'Yesterday';
+            if (offsetDays === 0) return 'Today';
+            if (offsetDays === 1) return 'Tomorrow';
+            return `${offsetDays > 0 ? '+' : ''}${offsetDays}d`;
+        }
+
+        function parseDateParts(year, month, day) {
+            const y = Number(year);
+            const m = Number(month);
+            const d = Number(day);
+            if (!Number.isInteger(y) || !Number.isInteger(m) || !Number.isInteger(d)) return null;
+            const date = new Date(y, m - 1, d);
+            if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
+            return date;
+        }
+
+        function addDays(date, days) {
+            const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            copy.setDate(copy.getDate() + days);
+            return copy;
+        }
+
+        function formatDateInput(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function formatDateDisplay(date) {
+            return formatDateInput(date);
         }
 
         // ====== Tab Switch ======
@@ -1124,6 +2291,9 @@
 
             // Re-render result if showing
             if (selectedCountry) renderResult();
+            const panel = document.getElementById('tool-panel');
+            const activeTool = document.querySelector('.lw-tool.active');
+            if (panel && activeTool && !panel.classList.contains('hidden')) openTool(activeTool.dataset.tool);
         };
 
         // ====== Close suggestions on click outside ======
