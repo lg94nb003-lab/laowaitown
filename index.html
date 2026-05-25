@@ -271,10 +271,72 @@
         }
         .lw-policy-arrow { font-size: 12px; color: var(--text-tertiary); }
 
-        /* N/A rows */
+        /* ====== N/A rows ====== */
         .lw-policy-row.na .lw-policy-name { color: var(--text-disabled); font-size: 12px; font-weight: 500; }
         .lw-policy-row.na .lw-policy-days { color: var(--text-disabled); font-size: 12px; }
         .lw-policy-row.na .lw-policy-arrow { display: none; }
+
+        /* ====== Expandable Detail Card ====== */
+        .lw-policy-row { position: relative; }
+        .lw-detail-card {
+            display: none;
+            padding: 16px 20px;
+            margin: -1px 0 8px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            text-align: left;
+        }
+        .lw-detail-card.open { display: block; }
+        .lw-detail-scope {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 11px;
+        }
+        .lw-detail-scope-item { color: var(--text-secondary); }
+        .lw-detail-scope-label { color: var(--text-tertiary); font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .lw-detail-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .lw-detail-link {
+            font-size: 11px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .lw-detail-link:hover { text-decoration: underline; }
+        .lw-policy-row.expanded { background: var(--surface); border-radius: 8px 8px 0 0; margin: 0 -8px; padding: 10px 8px; }
+
+        /* ====== 240h Lookup Tabs & Pills ====== */
+        .lw-240h-tabs { display: flex; gap: 0; margin-bottom: 12px; border-bottom: 1px solid var(--divider); }
+        .lw-240h-tab {
+            padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer;
+            color: var(--text-tertiary); border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+        }
+        .lw-240h-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+        .lw-240h-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .lw-pill {
+            padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 600;
+            background: var(--surface); border: 1px solid var(--surface-border);
+            color: var(--text-secondary); cursor: pointer; transition: all 0.15s; white-space: nowrap;
+        }
+        .lw-pill:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.1); }
+        .lw-pill.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+        .lw-240h-more { font-size: 11px; font-weight: 600; color: var(--accent); cursor: pointer; margin-bottom: 12px; display: inline-block; }
+        .lw-240h-more:hover { text-decoration: underline; }
+        .lw-240h-result {
+            padding: 12px 14px; border-radius: 10px; margin-bottom: 12px;
+            background: rgba(94,234,212,0.04); border: 1px solid rgba(94,234,212,0.1);
+        }
+        .lw-240h-result-title { font-size: 12px; font-weight: 700; color: var(--dot-green); margin-bottom: 8px; }
+        .lw-240h-result-row { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+        .lw-240h-result-row strong { color: var(--text-primary); }
+        .lw-240h-port-item { font-size: 10px; color: var(--text-tertiary); padding: 3px 0; border-bottom: 1px solid var(--divider); }
+        .lw-240h-port-item:last-child { border-bottom: none; }
 
         /* ====== C2 NOT AVAILABLE Divider ====== */
         .lw-na-divider {
@@ -385,6 +447,8 @@
             .lw-tool { padding: 10px 2px 6px; border-radius: 10px; }
             .lw-tool-icon { width: 28px; height: 28px; font-size: 13px; }
             .lw-tool-name { font-size: 9px; }
+            .lw-pill { font-size: 10px; padding: 4px 9px; }
+            .lw-240h-tab { font-size: 10px; padding: 5px 10px; }
         }
     </style>
 </head>
@@ -482,19 +546,40 @@
         // ====== Policy Definitions (7 types) ======
         const POLICIES = [
             { id: 'visa-free', en: 'Visa-Free Entry', zh: '免签入境', days_en: '30 days', days_zh: '30天', href: 'visa/visa-free-entry.html',
-              check: (code) => visaFreeCountries.some(c => c.code === code) },
+              check: (code) => visaFreeCountries.some(c => c.code === code),
+              detail_en: 'Nationals of eligible countries holding ordinary passports may enter China visa-free for business, tourism, visiting relatives and friends, exchange visits, or transit for up to 30 days. Stay period is calculated from midnight of the day following entry. Enter via any open port.',
+              detail_zh: '适用国家人员持普通护照来华经商、旅游观光、探亲访友、交流访问、过境不超过30日，可免签入境。停留时间自入境次日零时起算。可从任意开放口岸入境。',
+              scope_en: 'Any open port in China', scope_zh: '中国任意开放口岸' },
             { id: '240h', en: '240h Transit Visa-Free', zh: '240h过境免签', days_en: '10 days', days_zh: '10天', href: 'visa/240-hour-transit-visa.html',
-              check: (code) => transit240Countries.some(c => c.code === code) },
+              check: (code) => transit240Countries.some(c => c.code === code),
+              detail_en: 'Nationals of 55 eligible countries may transit visa-free through 65 open ports across 24 provinces, staying up to 10 days within designated areas. Must hold a confirmed onward ticket to a third country. Tourism, business, and visits allowed; work and study still require a visa.',
+              detail_zh: '对55国实施240小时过境免签，可从24个省份65个口岸入境，在规定区域停留活动不超过10天。须持前往第三国的联程客票。可从事旅游、商务、访问等活动，工作、学习仍需办妥签证。',
+              scope_en: '24 provinces, 65 ports', scope_zh: '24个省份、65个口岸' },
             { id: '24h', en: '24h Transit Visa-Free', zh: '24h过境免签', days_en: '1 day', days_zh: '1天', href: 'visa/24-hour-transit-visa.html',
-              check: () => true }, // all nationalities
+              check: () => true,
+              detail_en: 'All foreign nationals may transit visa-free through any internationally open port in China for up to 24 hours. Must hold a confirmed onward ticket and stay within the port area. Apply for a temporary entry permit if leaving the port area.',
+              detail_zh: '世界各国人员持有效国际旅行证件和定妥座位的联程客票，可在所有对外开放口岸过境停留不超过24小时，不离开口岸限定区域。如需离开须申请临时入境许可。',
+              scope_en: 'All open ports', scope_zh: '所有对外开放口岸' },
             { id: 'hainan', en: 'Hainan 30-Day Visa-Free', zh: '海南30天免签', days_en: '30 days', days_zh: '30天', href: 'visa/hainan-visa-free.html',
-              check: (code) => hainan59Countries.some(c => c.code === code) },
+              check: (code) => hainan59Countries.some(c => c.code === code),
+              detail_en: 'Nationals from 59 eligible countries may enter Hainan visa-free for short-term purposes such as tourism, trade, visits, medical treatment, exhibitions, and sports competitions (excluding work and study). Activity area limited to Hainan Province.',
+              detail_zh: '59国人员持普通护照可免办签证入境海南，因旅游、商贸、访问、探亲、就医、会展、体育竞技等短期来华（工作、学习除外）。活动范围限海南省行政区域。',
+              scope_en: 'Hainan Province only', scope_zh: '仅海南省' },
             { id: 'cruise', en: 'Cruise Visa-Free', zh: '邮轮免签', days_en: '15 days', days_zh: '15天', href: 'visa/cruise-visa-free.html',
-              check: () => true }, // all nationalities (group tour)
+              check: () => true,
+              detail_en: 'Foreign tour groups (2+ people) arriving by cruise and organized by Chinese travel agencies may enter visa-free. Must travel on the same cruise to the next port. Stay up to 15 days across 13 cruise port cities.',
+              detail_zh: '乘坐邮轮并经由中国境内旅行社组织接待的外国旅游团（2人及以上），可免办签证整团入境。须随同一邮轮前往下一港。可在13个邮轮口岸城市停留不超过15天。',
+              scope_en: '13 cruise port cities', scope_zh: '13个邮轮口岸城市' },
             { id: 'guangxi', en: 'Guangxi Border Visa-Free', zh: '广西边境免签', days_en: '15 days', days_zh: '15天', href: '#',
-              check: (code) => ['MY','ID','TH','PH','SG','BN','VN','LA','MM','KH'].includes(code) },
+              check: (code) => ['MY','ID','TH','PH','SG','BN','VN','LA','MM','KH'].includes(code),
+              detail_en: 'ASEAN 10-country tour groups (2+ people) with ordinary passports, organized by Chinese travel agencies, may enter visa-free via group format. Stay up to 15 days.',
+              detail_zh: '东盟10国旅游团（2人及以上），持普通护照经我国境内旅行社组织接待，团进团出免签入境。停留不超过15天。',
+              scope_en: 'Guangxi border area', scope_zh: '广西边境区域' },
             { id: 'gba', en: 'Greater Bay Area Visa-Free', zh: '大湾区免签', days_en: '6 days', days_zh: '6天', href: '#',
-              check: () => true } // diplomatic countries (simplified: all)
+              check: () => true,
+              detail_en: 'Citizens of countries with diplomatic relations with China, arriving from Hong Kong or Macau, may enter visa-free via tour groups (2+) organized by HK/Macau-registered agencies. Group entry and exit required. Stay up to 6 days.',
+              detail_zh: '与中国建交国的公民持普通护照到香港、澳门地区后，经在香港、澳门注册的旅行社组团（2人及以上），团进团出免签入境。停留不超过6天。',
+              scope_en: 'GBA cities + Shantou', scope_zh: '大湾区城市 + 汕头' }
         ];
 
         // ====== Country flag helper ======
@@ -659,6 +744,10 @@
             const country = allCountries.find(c => c.code === code);
             if (!country) return;
             selectedCountry = { ...country, flag: getFlag(code) };
+            // Reset 240h lookup state on new country
+            lookup240hTab = 'province';
+            lookup240hExpanded = false;
+            lookup240hSelected = null;
             hideSuggestions();
             clearSearch();
             renderResult();
@@ -724,16 +813,43 @@
             const list = document.getElementById('policy-list');
             let html = '';
 
-            // Available rows
-            available.forEach(p => {
+            // Available rows (expandable)
+            available.forEach((p, i) => {
                 const name = currentLang === 'zh' ? p.zh : p.en;
                 const days = currentLang === 'zh' ? p.days_zh : p.days_en;
-                html += `<a class="lw-policy-row" href="${p.href}">
+                const detail = currentLang === 'zh' ? p.detail_zh : p.detail_en;
+                const scope = currentLang === 'zh' ? p.scope_zh : p.scope_en;
+                const daysLabel = currentLang === 'zh' ? '停留时间' : 'Stay';
+                const scopeLabel = currentLang === 'zh' ? '活动范围' : 'Area';
+                const viewFull = currentLang === 'zh' ? '查看完整政策详情 →' : 'View full policy details →';
+                html += `<div class="lw-policy-row" onclick="toggleDetail(${i})" data-idx="${i}">
                     <div class="lw-policy-dot green"></div>
                     <div class="lw-policy-name">${name}</div>
                     <div class="lw-policy-days">${days}</div>
                     <span class="lw-policy-arrow">›</span>
-                </a>`;
+                </div>
+                <div class="lw-detail-card" id="detail-${i}">`;
+
+                // Special 240h card with dual-tab lookup
+                if (p.id === '240h') {
+                    html += `<div class="lw-detail-text" style="margin-bottom:14px;">${detail}</div>
+                    <div id="lookup-240h">${build240hLookup()}</div>
+                    <a class="lw-detail-link" href="${p.href}">${viewFull}</a>`;
+                } else {
+                    html += `<div class="lw-detail-scope">
+                        <div class="lw-detail-scope-item">
+                            <div class="lw-detail-scope-label">${daysLabel}</div>
+                            <div>${days}</div>
+                        </div>
+                        <div class="lw-detail-scope-item">
+                            <div class="lw-detail-scope-label">${scopeLabel}</div>
+                            <div>${scope}</div>
+                        </div>
+                    </div>
+                    <div class="lw-detail-text">${detail}</div>
+                    <a class="lw-detail-link" href="${p.href}">${viewFull}</a>`;
+                }
+                html += `</div>`;
             });
 
             // N/A section
@@ -755,6 +871,214 @@
 
             list.innerHTML = html;
         }
+
+        // ====== Toggle Detail Card ======
+        let currentOpenIdx = -1;
+        window.toggleDetail = function(idx) {
+            // Close previously open
+            if (currentOpenIdx >= 0) {
+                const prev = document.getElementById('detail-' + currentOpenIdx);
+                if (prev) prev.classList.remove('open');
+                const prevRow = document.querySelector(`.lw-policy-row[data-idx="${currentOpenIdx}"]`);
+                if (prevRow) prevRow.classList.remove('expanded');
+            }
+            // Toggle current
+            if (currentOpenIdx === idx) {
+                currentOpenIdx = -1;
+            } else {
+                const card = document.getElementById('detail-' + idx);
+                if (card) card.classList.add('open');
+                const row = document.querySelector(`.lw-policy-row[data-idx="${idx}"]`);
+                if (row) row.classList.add('expanded');
+                currentOpenIdx = idx;
+            }
+        };
+
+        // ====== 240h Province/Port Lookup ======
+        const POPULAR_PROVINCES = ['beijing','shanghai','guangdong','zhejiang','sichuan','fujian','hainan','yunnan'];
+        const POPULAR_PORT_NAMES_EN = [
+            'Beijing Capital International Airport',
+            'Beijing Daxing International Airport',
+            'Shanghai Pudong International Airport',
+            'Shanghai Hongqiao International Airport',
+            'Guangzhou Baiyun International Airport',
+            "Shenzhen Bao'an International Airport",
+            'Hangzhou Xiaoshan International Airport',
+            'Chengdu Tianfu International Airport',
+            'Kunming Changshui International Airport',
+            "Xi'an Xianyang International Airport",
+            'Guangzhou-Shenzhen-HK Express Rail West Kowloon'
+        ];
+
+        let lookup240hTab = 'province'; // 'province' | 'port'
+        let lookup240hExpanded = false;
+        let lookup240hSelected = null; // province id or port en-name
+
+        // Build flat port list for reverse lookup
+        function getAllPorts() {
+            const ports = [];
+            transit240Provinces.forEach(prov => {
+                prov.ports.forEach(port => {
+                    ports.push({ ...port, province_id: prov.id, province_en: prov.en, province_zh: prov.zh, area_en: prov.area_en, area_zh: prov.area_zh });
+                });
+            });
+            return ports;
+        }
+
+        function build240hLookup() {
+            const isZh = currentLang === 'zh';
+            const tabProvLabel = isZh ? '按省份' : 'By Province';
+            const tabPortLabel = isZh ? '按口岸' : 'By Port';
+
+            let h = `<div class="lw-240h-tabs">
+                <div class="lw-240h-tab ${lookup240hTab==='province'?'active':''}" onclick="switch240hTab('province')">${tabProvLabel}</div>
+                <div class="lw-240h-tab ${lookup240hTab==='port'?'active':''}" onclick="switch240hTab('port')">${tabPortLabel}</div>
+            </div>`;
+
+            if (lookup240hTab === 'province') {
+                h += buildProvincePills();
+            } else {
+                h += buildPortPills();
+            }
+
+            // Result card
+            if (lookup240hSelected) {
+                h += build240hResult();
+            }
+
+            return h;
+        }
+
+        function buildProvincePills() {
+            const isZh = currentLang === 'zh';
+            const provinces = transit240Provinces;
+            const popular = provinces.filter(p => POPULAR_PROVINCES.includes(p.id));
+            const rest = provinces.filter(p => !POPULAR_PROVINCES.includes(p.id));
+            const showAll = lookup240hExpanded;
+
+            let h = '<div class="lw-240h-pills">';
+            popular.forEach(prov => {
+                const label = isZh ? prov.zh : prov.en;
+                const active = lookup240hSelected === prov.id ? 'active' : '';
+                h += `<span class="lw-pill ${active}" onclick="select240hPill('${prov.id}')">${label}</span>`;
+            });
+            if (showAll) {
+                rest.forEach(prov => {
+                    const label = isZh ? prov.zh : prov.en;
+                    const active = lookup240hSelected === prov.id ? 'active' : '';
+                    h += `<span class="lw-pill ${active}" onclick="select240hPill('${prov.id}')">${label}</span>`;
+                });
+            }
+            h += '</div>';
+
+            if (!showAll && rest.length > 0) {
+                const moreLabel = isZh ? `+${rest.length} 更多 ▾` : `+${rest.length} more ▾`;
+                h += `<span class="lw-240h-more" onclick="toggle240hMore()">${moreLabel}</span>`;
+            } else if (showAll && rest.length > 0) {
+                const lessLabel = isZh ? '收起 ▴' : 'Show less ▴';
+                h += `<span class="lw-240h-more" onclick="toggle240hMore()">${lessLabel}</span>`;
+            }
+            return h;
+        }
+
+        function buildPortPills() {
+            const isZh = currentLang === 'zh';
+            const allPorts = getAllPorts();
+            const popular = allPorts.filter(p => POPULAR_PORT_NAMES_EN.includes(p.en));
+            const rest = allPorts.filter(p => !POPULAR_PORT_NAMES_EN.includes(p.en));
+            const showAll = lookup240hExpanded;
+
+            let h = '<div class="lw-240h-pills">';
+            popular.forEach(port => {
+                const label = isZh ? port.zh : port.en.replace(' International Airport', '').replace(' Airport', '');
+                const active = lookup240hSelected === port.en ? 'active' : '';
+                h += `<span class="lw-pill ${active}" onclick="select240hPort('${port.en.replace(/'/g, '\\&#39;')}')">${label}</span>`;
+            });
+            if (showAll) {
+                rest.forEach(port => {
+                    const label = isZh ? port.zh : port.en.replace(' International Airport', '').replace(' Airport', '');
+                    const active = lookup240hSelected === port.en ? 'active' : '';
+                    h += `<span class="lw-pill ${active}" onclick="select240hPort('${port.en.replace(/'/g, '\\&#39;')}')">${label}</span>`;
+                });
+            }
+            h += '</div>';
+
+            if (!showAll && rest.length > 0) {
+                const moreLabel = isZh ? `+${rest.length} 更多口岸 ▾` : `+${rest.length} more ports ▾`;
+                h += `<span class="lw-240h-more" onclick="toggle240hMore()">${moreLabel}</span>`;
+            } else if (showAll && rest.length > 0) {
+                const lessLabel = isZh ? '收起 ▴' : 'Show less ▴';
+                h += `<span class="lw-240h-more" onclick="toggle240hMore()">${lessLabel}</span>`;
+            }
+            return h;
+        }
+
+        function build240hResult() {
+            const isZh = currentLang === 'zh';
+            let h = '';
+
+            if (lookup240hTab === 'province') {
+                const prov = transit240Provinces.find(p => p.id === lookup240hSelected);
+                if (!prov) return '';
+                const area = isZh ? prov.area_zh : prov.area_en;
+                const provName = isZh ? prov.zh : prov.en;
+                const areaLabel = isZh ? '活动范围' : 'Allowed area';
+                const portsLabel = isZh ? '入境口岸' : 'Entry ports';
+                h += `<div class="lw-240h-result">
+                    <div class="lw-240h-result-title">✓ ${provName}</div>
+                    <div class="lw-240h-result-row"><strong>${areaLabel}:</strong> ${area}</div>
+                    <div class="lw-240h-result-row" style="margin-bottom:6px;"><strong>${portsLabel} (${prov.ports.length}):</strong></div>`;
+                prov.ports.forEach(port => {
+                    const portName = isZh ? port.zh : port.en;
+                    h += `<div class="lw-240h-port-item">· ${portName}</div>`;
+                });
+                h += '</div>';
+            } else {
+                const allPorts = getAllPorts();
+                const port = allPorts.find(p => p.en === lookup240hSelected);
+                if (!port) return '';
+                const portName = isZh ? port.zh : port.en;
+                const provLabel = isZh ? '所属省份' : 'Province';
+                const areaLabel = isZh ? '活动范围' : 'Allowed area';
+                const area = isZh ? port.area_zh : port.area_en;
+                const provName = isZh ? port.province_zh : port.province_en;
+                h += `<div class="lw-240h-result">
+                    <div class="lw-240h-result-title">✓ ${portName}</div>
+                    <div class="lw-240h-result-row"><strong>${provLabel}:</strong> ${provName}</div>
+                    <div class="lw-240h-result-row"><strong>${areaLabel}:</strong> ${area}</div>
+                </div>`;
+            }
+            return h;
+        }
+
+        function refresh240hLookup() {
+            const el = document.getElementById('lookup-240h');
+            if (el) el.innerHTML = build240hLookup();
+        }
+
+        window.switch240hTab = function(tab) {
+            lookup240hTab = tab;
+            lookup240hExpanded = false;
+            lookup240hSelected = null;
+            refresh240hLookup();
+        };
+
+        window.select240hPill = function(provinceId) {
+            lookup240hSelected = (lookup240hSelected === provinceId) ? null : provinceId;
+            refresh240hLookup();
+        };
+
+        window.select240hPort = function(portEn) {
+            // Decode HTML entity back
+            const decoded = portEn.replace(/&#39;/g, "'");
+            lookup240hSelected = (lookup240hSelected === decoded) ? null : decoded;
+            refresh240hLookup();
+        };
+
+        window.toggle240hMore = function() {
+            lookup240hExpanded = !lookup240hExpanded;
+            refresh240hLookup();
+        };
 
         // ====== Language ======
         window.setLanguage = function(lang) {

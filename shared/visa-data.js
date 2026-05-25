@@ -196,6 +196,148 @@ const hainan59Countries = [
 // 注：摩纳哥(MC)在原中文清单中为单独补充项，独立 push 以保持 59 国总数
 hainan59Countries.push({ code:'MC', zh:'摩纳哥', en:'Monaco', continent:'europe' });
 
+// ===== 240h过境免签省份/口岸数据 =====
+// 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
+const transit240Provinces = [
+    { id:'beijing', zh:'北京', en:'Beijing', area_zh:'北京市', area_en:'Beijing',
+      ports: [
+        { zh:'北京首都国际机场口岸', en:'Beijing Capital International Airport' },
+        { zh:'北京大兴国际机场口岸', en:'Beijing Daxing International Airport' }
+      ] },
+    { id:'tianjin', zh:'天津', en:'Tianjin', area_zh:'天津市', area_en:'Tianjin',
+      ports: [
+        { zh:'天津滨海国际机场口岸', en:'Tianjin Binhai International Airport' },
+        { zh:'天津海港口岸（客运）', en:'Tianjin Seaport (Passenger)' }
+      ] },
+    { id:'hebei', zh:'河北', en:'Hebei', area_zh:'河北省', area_en:'Hebei Province',
+      ports: [
+        { zh:'石家庄正定国际机场口岸', en:'Shijiazhuang Zhengding International Airport' },
+        { zh:'秦皇岛海港口岸（客运）', en:'Qinhuangdao Seaport (Passenger)' }
+      ] },
+    { id:'liaoning', zh:'辽宁', en:'Liaoning', area_zh:'沈阳市、大连市', area_en:'Shenyang, Dalian',
+      ports: [
+        { zh:'沈阳桃仙国际机场口岸', en:'Shenyang Taoxian International Airport' },
+        { zh:'大连周水子国际机场口岸', en:'Dalian Zhoushuizi International Airport' },
+        { zh:'大连海港口岸（客运）', en:'Dalian Seaport (Passenger)' }
+      ] },
+    { id:'shanghai', zh:'上海', en:'Shanghai', area_zh:'上海市', area_en:'Shanghai',
+      ports: [
+        { zh:'上海虹桥国际机场口岸', en:'Shanghai Hongqiao International Airport' },
+        { zh:'上海浦东国际机场口岸', en:'Shanghai Pudong International Airport' },
+        { zh:'上海海港口岸（客运）', en:'Shanghai Seaport (Passenger)' }
+      ] },
+    { id:'jiangsu', zh:'江苏', en:'Jiangsu', area_zh:'南京、无锡、扬州、连云港', area_en:'Nanjing, Wuxi, Yangzhou, Lianyungang',
+      ports: [
+        { zh:'南京禄口国际机场口岸', en:'Nanjing Lukou International Airport' },
+        { zh:'苏南硕放国际机场口岸', en:'Sunan Shuofang International Airport' },
+        { zh:'扬州泰州国际机场口岸', en:'Yangzhou Taizhou International Airport' },
+        { zh:'连云港海港口岸（客运）', en:'Lianyungang Seaport (Passenger)' }
+      ] },
+    { id:'zhejiang', zh:'浙江', en:'Zhejiang', area_zh:'杭州、宁波、温州、义乌、舟山', area_en:'Hangzhou, Ningbo, Wenzhou, Yiwu, Zhoushan',
+      ports: [
+        { zh:'杭州萧山国际机场口岸', en:'Hangzhou Xiaoshan International Airport' },
+        { zh:'宁波栎社国际机场口岸', en:'Ningbo Lishe International Airport' },
+        { zh:'温州龙湾国际机场口岸', en:'Wenzhou Longwan International Airport' },
+        { zh:'义乌机场口岸', en:'Yiwu Airport' },
+        { zh:'温州港口岸（客运）', en:'Wenzhou Seaport (Passenger)' },
+        { zh:'舟山港口岸（客运）', en:'Zhoushan Seaport (Passenger)' }
+      ] },
+    { id:'anhui', zh:'安徽', en:'Anhui', area_zh:'合肥、黄山', area_en:'Hefei, Huangshan',
+      ports: [
+        { zh:'合肥新桥国际机场口岸', en:'Hefei Xinqiao International Airport' },
+        { zh:'黄山屯溪国际机场口岸', en:'Huangshan Tunxi International Airport' }
+      ] },
+    { id:'fujian', zh:'福建', en:'Fujian', area_zh:'福州、厦门、泉州、武夷山', area_en:'Fuzhou, Xiamen, Quanzhou, Wuyishan',
+      ports: [
+        { zh:'福州长乐国际机场口岸', en:'Fuzhou Changle International Airport' },
+        { zh:'厦门高崎国际机场口岸', en:'Xiamen Gaoqi International Airport' },
+        { zh:'泉州晋江国际机场口岸', en:'Quanzhou Jinjiang International Airport' },
+        { zh:'武夷山机场口岸', en:'Wuyishan Airport' },
+        { zh:'厦门海港口岸（客运）', en:'Xiamen Seaport (Passenger)' }
+      ] },
+    { id:'shandong', zh:'山东', en:'Shandong', area_zh:'济南、青岛、烟台、威海', area_en:'Jinan, Qingdao, Yantai, Weihai',
+      ports: [
+        { zh:'济南遥墙国际机场口岸', en:'Jinan Yaoqiang International Airport' },
+        { zh:'青岛胶东国际机场口岸', en:'Qingdao Jiaodong International Airport' },
+        { zh:'烟台蓬莱国际机场口岸', en:'Yantai Penglai International Airport' },
+        { zh:'威海大水泊国际机场口岸', en:'Weihai Dashuibo International Airport' },
+        { zh:'青岛海港口岸（客运）', en:'Qingdao Seaport (Passenger)' }
+      ] },
+    { id:'henan', zh:'河南', en:'Henan', area_zh:'郑州市', area_en:'Zhengzhou',
+      ports: [
+        { zh:'郑州新郑国际机场口岸', en:'Zhengzhou Xinzheng International Airport' }
+      ] },
+    { id:'hubei', zh:'湖北', en:'Hubei', area_zh:'武汉市', area_en:'Wuhan',
+      ports: [
+        { zh:'武汉天河国际机场口岸', en:'Wuhan Tianhe International Airport' }
+      ] },
+    { id:'hunan', zh:'湖南', en:'Hunan', area_zh:'长沙、张家界', area_en:'Changsha, Zhangjiajie',
+      ports: [
+        { zh:'长沙黄花国际机场口岸', en:'Changsha Huanghua International Airport' },
+        { zh:'张家界荷花国际机场口岸', en:'Zhangjiajie Hehua International Airport' }
+      ] },
+    { id:'guangdong', zh:'广东', en:'Guangdong', area_zh:'广东省（可从全省所有对外开放口岸出境）', area_en:'Guangdong Province (all open ports)',
+      ports: [
+        { zh:'广州白云国际机场口岸', en:'Guangzhou Baiyun International Airport' },
+        { zh:'深圳宝安国际机场口岸', en:"Shenzhen Bao'an International Airport" },
+        { zh:'揭阳潮汕国际机场口岸', en:'Jieyang Chaoshan International Airport' },
+        { zh:'南沙港口岸（客运）', en:'Nansha Seaport (Passenger)' },
+        { zh:'蛇口港口岸（客运）', en:'Shekou Seaport (Passenger)' },
+        { zh:'广州港口岸琶洲港澳客运码头', en:'Guangzhou Port Pazhou HK-Macao Terminal' },
+        { zh:'中山港口岸中山港区客运码头', en:'Zhongshan Port Passenger Terminal' },
+        { zh:'横琴口岸', en:'Hengqin Port' },
+        { zh:'港珠澳大桥珠海公路口岸', en:'HK-Zhuhai-Macao Bridge Zhuhai Port' },
+        { zh:'广深港高铁西九龙站口岸', en:'Guangzhou-Shenzhen-HK Express Rail West Kowloon' }
+      ] },
+    { id:'hainan', zh:'海南', en:'Hainan', area_zh:'海南省', area_en:'Hainan Province',
+      ports: [
+        { zh:'海口美兰国际机场口岸', en:'Haikou Meilan International Airport' },
+        { zh:'三亚凤凰国际机场口岸', en:'Sanya Phoenix International Airport' }
+      ] },
+    { id:'chongqing', zh:'重庆', en:'Chongqing', area_zh:'重庆市', area_en:'Chongqing',
+      ports: [
+        { zh:'重庆江北国际机场口岸', en:'Chongqing Jiangbei International Airport' }
+      ] },
+    { id:'guizhou', zh:'贵州', en:'Guizhou', area_zh:'贵阳市', area_en:'Guiyang',
+      ports: [
+        { zh:'贵阳龙洞堡国际机场口岸', en:'Guiyang Longdongbao International Airport' }
+      ] },
+    { id:'shaanxi', zh:'陕西', en:'Shaanxi', area_zh:'西安市', area_en:"Xi'an",
+      ports: [
+        { zh:'西安咸阳国际机场口岸', en:"Xi'an Xianyang International Airport" }
+      ] },
+    { id:'shanxi', zh:'山西', en:'Shanxi', area_zh:'太原市、大同市', area_en:'Taiyuan, Datong',
+      ports: [
+        { zh:'太原武宿国际机场口岸', en:'Taiyuan Wusu International Airport' }
+      ] },
+    { id:'heilongjiang', zh:'黑龙江', en:'Heilongjiang', area_zh:'哈尔滨市', area_en:'Harbin',
+      ports: [
+        { zh:'哈尔滨太平国际机场口岸', en:'Harbin Taiping International Airport' }
+      ] },
+    { id:'jiangxi', zh:'江西', en:'Jiangxi', area_zh:'南昌市、景德镇市', area_en:'Nanchang, Jingdezhen',
+      ports: [
+        { zh:'南昌昌北国际机场口岸', en:'Nanchang Changbei International Airport' }
+      ] },
+    { id:'guangxi', zh:'广西', en:'Guangxi', area_zh:'南宁、柳州、桂林、梧州、北海、防城港、钦州、贵港、玉林、贺州、河池、来宾12市', area_en:'Nanning, Liuzhou, Guilin, Wuzhou, Beihai, Fangchenggang, Qinzhou, Guigang, Yulin, Hezhou, Hechi, Laibin (12 cities)',
+      ports: [
+        { zh:'南宁吴圩国际机场口岸', en:'Nanning Wuxu International Airport' },
+        { zh:'桂林两江国际机场口岸', en:'Guilin Liangjiang International Airport' },
+        { zh:'北海福成机场口岸', en:'Beihai Fucheng Airport' },
+        { zh:'北海海港口岸（客运）', en:'Beihai Seaport (Passenger)' }
+      ] },
+    { id:'sichuan', zh:'四川', en:'Sichuan', area_zh:'成都、自贡、泸州、德阳、遂宁、内江、乐山、宜宾、雅安、眉山、资阳11市', area_en:'Chengdu, Zigong, Luzhou, Deyang, Suining, Neijiang, Leshan, Yibin, Ya\'an, Meishan, Ziyang (11 cities)',
+      ports: [
+        { zh:'成都双流国际机场口岸', en:'Chengdu Shuangliu International Airport' },
+        { zh:'成都天府国际机场口岸', en:'Chengdu Tianfu International Airport' }
+      ] },
+    { id:'yunnan', zh:'云南', en:'Yunnan', area_zh:'昆明、玉溪、楚雄、红河、文山、普洱、西双版纳、大理、丽江9市州', area_en:'Kunming, Yuxi, Chuxiong, Honghe, Wenshan, Pu\'er, Xishuangbanna, Dali, Lijiang (9 prefectures)',
+      ports: [
+        { zh:'昆明长水国际机场口岸', en:'Kunming Changshui International Airport' },
+        { zh:'丽江三义国际机场口岸', en:'Lijiang Sanyi International Airport' },
+        { zh:'磨憨铁路口岸', en:'Mohan Railway Port' }
+      ] }
+];
+
 // ===== 时区数据 =====
 const tzs = [
     { value: "Asia/Shanghai", zh: "北京/上海 (CST)", en: "Beijing / Shanghai (CST)" },
