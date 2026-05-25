@@ -661,14 +661,20 @@
             document.getElementById('search-clear').classList.toggle('show', val.length > 0);
             sugIndex = -1;
 
-            if (val.length === 0) { hideSuggestions(); return; }
+            if (val.length === 0) { showPopularCountries(); return; }
 
             if (currentTab === 'country') {
+                const q = val.toLowerCase();
                 const matches = allCountries.filter(c => {
-                    const q = val.toLowerCase();
                     return c.en.toLowerCase().includes(q) || c.zh.includes(q) || c.code.toLowerCase() === q;
-                }).slice(0, 6);
-                showCountrySuggestions(matches);
+                });
+                // Sort: starts-with first, then contains
+                matches.sort((a, b) => {
+                    const aStarts = a.en.toLowerCase().startsWith(q) || a.zh.startsWith(val) ? 0 : 1;
+                    const bStarts = b.en.toLowerCase().startsWith(q) || b.zh.startsWith(val) ? 0 : 1;
+                    return aStarts - bStarts;
+                });
+                showCountrySuggestions(matches.slice(0, 6));
             } else {
                 const q = val.toLowerCase();
                 const matches = PURPOSES.filter(p =>
@@ -681,7 +687,27 @@
         window.onSearchFocus = function() {
             const val = document.getElementById('search-input').value.trim();
             if (val.length > 0) onSearchInput();
+            else if (currentTab === 'country') showPopularCountries();
         };
+
+        // ====== Popular Countries (shown on focus with empty input) ======
+        const POPULAR_COUNTRIES = ['US','GB','JP','AU','KR'];
+        function showPopularCountries() {
+            if (currentTab !== 'country') { hideSuggestions(); return; }
+            const matches = POPULAR_COUNTRIES.map(code => allCountries.find(c => c.code === code)).filter(Boolean);
+            if (!matches.length) return;
+            const el = document.getElementById('suggestions');
+            const hotLabel = currentLang === 'zh' ? '热门国家' : 'Popular';
+            el.innerHTML = `<div style="padding:8px 20px 4px;font-size:10px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:1px;">${hotLabel}</div>` +
+                matches.map(c => `
+                <div class="lw-sug-item" onclick="selectCountry('${c.code}')">
+                    <span class="lw-sug-flag">${getFlag(c.code)}</span>
+                    <span class="lw-sug-name">${currentLang === 'zh' ? c.zh : c.en}</span>
+                </div>
+            `).join('');
+            el.classList.add('show');
+            document.getElementById('search-input').classList.add('has-suggestions');
+        }
 
         window.onSearchKeydown = function(e) {
             const items = document.querySelectorAll('.lw-sug-item');
