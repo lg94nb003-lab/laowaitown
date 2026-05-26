@@ -1,13 +1,18 @@
 /* =========================================================
    LAOWAITOWN Navigation Data
-   Six top categories + sub-page lists for left sidebar
+   Public top categories + sub-page lists for left sidebar
    Used by sub-pages to render unified navigation
    ========================================================= */
 
 window.LWNavData = {
     categories: [
+        { id: 'home',      label: 'Home',     href: '/',           desc: 'Visa checker and China travel tools' },
         { id: 'visa',      label: 'Visa',     href: '/visa/',      desc: 'Visa-free entry, transit, residence' },
-        { id: 'life',      label: 'Life',     href: '/life/',      desc: 'SIM, payment, transport, housing' },
+        { id: 'life',      label: 'Life',     href: '/life/',      desc: 'Payment, eSIM, maps, emergency basics' },
+        { id: 'tools',     label: 'Tools',    href: '/#tools',     desc: 'Stay calculator, FX, timezone, phrases' }
+    ],
+
+    futureCategories: [
         { id: 'travel',    label: 'Travel',   href: '/travel/',    desc: 'Hotels, trains, attractions' },
         { id: 'business',  label: 'Business', href: '/business/',  desc: 'Trade, jobs, company setup' },
         { id: 'education', label: 'Study',    href: '/education/', desc: 'HSK, scholarships, schools' },
@@ -27,6 +32,14 @@ window.LWNavData = {
         { href: '/visa/arrival-card.html',            label: 'Arrival Card' },
         { href: '/visa/entry-medical-exam.html',      label: 'Entry Medical Exam' },
         { href: '/visa/visa-extension-overstay.html', label: 'Extension & Overstay' }
+    ],
+
+    life: [
+        { href: '/life/pay-in-china-as-foreigner.html', label: 'Pay in China' },
+        { href: '/life/china-esim-travel.html', label: 'China eSIM' },
+        { href: '/life/maps-in-china.html', label: 'Maps in China' },
+        { href: '/life/emergency-numbers-china.html', label: 'Emergency Numbers' },
+        { href: '/life/hotel-registration-china.html', label: 'Hotel Registration' }
     ]
 };
 
@@ -184,6 +197,42 @@ window.LWDisclaimer =
     'announcements but are not affiliated with, endorsed by, or operated on behalf of any ' +
     'Chinese government authority. Always verify with the Chinese embassy or consulate before travel.';
 
+window.LWDefaultLastVerified = '2026-05-26';
+
+window.LWSourceLinks = {
+    'National Immigration Administration (NIA)': 'https://en.nia.gov.cn/',
+    'Ministry of Foreign Affairs (MFA)': 'https://www.mfa.gov.cn/eng/',
+    'China Consular Service': 'https://cs.mfa.gov.cn/',
+    'Hainan Provincial Government': 'https://en.hainan.gov.cn/',
+    'State Council Information Office': 'https://english.www.gov.cn/',
+    'State Council': 'https://english.www.gov.cn/',
+    'State Council Gazette': 'https://www.gov.cn/gongbao/',
+    'General Administration of Customs (GAC)': 'http://english.customs.gov.cn/',
+    'National Health Commission (NHC)': 'http://en.nhc.gov.cn/',
+    'Public Security Bureau Exit & Entry Administration (EEA)': 'https://en.nia.gov.cn/',
+    'Ministry of Foreign Affairs (MFA) Consular Department': 'https://cs.mfa.gov.cn/',
+    'NIA Online Arrival Card portal (s.nia.gov.cn)': 'https://s.nia.gov.cn/'
+};
+
+function LWEscapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[ch]));
+}
+
+function LWRenderSourceLink(source) {
+    const name = typeof source === 'string' ? source : source.name;
+    const href = typeof source === 'string' ? window.LWSourceLinks[name] : source.href;
+    const safeName = LWEscapeHtml(name);
+    return href
+        ? `<a class="lw-source-link" href="${href}" target="_blank" rel="noopener">${safeName}</a>`
+        : `<span>${safeName}</span>`;
+}
+
 /* =========================================================
    Render policy status: pill, changelog, sources + disclaimer
    Call: window.LWRenderStatus('visa-240-hour-transit');
@@ -193,7 +242,7 @@ window.LWRenderStatus = function (pageId) {
     const data = (window.LWPolicyStatus || {})[pageId];
     if (!data) return;
 
-    /* Auto-classify by effectiveSince if status not explicitly set */
+    /* Auto-classify by effectiveSince if status is not explicitly set. */
     let status = data.status;
     if (!status) {
         if (data.effectiveSince) {
@@ -206,16 +255,17 @@ window.LWRenderStatus = function (pageId) {
     const statusMap = {
         'active':           { cls: '',         label: 'Active' },
         'recently-updated': { cls: 'recent',   label: 'Recently updated' },
-        'outdated':         { cls: 'outdated', label: 'Outdated · do not rely on' }
+        'outdated':         { cls: 'outdated', label: 'Outdated - do not rely on' }
     };
     const s = statusMap[status] || statusMap.active;
+    const lastVerified = data.lastVerified || window.LWDefaultLastVerified;
 
     /* 1. Pill next to H1 */
     const pillHost = document.getElementById('lw-status-pill');
     if (pillHost) {
         const since = data.effectiveSince ? `Effective since ${data.effectiveSince}` : '';
         pillHost.className = 'lw-status-pill' + (s.cls ? ' ' + s.cls : '');
-        pillHost.innerHTML = `<span class="dot"></span>${s.label}${since ? ' · ' + since : ''}`;
+        pillHost.innerHTML = `<span class="dot"></span>${s.label}${since ? ' - ' + since : ''}`;
         pillHost.style.display = 'inline-flex';
     }
 
@@ -223,27 +273,38 @@ window.LWRenderStatus = function (pageId) {
     const cl = document.getElementById('lw-changelog');
     if (cl && data.changelog && data.changelog.length) {
         cl.innerHTML = `
-            <h4>✏ What's new</h4>
+            <h4>What's new</h4>
             <ul>
                 ${data.changelog.map(c =>
-                    `<li class="${c.isNew ? 'new' : ''}"><time>${c.date}</time><span>${c.text}</span></li>`
+                    `<li class="${c.isNew ? 'new' : ''}"><time>${LWEscapeHtml(c.date)}</time><span>${LWEscapeHtml(c.text)}</span></li>`
                 ).join('')}
             </ul>
         `;
         cl.style.display = 'block';
     }
 
-    /* 3. Sources (plain text, no hyperlinks) + disclaimer */
+    /* 3. Sources, verification metadata + disclaimer */
     const src = document.getElementById('lw-sources');
     if (src) {
-        const sourcesLine = (data.sources && data.sources.length)
-            ? `<strong>Sources:</strong><span class="src-list">${data.sources.join(' · ')}</span> · <em>Cross-checked monthly against official announcements.</em>`
+        const sourceLinks = (data.sources && data.sources.length)
+            ? data.sources.map(LWRenderSourceLink).join(' <span class="sep">/</span> ')
+            : '';
+        const sourcesLine = sourceLinks
+            ? `<div class="lw-source-row"><strong>Sources</strong><span class="src-list">${sourceLinks}</span></div>`
             : '';
         const disclaimer = window.LWDisclaimer
-            ? `<span class="disclaimer">${window.LWDisclaimer}</span>`
+            ? `<span class="disclaimer">${LWEscapeHtml(window.LWDisclaimer)}</span>`
             : '';
         if (sourcesLine || disclaimer) {
-            src.innerHTML = sourcesLine + disclaimer;
+            src.innerHTML = `
+                <div class="lw-trust-grid">
+                    <div><strong>Status</strong><span>${LWEscapeHtml(s.label)}</span></div>
+                    <div><strong>Last verified</strong><span>${LWEscapeHtml(lastVerified)}</span></div>
+                    <div><strong>Effective since</strong><span>${LWEscapeHtml(data.effectiveSince || 'N/A')}</span></div>
+                </div>
+                ${sourcesLine}
+                <div class="lw-source-row"><strong>Disclaimer</strong>${disclaimer}</div>
+            `;
             src.style.display = 'block';
         }
     }

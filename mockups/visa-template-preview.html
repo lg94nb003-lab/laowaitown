@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAOWAITOWN Visa Template Preview</title>
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --panel: rgba(255, 255, 255, .045);
+      --panel-strong: rgba(255, 255, 255, .075);
+      --border: rgba(255, 255, 255, .08);
+      --border-strong: rgba(255, 255, 255, .14);
+      --text: #f8fafc;
+      --muted: rgba(248, 250, 252, .62);
+      --faint: rgba(248, 250, 252, .34);
+      --accent: #7c6ef0;
+      --accent-soft: rgba(124, 110, 240, .18);
+      --cyan: #5eead4;
+      --amber: #fbbf24;
+      --red: #fda4af;
+      --green-soft: rgba(94, 234, 212, .12);
+      --amber-soft: rgba(251, 191, 36, .12);
+      --red-soft: rgba(253, 164, 175, .12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% -10%, rgba(94, 234, 212, .10), transparent 32%),
+        radial-gradient(circle at 90% 0%, rgba(124, 110, 240, .12), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 15, 26, .84);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 850;
+      letter-spacing: .02em;
+    }
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--cyan), var(--accent));
+      color: #06111f;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .nav a.active { color: var(--text); }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 80px;
+    }
+
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--faint);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-main,
+    .answer-card,
+    .panel,
+    .mini-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .24);
+    }
+
+    .hero-main {
+      padding: 34px;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 680px;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: .98;
+      font-weight: 880;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .btn {
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      color: var(--text);
+      background: rgba(255, 255, 255, .06);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent), #5eead4);
+      color: #07111f;
+    }
+
+    .search {
+      height: 52px;
+      width: 100%;
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 16px 0 18px;
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .07);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .answer-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .answer-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .answer-head h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .status-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .answer-item {
+      min-height: 86px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .answer-item span {
+      display: block;
+      color: var(--faint);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .answer-item strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .yes { color: var(--cyan); }
+    .no { color: var(--red); }
+    .maybe { color: var(--amber); }
+
+    .hub-grid,
+    .detail-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hub-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 28px;
+    }
+
+    .mini-card {
+      min-height: 142px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mini-card small {
+      color: var(--faint);
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .mini-card h3 {
+      margin: 10px 0 8px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .mini-card p,
+    .panel p,
+    .panel li {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      height: 34px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .04);
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .panel {
+      padding: 24px;
+      margin-top: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .detail-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .detail-card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .detail-card h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .detail-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      counter-reset: steps;
+      margin-top: 12px;
+    }
+
+    .step {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .step:before {
+      content: counter(steps);
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--text);
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .trust {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .trust div {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .trust span {
+      display: block;
+      color: var(--faint);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .trust strong {
+      display: block;
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .preview-note {
+      margin: 28px 0 0;
+      color: var(--faint);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .topbar { padding: 0 18px; }
+      .nav { gap: 14px; }
+      .wrap { width: min(100% - 24px, 720px); padding-top: 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .detail-grid { grid-template-columns: 1fr; }
+      .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .nav a:not(.active) { display: none; }
+      .hero-main { padding: 24px; min-height: auto; }
+      .answer-grid,
+      .hub-grid,
+      .trust { grid-template-columns: 1fr; }
+      .answer-head { flex-direction: column; }
+      .cta-row .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="mark">LW</span>
+      <span>LAOWAITOWN</span>
+    </a>
+    <nav class="nav" aria-label="Preview navigation">
+      <a href="#">Home</a>
+      <a class="active" href="#">Visa</a>
+      <a href="#">Life</a>
+      <a href="#">Tools</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <p class="section-label">Preview A / Visa directory</p>
+    <section class="hero">
+      <div class="hero-main">
+        <div>
+          <h1>China Visa-Free & Transit Hub</h1>
+          <p class="lead">Find the right China entry option before you book flights, hotels, or a long layover.</p>
+          <div class="search">
+            <span>Search your passport country</span>
+            <strong>Check</strong>
+          </div>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#">Check my country</a>
+          <a class="btn" href="#">Stay calculator</a>
+          <a class="btn" href="#">240h guide</a>
+        </div>
+      </div>
+
+      <aside class="answer-card">
+        <div class="answer-head">
+          <div>
+            <h2>Fast decision panel</h2>
+            <p class="lead" style="font-size:13px;margin-top:8px;">Use this as the repeated top block for country, port, and route pages.</p>
+          </div>
+          <span class="status-pill"><span class="dot"></span>Active</span>
+        </div>
+        <div class="answer-grid">
+          <div class="answer-item"><span>30-day visa-free</span><strong class="no">No</strong></div>
+          <div class="answer-item"><span>240h transit</span><strong class="yes">Yes</strong></div>
+          <div class="answer-item"><span>24h transit</span><strong class="maybe">Usually</strong></div>
+          <div class="answer-item"><span>Hainan visa-free</span><strong class="yes">Yes</strong></div>
+        </div>
+        <div class="cta-row" style="margin-top:2px;">
+          <a class="btn primary" href="#">Calculate dates</a>
+          <a class="btn" href="#">Phrasebook</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="hub-grid">
+      <a class="mini-card" href="#"><small>Core guide</small><div><h3>30-day visa-free</h3><p>Eligible countries, purposes, and stay counting.</p></div></a>
+      <a class="mini-card" href="#"><small>Transit</small><div><h3>240-hour transit</h3><p>Ports, allowed areas, documents, and route rules.</p></div></a>
+      <a class="mini-card" href="#"><small>Short layover</small><div><h3>24-hour transit</h3><p>For short international connections through China.</p></div></a>
+      <a class="mini-card" href="#"><small>Island route</small><div><h3>Hainan visa-free</h3><p>Hainan-only entry for eligible passports.</p></div></a>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Popular checks</h2>
+        <a class="btn" href="#">View all</a>
+      </div>
+      <div class="chips">
+        <span class="chip">United States</span>
+        <span class="chip">United Kingdom</span>
+        <span class="chip">Canada</span>
+        <span class="chip">Australia</span>
+        <span class="chip">Germany</span>
+        <span class="chip">France</span>
+        <span class="chip">Japan</span>
+        <span class="chip">South Korea</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>240h transit by city</h2>
+        <a class="btn" href="#">Transit map</a>
+      </div>
+      <div class="chips">
+        <span class="chip">Shanghai</span>
+        <span class="chip">Beijing</span>
+        <span class="chip">Guangzhou</span>
+        <span class="chip">Shenzhen / Guangdong</span>
+        <span class="chip">Chengdu</span>
+        <span class="chip">Xiamen</span>
+      </div>
+    </section>
+
+    <p class="section-label" style="margin-top:42px;">Preview B / Detail page</p>
+    <section class="hero">
+      <div class="hero-main">
+        <div>
+          <h1>China Visa-Free Entry for US Citizens 2026</h1>
+          <p class="lead">Quick answer before you book your China trip: the US is not in the 30-day visa-free list, but 240-hour transit may work for the right route.</p>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#">Calculate stay dates</a>
+          <a class="btn" href="#">Open phrasebook</a>
+        </div>
+      </div>
+      <aside class="answer-card">
+        <div class="answer-head">
+          <h2>Quick answer</h2>
+          <span class="status-pill"><span class="dot"></span>Verified</span>
+        </div>
+        <div class="answer-grid">
+          <div class="answer-item"><span>30-day entry</span><strong class="no">No</strong></div>
+          <div class="answer-item"><span>240h transit</span><strong class="yes">Yes</strong></div>
+          <div class="answer-item"><span>24h transit</span><strong class="maybe">Usually</strong></div>
+          <div class="answer-item"><span>Hainan</span><strong class="yes">Yes</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>What this means</h2>
+      </div>
+      <p>US passport holders should not rely on the normal 30-day visa-free route in this example. For a short China stop, compare 240-hour transit, 24-hour transit, Hainan entry, or a regular visa.</p>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h3>Conditions</h3>
+          <ul>
+            <li>Eligible passport and route.</li>
+            <li>Confirmed onward ticket.</li>
+            <li>Stay inside allowed area.</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h3>Documents</h3>
+          <ul>
+            <li>Passport.</li>
+            <li>Hotel address.</li>
+            <li>Return or onward booking.</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h3>Common risks</h3>
+          <ul>
+            <li>Wrong transit route.</li>
+            <li>Unclear itinerary.</li>
+            <li>Counting stay dates incorrectly.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Step-by-step</h2>
+      </div>
+      <div class="timeline">
+        <div class="step"><p>Check whether your passport and purpose match the route you want to use.</p></div>
+        <div class="step"><p>Confirm your arrival city, allowed stay area, and onward destination.</p></div>
+        <div class="step"><p>Use the stay calculator before booking flights and hotels.</p></div>
+        <div class="step"><p>Prepare a short explanation and keep documents ready at entry.</p></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Policy status</h2>
+      </div>
+      <div class="trust">
+        <div><span>Status</span><strong>Active reference</strong></div>
+        <div><span>Last verified</span><strong>2026-05-26</strong></div>
+        <div><span>Sources</span><strong>NIA / MFA / official pages</strong></div>
+        <div><span>Disclaimer</span><strong>Independent reference site</strong></div>
+      </div>
+    </section>
+
+    <p class="preview-note">This is a standalone visual preview. It does not change the production Visa pages yet.</p>
+  </main>
+</body>
+</html>

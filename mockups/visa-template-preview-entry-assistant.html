@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAOWAITOWN Entry Assistant Preview</title>
+  <style>
+    :root {
+      --page: #f8fafc;
+      --paper: #ffffff;
+      --ink: #132033;
+      --body: #526070;
+      --muted: #7a8798;
+      --line: #dfe5ee;
+      --line-soft: #edf1f6;
+      --navy: #16253d;
+      --blue: #2563eb;
+      --blue-soft: #eef4ff;
+      --teal: #087b6f;
+      --teal-soft: #edf7f5;
+      --gold: #b25e09;
+      --gold-soft: #fff7ed;
+      --red: #b42318;
+      --red-soft: #fff1f0;
+      --shadow: 0 18px 48px rgba(19, 32, 51, .09);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248, 250, 252, .92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 840;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: white;
+      background: var(--navy);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--body);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .nav a.active { color: var(--ink); }
+
+    .nav .cta {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border-radius: var(--radius);
+      background: var(--navy);
+      color: white;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(380px, .92fr);
+      gap: 28px;
+      align-items: stretch;
+      padding: 46px 0 26px;
+    }
+
+    .intro,
+    .assistant-card,
+    .panel,
+    .persona-card,
+    .route-card,
+    .source-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      padding: 38px;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .intro:after {
+      content: "";
+      position: absolute;
+      left: 38px;
+      right: 38px;
+      bottom: 124px;
+      height: 1px;
+      background: var(--line-soft);
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: .98;
+      letter-spacing: 0;
+      font-weight: 870;
+    }
+
+    .lead {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: var(--body);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 15px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .button.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    .button.soft {
+      border-color: #d8e4ff;
+      background: var(--blue-soft);
+      color: #244879;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .journey-step {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .journey-step span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .journey-step strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .assistant-card {
+      padding: 24px;
+    }
+
+    .assistant-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .assistant-head h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.22;
+    }
+
+    .assistant-head p {
+      margin: 7px 0 0;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: var(--radius);
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge:before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .form-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .field strong {
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid #cce9e4;
+      border-radius: var(--radius);
+      background: var(--teal-soft);
+    }
+
+    .result h3 {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 17px;
+    }
+
+    .result-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .result-chip {
+      padding: 10px;
+      border-radius: var(--radius);
+      background: white;
+      border: 1px solid rgba(8, 123, 111, .16);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .result-chip.no {
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: #ffd8d4;
+    }
+
+    .result-chip.maybe {
+      color: var(--gold);
+      background: var(--gold-soft);
+      border-color: #f4dfbd;
+    }
+
+    .section {
+      margin-top: 44px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    .section p {
+      margin: 8px 0 0;
+      color: var(--body);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .persona-card {
+      min-height: 210px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .persona-card small,
+    .route-card small {
+      width: fit-content;
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      padding: 0 9px;
+      border-radius: var(--radius);
+      background: var(--blue-soft);
+      color: #244879;
+      font-size: 12px;
+      font-weight: 780;
+    }
+
+    .persona-card h3,
+    .route-card h3 {
+      margin: 18px 0 8px;
+      font-size: 20px;
+      line-height: 1.22;
+    }
+
+    .persona-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .route-card {
+      padding: 18px;
+      min-height: 168px;
+    }
+
+    .route-card p {
+      margin: 0;
+      color: var(--body);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .trust-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .75fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 24px;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .source-card {
+      box-shadow: none;
+      padding: 14px;
+      background: #fbfcfe;
+    }
+
+    .source-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 780;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .source-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line-soft);
+      color: var(--body);
+      font-size: 14px;
+    }
+
+    .status-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .status-row strong {
+      color: var(--ink);
+    }
+
+    .mobile-preview {
+      display: none;
+      margin-top: 30px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+    }
+
+    .preview-note {
+      margin: 30px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1020px) {
+      .shell { width: min(760px, calc(100% - 28px)); }
+      .hero,
+      .trust-layout,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+      .persona-grid,
+      .journey,
+      .route-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(100% - 24px, 560px); }
+      .topbar { height: 64px; }
+      .nav a:not(.active), .nav .cta { display: none; }
+      .hero { padding-top: 26px; }
+      .intro { padding: 24px; min-height: auto; }
+      .intro:after { display: none; }
+      h1 { font-size: 39px; }
+      .lead { font-size: 16px; }
+      .assistant-head { flex-direction: column; }
+      .field,
+      .result-list,
+      .persona-grid,
+      .journey,
+      .route-grid,
+      .source-grid {
+        grid-template-columns: 1fr;
+      }
+      .button { width: 100%; }
+      .mobile-preview { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark">LW</span>
+        <span>LAOWAITOWN</span>
+      </a>
+      <nav class="nav" aria-label="Preview navigation">
+        <a href="#">Home</a>
+        <a class="active" href="#">Entry Assistant</a>
+        <a href="#">Guides</a>
+        <a href="#">Tools</a>
+        <a class="cta" href="#">Start check</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="intro">
+          <div>
+            <p class="eyebrow">For tourists, business visitors, and transit travelers</p>
+            <h1>Plan your China entry with fewer policy surprises.</h1>
+            <p class="lead">Instead of asking users to pick a policy first, this layout starts from how they think: passport, route, dates, and purpose.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#">Start an entry check</a>
+              <a class="button soft" href="#">Compare visa-free options</a>
+              <a class="button" href="#">View official sources</a>
+            </div>
+          </div>
+          <div class="journey">
+            <div class="journey-step"><span>Step 1</span><strong>Passport and purpose</strong></div>
+            <div class="journey-step"><span>Step 2</span><strong>Route and arrival city</strong></div>
+            <div class="journey-step"><span>Step 3</span><strong>Stay dates and documents</strong></div>
+          </div>
+        </div>
+
+        <aside class="assistant-card">
+          <div class="assistant-head">
+            <div>
+              <h2>Entry check preview</h2>
+              <p>A product-like card that could sit at the top of Visa pages and guide pages.</p>
+            </div>
+            <span class="badge">Source-backed</span>
+          </div>
+
+          <div class="form-stack">
+            <div class="field"><label>Passport</label><strong>United States</strong></div>
+            <div class="field"><label>Purpose</label><strong>Transit and short visit</strong></div>
+            <div class="field"><label>Route</label><strong>US -> Beijing -> Thailand</strong></div>
+            <div class="field"><label>Entry date</label><strong>June 18, 2026</strong></div>
+          </div>
+
+          <div class="result">
+            <h3>Likely paths to review</h3>
+            <div class="result-list">
+              <div class="result-chip no">30-day visa-free: No</div>
+              <div class="result-chip">240h transit: Yes</div>
+              <div class="result-chip maybe">24h transit: Usually</div>
+              <div class="result-chip">Hainan: Possible</div>
+            </div>
+          </div>
+
+          <div class="hero-actions" style="margin-top:16px;">
+            <a class="button primary" href="#">Calculate stay</a>
+            <a class="button" href="#">Show entry phrases</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Built around visitor intent.</h2>
+            <p>Tourists and business visitors usually do not know the name of the policy. They know what trip they are trying to take.</p>
+          </div>
+        </div>
+        <div class="persona-grid">
+          <article class="persona-card">
+            <div>
+              <small>Tourist</small>
+              <h3>Can I enter China without a visa?</h3>
+            </div>
+            <ul>
+              <li>Passport quick check.</li>
+              <li>Stay-date calculator.</li>
+              <li>Hotel and payment reminders.</li>
+            </ul>
+          </article>
+          <article class="persona-card">
+            <div>
+              <small>Business</small>
+              <h3>Can I attend meetings or trade visits?</h3>
+            </div>
+            <ul>
+              <li>Purpose eligibility.</li>
+              <li>Document checklist.</li>
+              <li>Conservative disclaimers.</li>
+            </ul>
+          </article>
+          <article class="persona-card">
+            <div>
+              <small>Transit</small>
+              <h3>Does my route qualify for 240h?</h3>
+            </div>
+            <ul>
+              <li>Third-country logic.</li>
+              <li>Port and city area limits.</li>
+              <li>Airline-ready explanation.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Examples feel like real trips.</h2>
+            <p>These cards are more understandable to a traveler than policy names alone.</p>
+          </div>
+        </div>
+        <div class="route-grid">
+          <article class="route-card">
+            <small>Transit route</small>
+            <h3>US -> Beijing -> Thailand</h3>
+            <p>Check 240-hour transit conditions and documents.</p>
+          </article>
+          <article class="route-card">
+            <small>Transit route</small>
+            <h3>UK -> Guangzhou -> Hong Kong</h3>
+            <p>Understand the region logic before booking.</p>
+          </article>
+          <article class="route-card">
+            <small>City guide</small>
+            <h3>Shanghai 240h transit</h3>
+            <p>Airports, stay area, and common route mistakes.</p>
+          </article>
+          <article class="route-card">
+            <small>Country guide</small>
+            <h3>Japan citizens</h3>
+            <p>Compare 30-day entry, transit, and Hainan options.</p>
+          </article>
+          <article class="route-card">
+            <small>Arrival guide</small>
+            <h3>Paying in China</h3>
+            <p>Prepare payment apps, backup cards, and cash.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section trust-layout">
+        <article class="panel">
+          <h2>Why this may work better</h2>
+          <p>It feels less like a website category page and more like a travel decision product. That is usually easier for foreign users, because the interface starts with their trip rather than the legal taxonomy.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#">Run a check</a>
+            <a class="button" href="#">Read full guide</a>
+          </div>
+        </article>
+
+        <aside class="panel">
+          <h2>Trust signals</h2>
+          <div class="source-grid">
+            <div class="source-card"><span>Status</span><strong>Active reference</strong></div>
+            <div class="source-card"><span>Verified</span><strong>2026-05-26</strong></div>
+            <div class="source-card"><span>Sources</span><strong>NIA / MFA / official pages</strong></div>
+            <div class="source-card"><span>Disclaimer</span><strong>Independent reference site</strong></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="mobile-preview">
+        <h2 style="margin:0 0 12px;font-size:24px;">Mobile idea</h2>
+        <div class="status-row"><span>Passport</span><strong>United States</strong></div>
+        <div class="status-row"><span>Route</span><strong>US -> Beijing -> Thailand</strong></div>
+        <div class="status-row"><span>Likely option</span><strong>240h transit</strong></div>
+        <a class="button primary" style="margin-top:14px;" href="#">Calculate stay</a>
+      </section>
+
+      <p class="preview-note">Preview D ignores the old page structure and treats LAOWAITOWN Visa as an entry assistant product.</p>
+    </main>
+  </div>
+</body>
+</html>

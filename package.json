@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check": "node scripts/check-site.js",
+    "generate:seo": "node scripts/generate-seo-pages.js",
+    "test": "npm run check"
   },
   "repository": {
     "type": "git",
