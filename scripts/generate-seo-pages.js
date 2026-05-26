@@ -4,7 +4,7 @@ const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://laowaitown.com';
-const LASTMOD = '2026-05-26';
+const LASTMOD = '2026-05-27';
 
 function readVisaData() {
   const code = fs.readFileSync(path.join(ROOT, 'shared', 'visa-data.js'), 'utf8') +
@@ -27,12 +27,12 @@ const SOURCES = {
     href: 'https://en.nia.gov.cn/n147418/n147463/c183412/content.html'
   },
   visaFree: {
-    name: 'State Council / NIA unilateral visa exemption list',
-    href: 'https://english.www.gov.cn/news/202504/14/content_WS680dee2dc6d0868f4e8f21cb.html'
+    name: 'National Immigration Administration - unilateral visa exemption list',
+    href: 'https://en.nia.gov.cn/n147418/n147463/c183390/content.html'
   },
   hainan: {
     name: 'Hainan Provincial Government visa-free entry guide',
-    href: 'https://en.hainan.gov.cn/englishsite/ogp/202506/bf78d0e9b8354d31a6122c8497251aac.shtml'
+    href: 'https://en.hainan.gov.cn/englishsite/TTravel/202506/c7cc60e9b7964abe9721a5e601f27506.shtml?ddtab=true'
   },
   consular: {
     name: 'China Consular Service',

@@ -16,6 +16,7 @@ Thumbs.db
 node_modules/
 dist/
 build/
+public/
 
 # ===== 第三方 vendor 目录（体积大，单独管理）=====
 # 如果 vendor/ 内容很重要，删除下一行让其纳入版本控制

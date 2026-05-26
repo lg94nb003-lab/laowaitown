@@ -91,7 +91,7 @@ const transit240Countries = [
     { code:'ES', zh:'西班牙', en:'Spain', continent:'europe' },
     { code:'SE', zh:'瑞典', en:'Sweden', continent:'europe' },
     { code:'CH', zh:'瑞士', en:'Switzerland', continent:'europe' },
-    { code:'LI', zh:'列支敦士登', en:'Liechtenstein', continent:'europe' },
+    { code:'UA', zh:'乌克兰', en:'Ukraine', continent:'europe' },
     { code:'NO', zh:'挪威', en:'Norway', continent:'europe' },
     { code:'HR', zh:'克罗地亚', en:'Croatia', continent:'europe' },
     { code:'BG', zh:'保加利亚', en:'Bulgaria', continent:'europe' },
@@ -124,7 +124,7 @@ const transit240Countries = [
     { code:'BN', zh:'文莱', en:'Brunei', continent:'asia' },
     { code:'AE', zh:'阿联酋', en:'UAE', continent:'asia' },
     { code:'QA', zh:'卡塔尔', en:'Qatar', continent:'asia' },
-    { code:'GE', zh:'格鲁吉亚', en:'Georgia', continent:'asia' }
+    { code:'ID', zh:'印度尼西亚', en:'Indonesia', continent:'asia' }
 ];
 
 // ===== 海南59国30天免签 =====

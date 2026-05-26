@@ -2280,11 +2280,16 @@
         window.selectPurpose = function(id) {
             hideSuggestions();
             clearSearch();
-            // TODO: navigate to scene page (future phase)
             __track('select_purpose', { purpose: id });
-            alert(currentLang === 'zh'
-                ? `场景页 "${id}" 正在建设中，敬请期待！`
-                : `Scene page "${id}" is coming soon!`);
+            const purposeTargets = {
+                tourism: 'visa/visa-free-entry.html',
+                business: 'visa/visa-types-comparison.html',
+                work: 'visa/residence-permit.html',
+                study: 'visa/visa-types-comparison.html',
+                transit: 'visa/240-hour-transit-visa.html',
+                family: 'visa/visa-types-comparison.html'
+            };
+            window.location.href = purposeTargets[id] || 'visa/';
         };
 
         // ====== Clear Nationality ======

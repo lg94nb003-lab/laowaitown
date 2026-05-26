@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run generate:seo && node scripts/check-site.js && node scripts/build-public.js && node scripts/check-site.js --root public",
     "check": "node scripts/check-site.js",
+    "check:public": "node scripts/check-site.js --root public",
     "generate:seo": "node scripts/generate-seo-pages.js",
+    "preview": "node scripts/build-public.js && npx wrangler pages dev public",
     "test": "npm run check"
   },
   "repository": {

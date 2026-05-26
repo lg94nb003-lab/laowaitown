@@ -197,7 +197,7 @@ window.LWDisclaimer =
     'announcements but are not affiliated with, endorsed by, or operated on behalf of any ' +
     'Chinese government authority. Always verify with the Chinese embassy or consulate before travel.';
 
-window.LWDefaultLastVerified = '2026-05-26';
+window.LWDefaultLastVerified = '2026-05-27';
 
 window.LWSourceLinks = {
     'National Immigration Administration (NIA)': 'https://en.nia.gov.cn/',

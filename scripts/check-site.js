@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const ROOT = path.resolve(__dirname, '..');
+const rootArgIndex = process.argv.indexOf('--root');
+const ROOT = rootArgIndex >= 0 && process.argv[rootArgIndex + 1]
+  ? path.resolve(process.cwd(), process.argv[rootArgIndex + 1])
+  : path.resolve(__dirname, '..');
 const SITE = 'https://laowaitown.com';
 const errors = [];
 
@@ -50,6 +53,10 @@ function existsTarget(url, fromFile) {
 }
 
 function checkJsSyntax() {
+  if (!fs.existsSync(ROOT)) {
+    fail(`Site root does not exist: ${ROOT}`);
+    return;
+  }
   const jsFiles = walk(ROOT, file => file.endsWith('.js'));
   for (const file of jsFiles) {
     try {
@@ -163,11 +170,56 @@ function checkPolicyTrust() {
   }
 }
 
+function readVisaData() {
+  const file = path.join(ROOT, 'shared', 'visa-data.js');
+  if (!fs.existsSync(file)) {
+    fail('Missing shared/visa-data.js');
+    return null;
+  }
+  try {
+    const code = fs.readFileSync(file, 'utf8') +
+      '\nthis.__data = { transit240Countries, transit240Provinces };';
+    const sandbox = {};
+    vm.createContext(sandbox);
+    vm.runInContext(code, sandbox, { filename: rel(file) });
+    return sandbox.__data;
+  } catch (error) {
+    fail(`Unable to read visa data: ${error.message}`);
+    return null;
+  }
+}
+
+function checkVisaDataConsistency() {
+  const data = readVisaData();
+  if (!data) return;
+
+  const expectedTransit240 = [
+    'AL', 'AR', 'AT', 'AU', 'BA', 'BE', 'BG', 'BN', 'BR', 'BY', 'CA',
+    'CH', 'CL', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB',
+    'GR', 'HR', 'HU', 'ID', 'IE', 'IS', 'IT', 'JP', 'KR', 'LT', 'LU',
+    'LV', 'MC', 'ME', 'MK', 'MT', 'MX', 'NL', 'NO', 'NZ', 'PL', 'PT',
+    'QA', 'RO', 'RS', 'RU', 'SE', 'SG', 'SI', 'SK', 'UA', 'US', 'AE'
+  ].sort();
+
+  const actual = data.transit240Countries.map(c => c.code).sort();
+  const missing = expectedTransit240.filter(code => !actual.includes(code));
+  const extra = actual.filter(code => !expectedTransit240.includes(code));
+  if (missing.length || extra.length) {
+    fail(`240h country list mismatch against NIA 2025-11-03 source. Missing: ${missing.join(', ') || 'none'}; extra: ${extra.join(', ') || 'none'}`);
+  }
+
+  const provinceCount = data.transit240Provinces.length;
+  const portCount = data.transit240Provinces.reduce((count, province) => count + province.ports.length, 0);
+  if (provinceCount !== 24) fail(`240h province count should be 24, got ${provinceCount}`);
+  if (portCount !== 65) fail(`240h port count should be 65, got ${portCount}`);
+}
+
 checkJsSyntax();
 checkLinks();
 checkSitemap();
 checkToolEntrypoints();
 checkPolicyTrust();
+checkVisaDataConsistency();
 
 if (errors.length) {
   console.error(`Site check failed with ${errors.length} issue(s):`);
