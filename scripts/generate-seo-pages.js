@@ -233,7 +233,7 @@ function ensureDir(dir) {
 function writeFile(rel, html) {
   const full = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(full), { recursive: true });
-  fs.writeFileSync(full, html, 'utf8');
+  fs.writeFileSync(full, html.replace(/[ \t]+$/gm, ''), 'utf8');
 }
 
 function sourcesBlock(sources) {
@@ -268,6 +268,42 @@ function defaultSummaryCard() {
   `;
 }
 
+function sideRail({ section, toc = [], sources = [] }) {
+  const toolHref = section === 'life' ? '/#tools' : '/#calculator';
+  const toolLabel = section === 'life' ? 'Open tools' : 'Check dates';
+  const tocLinks = toc.length
+    ? `
+      <nav class="vm-rail-card vm-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <div class="vm-rail-links">
+          ${toc.map(item => `<a href="#${esc(item.id)}">${esc(item.label)}</a>`).join('\n          ')}
+        </div>
+      </nav>`
+    : '';
+  const sourceNames = sources.slice(0, 3).map(source => esc(source.name)).join(' / ');
+  return `
+        <aside class="vm-side-rail">
+          ${tocLinks}
+          <div class="vm-rail-card">
+            <h2>Quick check</h2>
+            <p>Use the tools after reading the answer, especially when dates, route, or passport details matter.</p>
+            <div class="vm-rail-actions">
+              <a class="vm-button primary" href="${toolHref}">${toolLabel}</a>
+              <a class="vm-button" href="/visa/">Visa hub</a>
+            </div>
+          </div>
+          <div class="vm-rail-card">
+            <h2>Trust notes</h2>
+            <dl class="vm-rail-meta">
+              <div><dt>Updated</dt><dd>${LASTMOD}</dd></div>
+              <div><dt>Source type</dt><dd>${sourceNames || 'Official references'}</dd></div>
+              <div><dt>Publisher</dt><dd>Independent reference site</dd></div>
+            </dl>
+          </div>
+        </aside>
+  `;
+}
+
 function faqJson(title, faqs) {
   return JSON.stringify({
     '@context': 'https://schema.org',
@@ -297,6 +333,7 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
   const canonical = SITE + urlPath;
   const faqScript = faqs.length ? `<script type="application/ld+json">${faqJson(title, faqs)}</script>` : '';
   const navCta = section === 'life' ? '/#tools' : '/#calculator';
+  const rail = sideRail({ section, toc, sources });
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -348,9 +385,10 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
       </section>
 
       <section class="vm-detail-layout">
-        <article class="vm-panel">
+        <article class="vm-panel vm-content-panel">
           ${body}
         </article>
+        ${rail}
       </section>
 
       ${sourcesBlock(sources)}

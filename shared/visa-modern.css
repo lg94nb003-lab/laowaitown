@@ -41,6 +41,7 @@ body.vm-page {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 18px;
   border-bottom: 1px solid var(--vm-line);
   background: rgba(248, 250, 252, .92);
   backdrop-filter: blur(12px);
@@ -50,6 +51,7 @@ body.vm-page {
 }
 
 .vm-brand {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -63,15 +65,18 @@ body.vm-page {
   place-items: center;
   border-radius: var(--vm-radius);
   color: white;
-  background: var(--vm-navy);
+  background: linear-gradient(135deg, var(--vm-blue), var(--vm-teal));
   font-size: 12px;
   font-weight: 850;
 }
 
 .vm-nav {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   align-items: center;
-  gap: 28px;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 28px);
   margin: 0;
   padding: 0;
   color: var(--vm-body);
@@ -86,16 +91,26 @@ body.vm-page {
 }
 
 .vm-top-cta {
+  flex: 0 0 auto;
   height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0 14px;
+  border: 1px solid #c9d8ff;
   border-radius: var(--vm-radius);
-  background: var(--vm-navy);
-  color: white;
+  background: var(--vm-paper);
+  color: #1d4ed8;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, .10);
   font-size: 13px;
   font-weight: 760;
+  white-space: nowrap;
+}
+
+.vm-top-cta:hover {
+  border-color: #9bb8ff;
+  background: var(--vm-blue-soft);
+  color: #173f91;
 }
 
 .vm-main {
@@ -487,7 +502,7 @@ body.vm-page {
 
 .vm-detail-layout {
   display: grid;
-  grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+  grid-template-columns: minmax(0, 780px) minmax(280px, 1fr);
   gap: 24px;
   align-items: start;
   margin-top: 28px;
@@ -495,6 +510,99 @@ body.vm-page {
 
 .vm-panel {
   padding: 24px;
+}
+
+.vm-content-panel {
+  min-width: 0;
+}
+
+.vm-side-rail {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 14px;
+  align-self: start;
+  min-width: 0;
+}
+
+.vm-rail-card {
+  padding: 18px;
+  border: 1px solid var(--vm-line);
+  border-radius: var(--vm-radius);
+  background: var(--vm-paper);
+  box-shadow: 0 12px 30px rgba(19, 32, 51, .06);
+}
+
+.vm-rail-card h2 {
+  margin: 0 0 12px;
+  color: var(--vm-ink);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.vm-rail-card p {
+  margin: 0;
+  color: var(--vm-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.vm-rail-links {
+  display: grid;
+  gap: 4px;
+}
+
+.vm-rail-links a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: var(--vm-radius);
+  color: var(--vm-body);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.vm-rail-links a:hover {
+  background: var(--vm-blue-soft);
+  color: #1d4ed8;
+}
+
+.vm-rail-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.vm-rail-meta {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.vm-rail-meta div {
+  padding-top: 12px;
+  border-top: 1px solid var(--vm-line-soft);
+}
+
+.vm-rail-meta div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.vm-rail-meta dt {
+  color: var(--vm-muted);
+  font-size: 12px;
+  font-weight: 780;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.vm-rail-meta dd {
+  margin: 5px 0 0;
+  color: var(--vm-ink);
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 680;
 }
 
 .vm-main .lw-article {
@@ -531,6 +639,29 @@ body.vm-page {
   margin: 18px 0 8px;
   color: var(--vm-ink);
   font-size: 17px;
+}
+
+.vm-main .lw-article a.lw-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  margin: 4px 8px 4px 0;
+  padding: 0 14px;
+  border: 1px solid var(--vm-blue);
+  border-radius: var(--vm-radius);
+  background: var(--vm-blue);
+  color: white !important;
+  font-size: 13px;
+  font-weight: 760;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.vm-main .lw-article a.lw-cta.ghost {
+  border-color: #d8e4ff;
+  background: var(--vm-blue-soft);
+  color: #244879 !important;
 }
 
 .vm-main .lw-article table {
@@ -626,10 +757,12 @@ body.vm-page {
   .vm-guide-grid,
   .vm-journey,
   .vm-route-grid,
+  .vm-side-rail,
   .vm-sources .lw-trust-grid,
   .vm-trust-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .vm-side-rail { position: static; }
 }
 
 @media (max-width: 640px) {
@@ -651,6 +784,7 @@ body.vm-page {
   .vm-guide-grid,
   .vm-journey,
   .vm-route-grid,
+  .vm-side-rail,
   .vm-sources .lw-trust-grid,
   .vm-trust-grid {
     grid-template-columns: 1fr;
