@@ -720,6 +720,13 @@
             grid-template-columns: 1fr auto;
             gap: 10px;
             align-items: center;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s, transform 0.15s;
+        }
+        .lw-phrase-row:hover {
+            background: rgba(124,110,240,0.09);
+            border-color: rgba(124,110,240,0.35);
+            transform: translateY(-1px);
         }
         .lw-phrase-zh {
             color: var(--text-primary);
@@ -731,6 +738,178 @@
             color: var(--text-tertiary);
             font-size: 11px;
             margin-top: 3px;
+        }
+        .lw-phrase-carousel {
+            position: relative;
+            margin-top: 14px;
+        }
+        .lw-phrase-carousel-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .lw-phrase-scenes {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: calc((100% - 30px) / 4);
+            grid-template-columns: none;
+            gap: 10px;
+            margin-top: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-x: contain;
+            padding: 2px 0 10px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .lw-phrase-scenes::-webkit-scrollbar {
+            display: none;
+        }
+        .lw-phrase-scene-card {
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.035);
+            padding: 13px;
+            color: var(--text-secondary);
+            text-align: left;
+            cursor: pointer;
+            min-height: 104px;
+            min-width: 0;
+            scroll-snap-align: start;
+            touch-action: pan-x;
+            transition: background 0.15s, border-color 0.15s, transform 0.15s;
+        }
+        .lw-phrase-scroll-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.11);
+            color: var(--text-primary);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+            backdrop-filter: blur(16px);
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.18s, transform 0.18s, background 0.18s, border-color 0.18s;
+        }
+        .lw-phrase-scroll-btn:hover {
+            background: rgba(124,110,240,0.24);
+            border-color: rgba(124,110,240,0.48);
+            transform: scale(1.04);
+        }
+        .lw-phrase-scroll-btn.is-disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .lw-phrase-scene-card:hover,
+        .lw-phrase-scene-card.active {
+            background: var(--accent-soft);
+            border-color: rgba(124,110,240,0.55);
+            transform: translateY(-1px);
+        }
+        .lw-phrase-scene-icon { font-size: 20px; margin-bottom: 8px; }
+        .lw-phrase-scene-zh {
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+        .lw-phrase-scene-en {
+            color: var(--text-tertiary);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .lw-phrase-fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            background: #030712;
+            color: var(--text-primary);
+            padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+            box-sizing: border-box;
+        }
+        .lw-phrase-fullscreen.hidden { display: none; }
+        .lw-phrase-fs-topbar,
+        .lw-phrase-fs-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .lw-phrase-fs-index {
+            border-radius: 999px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .lw-phrase-fs-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 22px;
+            padding: 24px min(7vw, 72px);
+            cursor: pointer;
+            user-select: text;
+        }
+        .lw-phrase-fs-zh {
+            font-size: clamp(34px, 7vw, 72px);
+            font-weight: 900;
+            line-height: 1.18;
+            letter-spacing: 0;
+            max-width: 1100px;
+            overflow-wrap: anywhere;
+        }
+        .lw-phrase-fs-en {
+            font-size: clamp(18px, 3.2vw, 36px);
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text-secondary);
+            max-width: 980px;
+            overflow-wrap: anywhere;
+        }
+        .lw-phrase-fullscreen.large .lw-phrase-fs-zh { font-size: clamp(44px, 9vw, 96px); }
+        .lw-phrase-fullscreen.large .lw-phrase-fs-en { font-size: clamp(22px, 4vw, 44px); }
+        .lw-fs-btn {
+            min-width: 44px;
+            min-height: 44px;
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.06);
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+        .lw-fs-btn.text {
+            padding: 0 14px;
+            font-size: 12px;
+            min-width: auto;
+        }
+        .lw-fs-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+        .lw-phrase-fs-hint {
+            color: var(--text-tertiary);
+            font-size: 11px;
+            text-align: center;
+            flex: 1;
         }
         .lw-copy-btn,
         .lw-link-btn {
@@ -764,7 +943,7 @@
             left: 50%;
             bottom: 22px;
             transform: translateX(-50%);
-            z-index: 500;
+            z-index: 1200;
             padding: 10px 14px;
             border-radius: 999px;
             background: rgba(15,23,42,0.96);
@@ -828,6 +1007,23 @@
             .lw-tool-panel { padding: 16px; }
             .lw-form-row,
             .lw-mini-grid { grid-template-columns: 1fr; }
+            .lw-phrase-scenes {
+                grid-auto-columns: calc((100% - 10px) / 2);
+                padding: 2px 0 10px;
+            }
+            .lw-phrase-scroll-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 18px;
+            }
+            .lw-phrase-fullscreen { padding: 12px; }
+            .lw-phrase-fs-content { padding: 18px 6px; gap: 18px; }
+            .lw-phrase-fs-zh { font-size: clamp(32px, 12vw, 58px); }
+            .lw-phrase-fs-en { font-size: clamp(18px, 6vw, 28px); }
+            .lw-phrase-fullscreen.large .lw-phrase-fs-zh { font-size: clamp(42px, 15vw, 72px); }
+            .lw-phrase-fullscreen.large .lw-phrase-fs-en { font-size: clamp(20px, 7vw, 34px); }
+            .lw-phrase-fs-bottom { gap: 8px; }
+            .lw-phrase-fs-hint { display: none; }
             .lw-pill { font-size: 10px; padding: 4px 9px; }
             .lw-240h-tab { font-size: 10px; padding: 5px 10px; }
         }
@@ -902,6 +1098,9 @@
         let sugIndex = -1;
         let currencyCache = {};
         let currencyDebounceTimer = null;
+        let phraseFullscreenSceneId = null;
+        let phraseFullscreenIndex = 0;
+        let phraseFullscreenTouchX = null;
 
         // ====== Tools Data ======
         const TOOLS = [
@@ -921,30 +1120,65 @@
         const USD_RATES = { USD:1, CNY:7.2, EUR:0.92, JPY:155, GBP:0.79, HKD:7.8, THB:36, AUD:1.52, SGD:1.34, KRW:1360, CAD:1.36 };
 
         const PHRASE_SCENES = [
+            { id:'communication', icon:'🗣️', en:'Communication', zh:'语言沟通', phrases:[
+                ["你好，我听不懂中文，可以用英语吗？","Hello, I don't speak Chinese. Could we use English?"],
+                ['请把这句话写下来/打在手机上给我看。','Please type it on your phone to show me.'],
+                ['请说慢一点，我需要用翻译软件。','Please speak slowly. I need to use a translation app.']
+            ]},
             { id:'arrival', icon:'🛂', en:'Arrival', zh:'入境', phrases:[
                 ['请问入境检查在哪里？','Where is immigration control?'],
-                ['我来中国旅游。','I am visiting China for tourism.'],
-                ['这是我的返程/联程机票。','This is my return/onward ticket.']
+                ['我来中国旅游/商务出差。','I am visiting China for tourism / business.'],
+                ['这是我的酒店预订单和返程/联程机票。','This is my hotel reservation and return/onward ticket.']
+            ]},
+            { id:'payment', icon:'💳', en:'QR Payment', zh:'扫码支付', phrases:[
+                ['我没有微信/支付宝，可以用现金吗？','I do not have WeChat Pay / Alipay. Can I pay in cash?'],
+                ['请扫我手机上的付款码。','Please scan the payment QR code on my phone.'],
+                ['这里可以刷外国信用卡（Visa/Mastercard）吗？','Do you accept foreign credit cards (Visa/Mastercard)?']
             ]},
             { id:'taxi', icon:'🚕', en:'Taxi', zh:'打车', phrases:[
-                ['请带我去这个地址。','Please take me to this address.'],
-                ['可以用支付宝或微信支付吗？','Can I pay with Alipay or WeChat Pay?'],
-                ['请在这里停车。','Please stop here.']
+                ['请带我去这个地址，谢谢。（出示手机地图）','Please take me to this address, thank you.'],
+                ['请打表，不用绕路。','Please use the meter, no detours.'],
+                ["请在这里停车，我在这儿下。","Please stop here, I'll get off."]
             ]},
-            { id:'hotel', icon:'🏨', en:'Hotel', zh:'酒店', phrases:[
-                ['我有一个预订。','I have a reservation.'],
-                ['请帮我办理住宿登记。','Please help me with accommodation registration.'],
-                ['可以寄存行李吗？','Can I store my luggage?']
+            { id:'directions', icon:'🧭', en:'Directions', zh:'问路', phrases:[
+                ['这个地方怎么走？远不远？','How do I get to this place? Is it far?'],
+                ['最近的地铁站/公交站在哪里？','Where is the nearest subway / bus station?'],
+                ['最近的医院/药店在哪里？','Where is the nearest hospital / pharmacy?']
             ]},
-            { id:'food', icon:'🍜', en:'Food', zh:'吃饭', phrases:[
-                ['请问有英文菜单吗？','Do you have an English menu?'],
-                ['不要辣，谢谢。','No spicy food, please.'],
-                ['请打包。','Please pack it to go.']
+            { id:'transit', icon:'🚇', en:'Transit', zh:'交通换乘', phrases:[
+                ['请问中转柜台在哪里？','Where is the transfer counter?'],
+                ['我可以离开机场去市区吗？','Can I leave the airport and go downtown?'],
+                ['请问去这个地方应该坐地铁还是打车？','Should I take the subway or a taxi to this place?']
             ]},
-            { id:'emergency', icon:'🚨', en:'Emergency', zh:'应急', phrases:[
-                ['请帮我报警。','Please help me call the police.'],
-                ['我需要去医院。','I need to go to a hospital.'],
-                ['我迷路了，请帮帮我。','I am lost. Please help me.']
+            { id:'food', icon:'🍜', en:'Ordering Food', zh:'点菜', phrases:[
+                ['请给我一份英文菜单。','Could I have an English menu, please?'],
+                ["这道菜辣吗？我不能吃辣。","Is this dish spicy? I can't eat spicy food."],
+                ['买单，谢谢。','Check, please.']
+            ]},
+            { id:'allergies', icon:'⚠️', en:'Allergies', zh:'过敏/忌口', phrases:[
+                ["我对花生/海鲜/牛奶过敏，请不要放。","I'm allergic to peanuts / seafood / dairy, please do not add any."],
+                ["我是素食者，不吃任何肉和海鲜。","I'm vegetarian, no meat or seafood please."],
+                ['请给我一杯温水/冰水。','A glass of warm / ice water, please.']
+            ]},
+            { id:'shopping', icon:'🛍️', en:'Shopping', zh:'购物', phrases:[
+                ['这个多少钱？能便宜一点吗？','How much is this? Can you make it cheaper?'],
+                ['我可以试穿吗？有大一号的吗？','Can I try this on? Do you have a bigger size?'],
+                ['请给我一张发票/收据。','Could I have a receipt, please?']
+            ]},
+            { id:'hotel', icon:'🏨', en:'Hotel / Wi-Fi', zh:'住宿/Wi-Fi', phrases:[
+                ['请问 Wi-Fi 密码是多少？',"What's the Wi-Fi password, please?"],
+                ['我预订了房间，这是我的护照。','I have a reservation. Here is my passport.'],
+                ["空调/热水坏了，可以帮我看看吗？","The AC / hot water isn't working. Could you check it?"]
+            ]},
+            { id:'emergency', icon:'🚨', en:'Emergency', zh:'急救/报警', phrases:[
+                ['我不舒服，请帮我叫医生/救护车。（120）','I do not feel well. Please call a doctor / ambulance (120).'],
+                ['请帮我叫警察。（110）','Please call the police (110).'],
+                ["我的护照/手机/钱包丢了，请帮帮我。","I've lost my passport / phone / wallet. Please help."]
+            ]},
+            { id:'daily', icon:'🤝', en:'Daily Helpers', zh:'日常便利', phrases:[
+                ['请问洗手间在哪里？','Where is the restroom?'],
+                ['可以帮我拍张照吗？','Could you take a photo for me, please?'],
+                ["我用翻译软件和你交流，请稍等。","I'll use a translation app with you, one moment please."]
             ]}
         ];
 
@@ -1101,7 +1335,10 @@
                 if (to) to.value = 'USD';
                 convertCurrency();
             }
-            if (toolId === 'phrases') selectPhraseScene('arrival');
+            if (toolId === 'phrases') {
+                selectPhraseScene(PHRASE_SCENES[0].id);
+                requestAnimationFrame(updatePhraseScrollButtons);
+            }
             if (toolId === 'weather') updateWeatherLinks();
         }
 
@@ -1247,12 +1484,25 @@
                 '💬',
                 'Quick Phrases',
                 '常用短语',
-                'Tap a scene, then copy a Chinese phrase for taxi, hotel, food, arrival, or emergency.',
-                '选择场景，复制打车、酒店、吃饭、入境、应急常用中文短语。',
+                'Swipe the scene cards, then tap a phrase to show large text or copy the Chinese.',
+                '横向滑动选择场景，点短语可放大展示，也可复制中文。',
                 `
-                <div class="lw-quick-days">
-                    ${PHRASE_SCENES.map(s => `<button type="button" data-phrase-scene="${s.id}" onclick="selectPhraseScene('${s.id}')">${s.icon} ${currentLang === 'zh' ? s.zh : s.en}</button>`).join('')}
+                <div class="lw-phrase-carousel">
+                    <div class="lw-phrase-carousel-controls">
+                        <button type="button" id="phrase-scenes-prev" class="lw-phrase-scroll-btn is-disabled" onclick="scrollPhraseScenes(-1)" aria-label="${currentLang === 'zh' ? '上一组场景' : 'Previous scenes'}">‹</button>
+                        <button type="button" id="phrase-scenes-next" class="lw-phrase-scroll-btn" onclick="scrollPhraseScenes(1)" aria-label="${currentLang === 'zh' ? '下一组场景' : 'Next scenes'}">›</button>
+                    </div>
+                    <div class="lw-phrase-scenes" id="phrase-scenes" onscroll="updatePhraseScrollButtons()">
+                        ${PHRASE_SCENES.map(s => `
+                            <button type="button" class="lw-phrase-scene-card" data-phrase-scene="${s.id}" onclick="selectPhraseScene('${s.id}')">
+                                <div class="lw-phrase-scene-icon">${s.icon}</div>
+                                <div class="lw-phrase-scene-zh">${s.zh}</div>
+                                <div class="lw-phrase-scene-en">${s.en}</div>
+                            </button>
+                        `).join('')}
+                    </div>
                 </div>
+                <div class="lw-tool-note">${currentLang === 'zh' ? '点击箭头或向右滑动查看更多场景；点短语整行进入全屏大字模式。' : 'Use the arrows or swipe right for more scenes. Tap a phrase row for fullscreen large text.'}</div>
                 <div class="lw-list" id="phrase-list"></div>
                 `
             );
@@ -1378,6 +1628,9 @@
         window.closeTool = function() {
             document.getElementById('tool-panel').classList.add('hidden');
             document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.remove('active'));
+            const phraseFs = document.getElementById('phrase-fullscreen');
+            if (phraseFs) phraseFs.classList.add('hidden');
+            document.body.style.overflow = '';
         };
 
         window.convertTimezone = function() {
@@ -1532,21 +1785,145 @@
             if (btn) btn.textContent = currentLang === 'zh' ? '刷新汇率' : 'Refresh rate';
         };
 
+        window.scrollPhraseScenes = function(direction) {
+            const scroller = document.getElementById('phrase-scenes');
+            if (!scroller) return;
+            const firstCard = scroller.querySelector('.lw-phrase-scene-card');
+            const styles = window.getComputedStyle(scroller);
+            const gap = parseFloat(styles.columnGap || styles.gap) || 10;
+            const visibleCards = window.matchMedia('(max-width: 480px)').matches ? 2 : 4;
+            const step = firstCard
+                ? (firstCard.getBoundingClientRect().width + gap) * visibleCards
+                : scroller.clientWidth * 0.85;
+            scroller.scrollBy({ left: direction * step, behavior: 'smooth' });
+            setTimeout(updatePhraseScrollButtons, 360);
+        };
+
+        window.updatePhraseScrollButtons = updatePhraseScrollButtons;
+
+        function updatePhraseScrollButtons() {
+            const scroller = document.getElementById('phrase-scenes');
+            const prev = document.getElementById('phrase-scenes-prev');
+            const next = document.getElementById('phrase-scenes-next');
+            if (!scroller || !prev || !next) return;
+            const carousel = scroller.closest('.lw-phrase-carousel');
+            const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+            const hasOverflow = maxScroll > 2;
+            const atStart = !hasOverflow || scroller.scrollLeft <= 2;
+            const atEnd = !hasOverflow || scroller.scrollLeft >= maxScroll - 2;
+            prev.classList.toggle('is-disabled', atStart);
+            next.classList.toggle('is-disabled', atEnd);
+            if (carousel) {
+                carousel.classList.toggle('at-start', atStart);
+                carousel.classList.toggle('at-end', atEnd);
+            }
+        }
+
         window.selectPhraseScene = function(sceneId) {
             const scene = PHRASE_SCENES.find(s => s.id === sceneId) || PHRASE_SCENES[0];
             const list = document.getElementById('phrase-list');
             if (!list || !scene) return;
             document.querySelectorAll('[data-phrase-scene]').forEach(btn => btn.classList.toggle('active', btn.dataset.phraseScene === scene.id));
-            list.innerHTML = scene.phrases.map(([zh, en]) => `
-                <div class="lw-list-item lw-phrase-row">
+            list.innerHTML = scene.phrases.map(([zh, en], idx) => `
+                <div class="lw-list-item lw-phrase-row" role="button" tabindex="0" onclick="openPhraseFullscreen('${scene.id}', ${idx})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPhraseFullscreen('${scene.id}', ${idx});}">
                     <div>
                         <div class="lw-phrase-zh">${zh}</div>
                         <div class="lw-phrase-en">${en}</div>
                     </div>
-                    <button class="lw-copy-btn" type="button" onclick="copyToolText('${escapeAttr(zh)}')">${currentLang === 'zh' ? '复制' : 'Copy'}</button>
+                    <button class="lw-copy-btn" type="button" onclick="event.stopPropagation();copyToolText('${escapeAttr(zh)}')">${currentLang === 'zh' ? '复制' : 'Copy'}</button>
                 </div>
             `).join('');
         };
+
+        window.openPhraseFullscreen = function(sceneId, index) {
+            const scene = PHRASE_SCENES.find(s => s.id === sceneId);
+            if (!scene || !scene.phrases.length) return;
+            phraseFullscreenSceneId = sceneId;
+            phraseFullscreenIndex = Math.max(0, Math.min(index, scene.phrases.length - 1));
+            ensurePhraseFullscreen();
+            renderPhraseFullscreen();
+            const overlay = document.getElementById('phrase-fullscreen');
+            overlay.classList.remove('hidden', 'large');
+            document.body.style.overflow = 'hidden';
+            __track('phrase_fullscreen_open', { scene: sceneId });
+        };
+
+        window.closePhraseFullscreen = function() {
+            const overlay = document.getElementById('phrase-fullscreen');
+            if (overlay) overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        };
+
+        window.phraseFullscreenPrev = function() {
+            const scene = PHRASE_SCENES.find(s => s.id === phraseFullscreenSceneId);
+            if (!scene || !scene.phrases.length) return;
+            phraseFullscreenIndex = (phraseFullscreenIndex - 1 + scene.phrases.length) % scene.phrases.length;
+            renderPhraseFullscreen();
+        };
+
+        window.phraseFullscreenNext = function() {
+            const scene = PHRASE_SCENES.find(s => s.id === phraseFullscreenSceneId);
+            if (!scene || !scene.phrases.length) return;
+            phraseFullscreenIndex = (phraseFullscreenIndex + 1) % scene.phrases.length;
+            renderPhraseFullscreen();
+        };
+
+        window.togglePhraseFullscreenSize = function() {
+            const overlay = document.getElementById('phrase-fullscreen');
+            if (overlay) overlay.classList.toggle('large');
+        };
+
+        window.copyCurrentPhrase = function() {
+            const scene = PHRASE_SCENES.find(s => s.id === phraseFullscreenSceneId);
+            if (!scene || !scene.phrases[phraseFullscreenIndex]) return;
+            copyToolText(scene.phrases[phraseFullscreenIndex][0]);
+        };
+
+        function ensurePhraseFullscreen() {
+            if (document.getElementById('phrase-fullscreen')) return;
+            const overlay = document.createElement('div');
+            overlay.id = 'phrase-fullscreen';
+            overlay.className = 'lw-phrase-fullscreen hidden';
+            overlay.innerHTML = `
+                <div class="lw-phrase-fs-topbar">
+                    <div id="phrase-fs-index" class="lw-phrase-fs-index"></div>
+                    <button class="lw-fs-btn" type="button" onclick="closePhraseFullscreen()" aria-label="Close">x</button>
+                </div>
+                <div class="lw-phrase-fs-content" onclick="togglePhraseFullscreenSize()">
+                    <div id="phrase-fs-zh" class="lw-phrase-fs-zh"></div>
+                    <div id="phrase-fs-en" class="lw-phrase-fs-en"></div>
+                </div>
+                <div class="lw-phrase-fs-bottom">
+                    <button class="lw-fs-btn" type="button" onclick="phraseFullscreenPrev()" aria-label="Previous">‹</button>
+                    <div class="lw-phrase-fs-hint">${currentLang === 'zh' ? '点文字切换大字；左右键或滑动切换短语' : 'Tap text to enlarge; use arrows or swipe to switch'}</div>
+                    <button class="lw-fs-btn text" type="button" onclick="copyCurrentPhrase()">${currentLang === 'zh' ? '复制中文' : 'Copy Chinese'}</button>
+                    <button class="lw-fs-btn" type="button" onclick="phraseFullscreenNext()" aria-label="Next">›</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            overlay.addEventListener('touchstart', e => {
+                if (e.touches.length === 1) phraseFullscreenTouchX = e.touches[0].clientX;
+            }, { passive: true });
+            overlay.addEventListener('touchend', e => {
+                if (phraseFullscreenTouchX === null) return;
+                const endX = (e.changedTouches[0] || {}).clientX;
+                const dx = endX - phraseFullscreenTouchX;
+                if (Math.abs(dx) > 48) {
+                    if (dx < 0) phraseFullscreenNext();
+                    else phraseFullscreenPrev();
+                }
+                phraseFullscreenTouchX = null;
+            }, { passive: true });
+        }
+
+        function renderPhraseFullscreen() {
+            const scene = PHRASE_SCENES.find(s => s.id === phraseFullscreenSceneId);
+            if (!scene || !scene.phrases[phraseFullscreenIndex]) return;
+            const [zh, en] = scene.phrases[phraseFullscreenIndex];
+            document.getElementById('phrase-fs-zh').textContent = zh;
+            document.getElementById('phrase-fs-en').textContent = en;
+            document.getElementById('phrase-fs-index').textContent = `${scene.icon} ${phraseFullscreenIndex + 1} / ${scene.phrases.length}`;
+        }
 
         window.copyToolText = function(text) {
             const decoded = decodeHtml(text);
@@ -2300,6 +2677,24 @@
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.lw-search-wrap')) hideSuggestions();
         });
+
+        document.addEventListener('keydown', function(e) {
+            const phraseFs = document.getElementById('phrase-fullscreen');
+            const phraseOpen = phraseFs && !phraseFs.classList.contains('hidden');
+            if (!phraseOpen) return;
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closePhraseFullscreen();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                phraseFullscreenPrev();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                phraseFullscreenNext();
+            }
+        });
+
+        window.addEventListener('resize', updatePhraseScrollButtons);
 
         // ====== Boot ======
         init();
