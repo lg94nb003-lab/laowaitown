@@ -966,6 +966,26 @@
             margin-top: 24px;
             font-size: 11px;
             color: var(--text-disabled);
+            text-align: center;
+            line-height: 2;
+        }
+        .lw-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+        .lw-footer-links a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .lw-footer-links a:hover {
+            color: var(--text-primary);
+        }
+        .lw-footer-links .sep {
+            margin: 0 8px;
+            color: var(--text-disabled);
         }
 
         /* ====== Language Toggle ====== */
@@ -1081,7 +1101,12 @@
         <div class="lw-tool-panel hidden" id="tool-panel"></div>
 
         <!-- Footer -->
-        <footer class="lw-footer">© 2024 LAOWAITOWN. Policy data verified against official sources.</footer>
+        <footer class="lw-footer">
+                    <div class="lw-footer-links">
+                        <a href="/about.html">About</a><span class="sep">·</span><a href="/about.html#contact">Contact</a><span class="sep">·</span><a href="/visa/">Visa</a><span class="sep">·</span><a href="/life/">Life</a>
+                    </div>
+                    <div>© 2026 LAOWAITOWN · Independent reference · <a href="mailto:contact@laowaitown.com" class="lw-footer-links">contact@laowaitown.com</a></div>
+                </footer>
     </div>
 
     <!-- External Data -->

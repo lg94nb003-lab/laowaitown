@@ -399,7 +399,8 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
       <a href="/visa/">Visa</a>
       <a href="/life/">Life</a>
       <a href="/#tools">Tools</a>
-      <p>&copy; 2026 LAOWAITOWN. Independent reference site. Verify official requirements before travel.</p>
+      <a href="/about.html">About</a>
+      <p>&copy; 2026 LAOWAITOWN. Independent reference site. <a href="mailto:contact@laowaitown.com" style="color:inherit;">contact@laowaitown.com</a></p>
     </footer>
   </div>
 
@@ -1092,6 +1093,7 @@ function main() {
     '/#currency',
     '/#phrasebook',
     '/#phrases',
+    '/about.html',
     ...coreVisa,
     ...pages.map(p => p.urlPath),
     '/life/'

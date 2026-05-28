@@ -6,6 +6,7 @@ const OUT = path.join(ROOT, 'public');
 
 const FILES = [
   'index.html',
+  'about.html',
   'style.css',
   'logo.png',
   'robots.txt',
