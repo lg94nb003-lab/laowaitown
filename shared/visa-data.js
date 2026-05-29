@@ -214,7 +214,7 @@ const transit240Provinces = [
         { zh:'石家庄正定国际机场口岸', en:'Shijiazhuang Zhengding International Airport' },
         { zh:'秦皇岛海港口岸（客运）', en:'Qinhuangdao Seaport (Passenger)' }
       ] },
-    { id:'liaoning', zh:'辽宁', en:'Liaoning', area_zh:'沈阳市、大连市', area_en:'Shenyang, Dalian',
+    { id:'liaoning', zh:'辽宁', en:'Liaoning', area_zh:'辽宁省', area_en:'Liaoning Province',
       ports: [
         { zh:'沈阳桃仙国际机场口岸', en:'Shenyang Taoxian International Airport' },
         { zh:'大连周水子国际机场口岸', en:'Dalian Zhoushuizi International Airport' },
@@ -226,14 +226,14 @@ const transit240Provinces = [
         { zh:'上海浦东国际机场口岸', en:'Shanghai Pudong International Airport' },
         { zh:'上海海港口岸（客运）', en:'Shanghai Seaport (Passenger)' }
       ] },
-    { id:'jiangsu', zh:'江苏', en:'Jiangsu', area_zh:'南京、无锡、扬州、连云港', area_en:'Nanjing, Wuxi, Yangzhou, Lianyungang',
+    { id:'jiangsu', zh:'江苏', en:'Jiangsu', area_zh:'江苏省', area_en:'Jiangsu Province',
       ports: [
         { zh:'南京禄口国际机场口岸', en:'Nanjing Lukou International Airport' },
         { zh:'苏南硕放国际机场口岸', en:'Sunan Shuofang International Airport' },
         { zh:'扬州泰州国际机场口岸', en:'Yangzhou Taizhou International Airport' },
         { zh:'连云港海港口岸（客运）', en:'Lianyungang Seaport (Passenger)' }
       ] },
-    { id:'zhejiang', zh:'浙江', en:'Zhejiang', area_zh:'杭州、宁波、温州、义乌、舟山', area_en:'Hangzhou, Ningbo, Wenzhou, Yiwu, Zhoushan',
+    { id:'zhejiang', zh:'浙江', en:'Zhejiang', area_zh:'浙江省', area_en:'Zhejiang Province',
       ports: [
         { zh:'杭州萧山国际机场口岸', en:'Hangzhou Xiaoshan International Airport' },
         { zh:'宁波栎社国际机场口岸', en:'Ningbo Lishe International Airport' },
@@ -242,12 +242,12 @@ const transit240Provinces = [
         { zh:'温州港口岸（客运）', en:'Wenzhou Seaport (Passenger)' },
         { zh:'舟山港口岸（客运）', en:'Zhoushan Seaport (Passenger)' }
       ] },
-    { id:'anhui', zh:'安徽', en:'Anhui', area_zh:'合肥、黄山', area_en:'Hefei, Huangshan',
+    { id:'anhui', zh:'安徽', en:'Anhui', area_zh:'安徽省', area_en:'Anhui Province',
       ports: [
         { zh:'合肥新桥国际机场口岸', en:'Hefei Xinqiao International Airport' },
         { zh:'黄山屯溪国际机场口岸', en:'Huangshan Tunxi International Airport' }
       ] },
-    { id:'fujian', zh:'福建', en:'Fujian', area_zh:'福州、厦门、泉州、武夷山', area_en:'Fuzhou, Xiamen, Quanzhou, Wuyishan',
+    { id:'fujian', zh:'福建', en:'Fujian', area_zh:'福建省', area_en:'Fujian Province',
       ports: [
         { zh:'福州长乐国际机场口岸', en:'Fuzhou Changle International Airport' },
         { zh:'厦门高崎国际机场口岸', en:'Xiamen Gaoqi International Airport' },
@@ -255,7 +255,7 @@ const transit240Provinces = [
         { zh:'武夷山机场口岸', en:'Wuyishan Airport' },
         { zh:'厦门海港口岸（客运）', en:'Xiamen Seaport (Passenger)' }
       ] },
-    { id:'shandong', zh:'山东', en:'Shandong', area_zh:'济南、青岛、烟台、威海', area_en:'Jinan, Qingdao, Yantai, Weihai',
+    { id:'shandong', zh:'山东', en:'Shandong', area_zh:'山东省', area_en:'Shandong Province',
       ports: [
         { zh:'济南遥墙国际机场口岸', en:'Jinan Yaoqiang International Airport' },
         { zh:'青岛胶东国际机场口岸', en:'Qingdao Jiaodong International Airport' },
@@ -263,15 +263,15 @@ const transit240Provinces = [
         { zh:'威海大水泊国际机场口岸', en:'Weihai Dashuibo International Airport' },
         { zh:'青岛海港口岸（客运）', en:'Qingdao Seaport (Passenger)' }
       ] },
-    { id:'henan', zh:'河南', en:'Henan', area_zh:'郑州市', area_en:'Zhengzhou',
+    { id:'henan', zh:'河南', en:'Henan', area_zh:'河南省', area_en:'Henan Province',
       ports: [
         { zh:'郑州新郑国际机场口岸', en:'Zhengzhou Xinzheng International Airport' }
       ] },
-    { id:'hubei', zh:'湖北', en:'Hubei', area_zh:'武汉市', area_en:'Wuhan',
+    { id:'hubei', zh:'湖北', en:'Hubei', area_zh:'湖北省', area_en:'Hubei Province',
       ports: [
         { zh:'武汉天河国际机场口岸', en:'Wuhan Tianhe International Airport' }
       ] },
-    { id:'hunan', zh:'湖南', en:'Hunan', area_zh:'长沙、张家界', area_en:'Changsha, Zhangjiajie',
+    { id:'hunan', zh:'湖南', en:'Hunan', area_zh:'湖南省', area_en:'Hunan Province',
       ports: [
         { zh:'长沙黄花国际机场口岸', en:'Changsha Huanghua International Airport' },
         { zh:'张家界荷花国际机场口岸', en:'Zhangjiajie Hehua International Airport' }
@@ -298,11 +298,11 @@ const transit240Provinces = [
       ports: [
         { zh:'重庆江北国际机场口岸', en:'Chongqing Jiangbei International Airport' }
       ] },
-    { id:'guizhou', zh:'贵州', en:'Guizhou', area_zh:'贵阳市', area_en:'Guiyang',
+    { id:'guizhou', zh:'贵州', en:'Guizhou', area_zh:'贵州省', area_en:'Guizhou Province',
       ports: [
         { zh:'贵阳龙洞堡国际机场口岸', en:'Guiyang Longdongbao International Airport' }
       ] },
-    { id:'shaanxi', zh:'陕西', en:'Shaanxi', area_zh:'西安市', area_en:"Xi'an",
+    { id:'shaanxi', zh:'陕西', en:'Shaanxi', area_zh:'陕西省', area_en:'Shaanxi Province',
       ports: [
         { zh:'西安咸阳国际机场口岸', en:"Xi'an Xianyang International Airport" }
       ] },

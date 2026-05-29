@@ -1157,9 +1157,9 @@
               scope_en: 'Any open port in China', scope_zh: '中国任意开放口岸' },
             { id: '240h', en: '240h Transit Visa-Free', zh: '240h过境免签', days_en: '10 days', days_zh: '10天', href: 'visa/240-hour-transit-visa.html',
               check: (code) => transit240Countries.some(c => c.code === code),
-              detail_en: 'Nationals of 55 eligible countries may transit visa-free through 65 open ports across 24 provinces, staying up to 10 days within designated areas. Must hold a confirmed onward ticket to a third country. Tourism, business, and visits allowed; work and study still require a visa.',
-              detail_zh: '对55国实施240小时过境免签，可从24个省份65个口岸入境，在规定区域停留活动不超过10天。须持前往第三国的联程客票。可从事旅游、商务、访问等活动，工作、学习仍需办妥签证。',
-              scope_en: '24 provinces, 65 ports', scope_zh: '24个省份、65个口岸' },
+              detail_en: 'Nationals of 55 eligible countries may transit visa-free through 65 open ports across 24 provinces, staying up to 10 days. Cross-province travel is permitted within the designated stay areas of all 24 provinces (most provinces allow full-province access; a few limit to specific cities). Must hold a confirmed onward ticket to a third country. Tourism, business, and visits allowed; work and study still require a visa.',
+              detail_zh: '对55国实施240小时过境免签，可从24个省份65个口岸入境，停留不超过10天。可在24个省份允许停留活动区域内跨省域停留（大部分省份全域开放，少数省份限特定城市）。须持前往第三国的联程客票。可从事旅游、商务、访问等活动，工作、学习仍需办妥签证。',
+              scope_en: '24 provinces (cross-province allowed), 65 ports', scope_zh: '24个省份（可跨省）、65个口岸' },
             { id: '24h', en: '24h Transit Visa-Free', zh: '24h过境免签', days_en: '1 day', days_zh: '1天', href: 'visa/24-hour-transit-visa.html',
               check: () => true,
               detail_en: 'All foreign nationals may transit visa-free through any internationally open port in China for up to 24 hours. Must hold a confirmed onward ticket and stay within the port area. Apply for a temporary entry permit if leaving the port area.',
@@ -2575,9 +2575,11 @@
                 const provName = isZh ? prov.zh : prov.en;
                 const areaLabel = isZh ? '活动范围' : 'Allowed area';
                 const portsLabel = isZh ? '入境口岸' : 'Entry ports';
+                const crossNote = isZh ? '可跨省停留：可在24个省份允许停留区域内跨省域移动' : 'Cross-province: travel permitted across designated areas of all 24 provinces';
                 h += `<div class="lw-240h-result">
                     <div class="lw-240h-result-title">✓ ${provName}</div>
                     <div class="lw-240h-result-row"><strong>${areaLabel}:</strong> ${area}</div>
+                    <div class="lw-240h-result-row" style="color:#22c55e;">✦ ${crossNote}</div>
                     <div class="lw-240h-result-row" style="margin-bottom:6px;"><strong>${portsLabel} (${prov.ports.length}):</strong></div>`;
                 prov.ports.forEach(port => {
                     const portName = isZh ? port.zh : port.en;
@@ -2593,10 +2595,12 @@
                 const areaLabel = isZh ? '活动范围' : 'Allowed area';
                 const area = isZh ? port.area_zh : port.area_en;
                 const provName = isZh ? port.province_zh : port.province_en;
+                const crossNote = isZh ? '可跨省停留：可在24个省份允许停留区域内跨省域移动' : 'Cross-province: travel permitted across designated areas of all 24 provinces';
                 h += `<div class="lw-240h-result">
                     <div class="lw-240h-result-title">✓ ${portName}</div>
                     <div class="lw-240h-result-row"><strong>${provLabel}:</strong> ${provName}</div>
                     <div class="lw-240h-result-row"><strong>${areaLabel}:</strong> ${area}</div>
+                    <div class="lw-240h-result-row" style="color:#22c55e;">✦ ${crossNote}</div>
                 </div>`;
             }
             return h;
