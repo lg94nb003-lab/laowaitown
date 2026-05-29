@@ -1140,12 +1140,14 @@
 
         // ====== Purpose Data ======
         const PURPOSES = [
-            { id: 'tourism', en: 'Tourism / Sightseeing', zh: '旅游观光', desc_en: 'Destinations, transport, payment, phrases', desc_zh: '目的地、交通、支付、短语' },
-            { id: 'business', en: 'Business Trip', zh: '商务出差', desc_en: 'Visa types, meetings, culture, banking', desc_zh: '签证类型、会议、文化、银行' },
-            { id: 'work', en: 'Work / Employment', zh: '工作就业', desc_en: 'Work permit, residence, tax, legal', desc_zh: '工作许可、居留、税务、法规' },
-            { id: 'study', en: 'Study / Education', zh: '留学深造', desc_en: 'X visa, universities, scholarships', desc_zh: 'X签证、大学、奖学金' },
-            { id: 'transit', en: 'Transit / Layover', zh: '过境转机', desc_en: '240h/24h transit, airport guide', desc_zh: '240h/24h过境、机场指南' },
-            { id: 'family', en: 'Family Visit', zh: '探亲访友', desc_en: 'Q visa, registration, long stay', desc_zh: 'Q签证、住宿登记、长期停留' }
+            { id: 'tourism', en: 'Tourism / Sightseeing', zh: '旅游', desc_en: 'Visa-free entry, destinations, transport, payment', desc_zh: '免签入境、目的地、交通、支付' },
+            { id: 'family', en: 'Family / Friends Visit', zh: '探亲', desc_en: 'Q visa, registration, long stay', desc_zh: 'Q签证、住宿登记、长期停留' },
+            { id: 'work', en: 'Work / Employment', zh: '工作', desc_en: 'Work permit, residence, tax, legal', desc_zh: '工作许可、居留、税务、法规' },
+            { id: 'study', en: 'Study / Education', zh: '学习', desc_en: 'X visa, universities, scholarships', desc_zh: 'X签证、大学、奖学金' },
+            { id: 'visit', en: 'Exchange / Official Visit', zh: '访问', desc_en: 'F visa, cultural exchange, conferences', desc_zh: 'F签证、文化交流、会议' },
+            { id: 'transit', en: 'Transit / Layover', zh: '过境', desc_en: '240h/24h transit, airport guide', desc_zh: '240h/24h过境、机场指南' },
+            { id: 'business', en: 'Business Trip', zh: '商务', desc_en: 'Meetings, trade fairs, short-term projects', desc_zh: '会议、展会、短期项目' },
+            { id: 'other', en: 'Other', zh: '其他', desc_en: 'Cruise, medical, sports, other purposes', desc_zh: '邮轮、就医、体育、其他' }
         ];
 
         // ====== Policy Definitions (7 types) ======
@@ -2168,10 +2170,15 @@
             document.getElementById('tab-purpose').classList.toggle('active', tab === 'purpose');
             const input = document.getElementById('search-input');
             input.value = '';
-            input.placeholder = tab === 'country'
-                ? (currentLang === 'zh' ? '输入国家名称，查看适用你的中国签证政策' : 'Enter your country to see which visa policies apply to you')
-                : (currentLang === 'zh' ? '输入你想在中国做的事，如旅游、工作、留学...' : 'What do you want to do in China? e.g. tourism, work, study...');
-            hideSuggestions();
+            if (tab === 'purpose') {
+                input.placeholder = currentLang === 'zh' ? '点击选择来华目的' : 'Select your purpose of visit';
+                input.readOnly = true;
+                showPurposeSuggestions(PURPOSES);
+            } else {
+                input.placeholder = currentLang === 'zh' ? '输入国家名称，查看适用你的中国签证政策' : 'Enter your country to see which visa policies apply to you';
+                input.readOnly = false;
+                hideSuggestions();
+            }
             document.getElementById('search-clear').classList.remove('show');
         };
 
@@ -2196,18 +2203,20 @@
                 });
                 showCountrySuggestions(matches.slice(0, 6));
             } else {
-                const q = val.toLowerCase();
-                const matches = PURPOSES.filter(p =>
-                    p.en.toLowerCase().includes(q) || p.zh.includes(q) || p.id.includes(q)
-                );
-                showPurposeSuggestions(matches);
+                // Purpose tab: always show all options (dropdown style)
+                showPurposeSuggestions(PURPOSES);
             }
         };
 
         window.onSearchFocus = function() {
             const val = document.getElementById('search-input').value.trim();
-            if (val.length > 0) onSearchInput();
-            else if (currentTab === 'country') showPopularCountries();
+            if (currentTab === 'purpose') {
+                showPurposeSuggestions(PURPOSES);
+            } else if (val.length > 0) {
+                onSearchInput();
+            } else {
+                showPopularCountries();
+            }
         };
 
         // ====== Popular Countries (shown on focus with empty input) ======
@@ -2308,11 +2317,13 @@
             __track('select_purpose', { purpose: id });
             const purposeTargets = {
                 tourism: 'visa/visa-free-entry.html',
-                business: 'visa/visa-types-comparison.html',
+                family: 'visa/visa-types-comparison.html',
                 work: 'visa/residence-permit.html',
                 study: 'visa/visa-types-comparison.html',
+                visit: 'visa/visa-types-comparison.html',
                 transit: 'visa/240-hour-transit-visa.html',
-                family: 'visa/visa-types-comparison.html'
+                business: 'visa/visa-types-comparison.html',
+                other: 'visa/'
             };
             window.location.href = purposeTargets[id] || 'visa/';
         };
