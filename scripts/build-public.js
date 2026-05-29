@@ -8,6 +8,7 @@ const FILES = [
   'index.html',
   'about.html',
   'style.css',
+  'home.css',
   'logo.png',
   'robots.txt',
   'sitemap.xml'

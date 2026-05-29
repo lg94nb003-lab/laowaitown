@@ -343,8 +343,7 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
   <meta name="description" content="${esc(description)}">
   <link rel="canonical" href="${canonical}">
   <link rel="stylesheet" href="${relDepth}/style.css">
-  <link rel="stylesheet" href="${relDepth}/shared/page.css">
-  <link rel="stylesheet" href="${relDepth}/shared/visa-modern.css">
+  <link rel="stylesheet" href="${relDepth}/shared/site.css">
   <script type="application/ld+json">${articleJson(title, description, canonical)}</script>
   ${faqScript}
 </head>
@@ -360,28 +359,14 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
     </header>
 
     <main class="vm-main">
-      <aside class="vm-trust-strip">
-        <div><strong>Independent China entry reference.</strong> Updated policy summaries, practical tools, and official-source links in one place.</div>
-        <div class="vm-source-note">NIA / MFA / official sources</div>
-      </aside>
-
-      <section class="vm-hero">
-        <div class="vm-intro">
-          <div>
-            <p class="vm-eyebrow">${esc(eyebrow)}</p>
-            <h1>${esc(title)}</h1>
-            <p class="vm-lead">${esc(description)}</p>
-          </div>
-          <div class="vm-actions">
-            <a class="vm-button primary" href="/#calculator">Calculate stay</a>
-            <a class="vm-button soft" href="/#phrasebook">Open phrasebook</a>
-            <a class="vm-button" href="/visa/">Visa hub</a>
-          </div>
-        </div>
-
-        <aside class="vm-assistant-card">
+      <section class="vm-answer-hero">
+        <p class="vm-eyebrow">${esc(eyebrow)}</p>
+        <h1>${esc(title)}</h1>
+        <p class="vm-lead">${esc(description)}</p>
+        <div class="vm-answer-box">
+          <h2>Quick answer</h2>
           ${summaryHtml || defaultSummaryCard()}
-        </aside>
+        </div>
       </section>
 
       <section class="vm-detail-layout">
@@ -1034,6 +1019,29 @@ function generateLifeIndex() {
     currentHref: '/life/',
     toc: [{ id: 'guides', label: 'Guides' }],
     sources: [SOURCES.consular],
+    eyebrow: 'Arrival preparation hub',
+    summaryHtml: `
+        <div class="vm-card-head">
+          <div>
+            <h2>First-week checklist</h2>
+            <p>Open the guide that matches the next practical problem.</p>
+          </div>
+          <span class="vm-badge">Travel-ready</span>
+        </div>
+        <div class="vm-result">
+          <h3>Most visitors should prepare these before arrival</h3>
+          <div class="vm-result-grid">
+            <div class="vm-result-chip">Payment app</div>
+            <div class="vm-result-chip">Mobile data</div>
+            <div class="vm-result-chip">Chinese address</div>
+            <div class="vm-result-chip maybe">Emergency numbers</div>
+          </div>
+        </div>
+        <div class="vm-actions" style="margin-top:16px;">
+          <a class="vm-button primary" href="/#tools">Open tools</a>
+          <a class="vm-button" href="/life/pay-in-china-as-foreigner.html">Payment guide</a>
+        </div>
+    `,
     body
   });
 }

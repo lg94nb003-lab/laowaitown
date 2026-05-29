@@ -25,7 +25,7 @@
     <meta name="keywords" content="china visa free, china visa free countries 2026, 240 hour transit visa, 24 hour transit visa, china transit visa, hainan visa free, china entry requirements, visa stay calculator, china travel tool, foreigner in china">
     <meta name="author" content="LAOWAITOWN">
     <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="theme-color" content="#0a0f1a">
+    <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="https://laowaitown.com/">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
@@ -46,1041 +46,76 @@
 
     <!-- Styles -->
     <link href="style.css" rel="stylesheet">
-    <style>
-        /* ====== Design Tokens ====== */
-        :root {
-            --bg: #0a0f1a;
-            --surface: rgba(255,255,255,0.04);
-            --surface-border: rgba(255,255,255,0.06);
-            --surface-hover: rgba(255,255,255,0.08);
-            --divider: rgba(255,255,255,0.04);
-            --accent: #7c6ef0;
-            --accent-soft: rgba(124,110,240,0.12);
-            --dot-green: #5eead4;
-            --dot-red: #fda4af;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255,255,255,0.6);
-            --text-tertiary: rgba(255,255,255,0.25);
-            --text-disabled: rgba(255,255,255,0.15);
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text-primary);
-            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ====== Layout ====== */
-        .lw-container {
-            max-width: 560px;
-            margin: 0 auto;
-            padding: 48px 24px 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 24px;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Hero zone: brand + search centered in viewport */
-        .lw-hero {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 50vh;
-            gap: 150px;
-            width: 100%;
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px;
-            box-sizing: border-box;
-        }
-
-        /* ====== Brand ====== */
-        .lw-brand {
-            font-size: 34px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            color: var(--text-primary);
-        }
-        .lw-brand-small {
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-tertiary);
-        }
-
-        /* ====== Tab Bar ====== */
-        .lw-tabs {
-            display: flex;
-            gap: 0;
-            width: 100%;
-        }
-        .lw-tab {
-            padding: 8px 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--text-tertiary);
-            border-bottom: 2px solid transparent;
-            transition: color 0.2s, border-color 0.2s;
-        }
-        .lw-tab.active {
-            color: var(--text-primary);
-            border-bottom-color: var(--accent);
-        }
-
-        /* ====== Search Input ====== */
-        .lw-search-wrap {
-            width: 100%;
-            position: relative;
-        }
-        .lw-search {
-            width: 100%;
-            padding: 14px 40px 14px 20px;
-            border-radius: 14px;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            font-size: 14px;
-            color: var(--text-primary);
-            outline: none;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-        .lw-search:focus { border-color: var(--accent); }
-        .lw-search::placeholder { color: var(--text-tertiary); }
-        .lw-search-clear {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            color: var(--text-tertiary);
-            cursor: pointer;
-            display: none;
-        }
-        .lw-search-clear.show { display: block; }
-
-        /* ====== Suggestions Dropdown ====== */
-        .lw-suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0; right: 0;
-            margin-top: -1px;
-            border-radius: 0 0 14px 14px;
-            background: rgba(15,23,42,0.98);
-            border: 1px solid var(--accent);
-            border-top: 1px solid var(--divider);
-            max-height: 240px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-        }
-        .lw-suggestions.show { display: block; }
-        .lw-suggestions.show + .lw-search,
-        .lw-search.has-suggestions {
-            border-radius: 14px 14px 0 0;
-            border-color: var(--accent);
-        }
-        .lw-sug-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-        .lw-sug-item:hover, .lw-sug-item.active {
-            background: var(--accent-soft);
-        }
-        .lw-sug-flag { font-size: 16px; }
-        .lw-sug-name { font-size: 13px; color: var(--text-primary); }
-        .lw-sug-desc { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
-
-        /* ====== Nationality Chip ====== */
-        .lw-nat-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            font-size: 13px;
-            color: var(--text-primary);
-        }
-        .lw-nat-chip-close {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            cursor: pointer;
-            margin-left: 4px;
-        }
-
-        /* ====== Summary Badge ====== */
-        .lw-badge {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        .lw-badge-count { font-weight: 700; }
-        .lw-badge-count.all-yes { color: var(--dot-green); }
-        .lw-badge-count.has-no { color: var(--dot-red); }
-
-        /* ====== Policy List ====== */
-        .lw-policy-list {
-            width: 100%;
-            text-align: left;
-        }
-        .lw-policy-row {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--divider);
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .lw-policy-row:hover { background: var(--surface); margin: 0 -8px; padding: 10px 8px; border-radius: 8px; }
-        .lw-policy-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .lw-policy-dot.green { background: var(--dot-green); }
-        .lw-policy-dot.red { background: var(--dot-red); }
-        .lw-policy-name {
-            flex: 1;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .lw-policy-days {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-right: 8px;
-        }
-        .lw-policy-arrow { font-size: 12px; color: var(--text-tertiary); }
-
-        /* ====== N/A rows ====== */
-        .lw-policy-row.na .lw-policy-name { color: var(--text-disabled); font-size: 12px; font-weight: 500; }
-        .lw-policy-row.na .lw-policy-days { color: var(--text-disabled); font-size: 12px; }
-        .lw-policy-row.na .lw-policy-arrow { display: none; }
-
-        /* ====== Expandable Detail Card ====== */
-        .lw-policy-row { position: relative; }
-        .lw-detail-card {
-            display: none;
-            padding: 16px 20px;
-            margin: -1px 0 8px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            text-align: left;
-        }
-        .lw-detail-card.open { display: block; }
-        .lw-detail-scope {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
-            font-size: 11px;
-        }
-        .lw-detail-scope-item { color: var(--text-secondary); }
-        .lw-detail-scope-label { color: var(--text-tertiary); font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .lw-detail-text {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-        .lw-detail-link {
-            font-size: 11px;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .lw-detail-link:hover { text-decoration: underline; }
-        .lw-policy-row.expanded { background: var(--surface); border-radius: 8px 8px 0 0; margin: 0 -8px; padding: 10px 8px; }
-
-        /* ====== 240h Lookup Tabs & Pills ====== */
-        .lw-240h-tabs { display: flex; gap: 0; margin-bottom: 12px; border-bottom: 1px solid var(--divider); }
-        .lw-240h-tab {
-            padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer;
-            color: var(--text-tertiary); border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
-        }
-        .lw-240h-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
-        .lw-240h-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-        .lw-pill {
-            padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 600;
-            background: var(--surface); border: 1px solid var(--surface-border);
-            color: var(--text-secondary); cursor: pointer; transition: all 0.15s; white-space: nowrap;
-        }
-        .lw-pill:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.1); }
-        .lw-pill.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-        .lw-240h-more { font-size: 11px; font-weight: 600; color: var(--accent); cursor: pointer; margin-bottom: 12px; display: inline-block; }
-        .lw-240h-more:hover { text-decoration: underline; }
-        .lw-240h-result {
-            padding: 12px 14px; border-radius: 10px; margin-bottom: 12px;
-            background: rgba(94,234,212,0.04); border: 1px solid rgba(94,234,212,0.1);
-        }
-        .lw-240h-result-title { font-size: 12px; font-weight: 700; color: var(--dot-green); margin-bottom: 8px; }
-        .lw-240h-result-row { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
-        .lw-240h-result-row strong { color: var(--text-primary); }
-        .lw-240h-port-item { font-size: 10px; color: var(--text-tertiary); padding: 3px 0; border-bottom: 1px solid var(--divider); }
-        .lw-240h-port-item:last-child { border-bottom: none; }
-
-        /* ====== C2 NOT AVAILABLE Divider ====== */
-        .lw-na-divider {
-            padding: 14px 0 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px;
-        }
-        .lw-na-divider-line {
-            flex: 1;
-            height: 1px;
-            background: var(--divider);
-        }
-        .lw-na-divider-text {
-            font-size: 9px;
-            color: var(--text-disabled);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
-
-        /* ====== Tool Grid ====== */
-        .lw-tools {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-        .lw-tool {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 12px 4px 8px;
-            border-radius: 12px;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .lw-tool:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.1); }
-        .lw-tool.active { background: var(--accent-soft); border-color: var(--accent); }
-        .lw-tool-icon {
-            width: 34px; height: 34px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        .lw-tool-name {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        /* ====== Tool Panel ====== */
-        .lw-tool-panel {
-            width: 100%;
-            padding: 24px;
-            border-radius: 24px;
-            background: rgba(17, 24, 39, 0.92);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 20px 40px -24px rgba(0,0,0,0.75);
-            text-align: left;
-            box-sizing: border-box;
-        }
-        .lw-tool-panel-head {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        .lw-tool-panel-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 0 0 4px;
-        }
-        .lw-tool-title-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .lw-tool-title-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 16px;
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        .lw-tool-panel-desc {
-            font-size: 12px;
-            line-height: 1.6;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-        .lw-tool-close {
-            border: 1px solid var(--surface-border);
-            background: var(--surface);
-            color: var(--text-secondary);
-            border-radius: 999px;
-            width: 28px;
-            height: 28px;
-            line-height: 1;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .lw-tool-close:hover { color: var(--text-primary); border-color: var(--accent); }
-        .lw-field label {
-            display: block;
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin: 0 0 6px;
-        }
-        .lw-field input {
-            width: 100%;
-            height: 48px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15, 23, 42, 0.8);
-            color: var(--text-primary);
-            font-size: 14px;
-            padding: 0 12px;
-            outline: none;
-            box-sizing: border-box;
-        }
-        .lw-field input:focus { border-color: var(--accent); }
-        .lw-date-pill {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            min-height: 54px;
-            padding: 0 16px;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15, 23, 42, 0.8);
-            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-        }
-        .lw-date-pill:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(124,110,240,0.12);
-            background: rgba(15, 23, 42, 0.95);
-        }
-        .lw-date-segment {
-            width: 54px;
-            height: 36px;
-            padding: 0;
-            border: none;
-            background: transparent;
-            color: var(--text-primary);
-            font-size: 17px;
-            font-weight: 800;
-            text-align: center;
-            outline: none;
-        }
-        .lw-field .lw-date-segment {
-            width: 58px;
-            height: 38px;
-            padding: 0;
-            border: none;
-            border-radius: 0;
-            background: transparent;
-            font-size: 17px;
-            flex: 0 0 58px;
-        }
-        .lw-field .lw-date-segment.month,
-        .lw-field .lw-date-segment.day {
-            width: 42px;
-            flex-basis: 42px;
-        }
-        .lw-date-segment::-webkit-outer-spin-button,
-        .lw-date-segment::-webkit-inner-spin-button,
-        .lw-stay-wrap input::-webkit-outer-spin-button,
-        .lw-stay-wrap input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .lw-date-segment,
-        .lw-stay-wrap input {
-            -moz-appearance: textfield;
-        }
-        .lw-date-sep {
-            color: var(--text-tertiary);
-            font-weight: 800;
-        }
-        .lw-stay-wrap {
-            position: relative;
-            margin-top: 14px;
-        }
-        .lw-stay-unit {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 10px;
-            font-weight: 800;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            pointer-events: none;
-        }
-        .lw-stay-wrap input { padding-right: 58px; }
-        .lw-quick-days {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 12px 0;
-        }
-        .lw-quick-days button {
-            border: 1px solid var(--surface-border);
-            background: var(--surface);
-            color: var(--text-secondary);
-            border-radius: 10px;
-            padding: 6px 10px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .lw-quick-days button:hover,
-        .lw-quick-days button.active {
-            border-color: var(--accent);
-            background: var(--accent-soft);
-            color: var(--text-primary);
-        }
-        .lw-calc-result {
-            min-height: 104px;
-            margin-top: 18px;
-            padding: 18px;
-            border-radius: 24px;
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.12);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
-        .lw-calc-result-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: rgba(56, 189, 248, 0.7);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 4px;
-        }
-        .lw-calc-result-date {
-            font-size: 24px;
-            font-weight: 800;
-            color: #38bdf8;
-            line-height: 1.2;
-        }
-        .lw-calc-note {
-            margin-top: 8px;
-            font-size: 11px;
-            line-height: 1.6;
-            color: var(--text-tertiary);
-        }
-        .lw-calc-error {
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--dot-red);
-        }
-        .lw-tool-action {
-            width: 100%;
-            margin-top: 18px;
-            padding: 14px 18px;
-            border: none;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #6366f1, #818cf8);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 12px 24px rgba(99,102,241,0.18);
-        }
-        .lw-tool-action:hover { filter: brightness(1.08); }
-        .lw-form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 14px;
-        }
-        .lw-field select,
-        .lw-field textarea {
-            width: 100%;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15, 23, 42, 0.8);
-            color: var(--text-primary);
-            font-size: 14px;
-            padding: 12px;
-            outline: none;
-            box-sizing: border-box;
-        }
-        .lw-field select { height: 48px; }
-        .lw-field textarea {
-            min-height: 104px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-        .lw-field select:focus,
-        .lw-field textarea:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(124,110,240,0.12);
-        }
-        .lw-tool-swap {
-            width: 38px;
-            height: 38px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(15,23,42,0.9);
-            color: var(--dot-green);
-            font-weight: 800;
-            cursor: pointer;
-            display: block;
-            margin: 12px auto 0;
-        }
-        .lw-mini-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 14px;
-        }
-        .lw-info-card {
-            border-radius: 16px;
-            border: 1px solid var(--surface-border);
-            background: rgba(255,255,255,0.035);
-            padding: 13px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            line-height: 1.55;
-        }
-        .lw-info-card strong {
-            display: block;
-            color: var(--text-primary);
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-        .lw-info-card a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-        }
-        .lw-info-card a:hover { text-decoration: underline; }
-        .lw-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 14px;
-        }
-        .lw-list-item {
-            border-radius: 14px;
-            border: 1px solid var(--surface-border);
-            background: rgba(255,255,255,0.03);
-            padding: 12px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            line-height: 1.55;
-        }
-        .lw-list-item strong {
-            color: var(--text-primary);
-            display: block;
-            margin-bottom: 3px;
-        }
-        .lw-phrase-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 10px;
-            align-items: center;
-            cursor: pointer;
-            transition: background 0.15s, border-color 0.15s, transform 0.15s;
-        }
-        .lw-phrase-row:hover {
-            background: rgba(124,110,240,0.09);
-            border-color: rgba(124,110,240,0.35);
-            transform: translateY(-1px);
-        }
-        .lw-phrase-zh {
-            color: var(--text-primary);
-            font-size: 14px;
-            font-weight: 800;
-            line-height: 1.45;
-        }
-        .lw-phrase-en {
-            color: var(--text-tertiary);
-            font-size: 11px;
-            margin-top: 3px;
-        }
-        .lw-phrase-carousel {
-            position: relative;
-            margin-top: 14px;
-        }
-        .lw-phrase-carousel-controls {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .lw-phrase-scenes {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: calc((100% - 30px) / 4);
-            grid-template-columns: none;
-            gap: 10px;
-            margin-top: 0;
-            overflow-x: auto;
-            overflow-y: hidden;
-            overscroll-behavior-x: contain;
-            padding: 2px 0 10px;
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-        }
-        .lw-phrase-scenes::-webkit-scrollbar {
-            display: none;
-        }
-        .lw-phrase-scene-card {
-            border: 1px solid var(--surface-border);
-            border-radius: 16px;
-            background: rgba(255,255,255,0.035);
-            padding: 13px;
-            color: var(--text-secondary);
-            text-align: left;
-            cursor: pointer;
-            min-height: 104px;
-            min-width: 0;
-            scroll-snap-align: start;
-            touch-action: pan-x;
-            transition: background 0.15s, border-color 0.15s, transform 0.15s;
-        }
-        .lw-phrase-scroll-btn {
-            width: 30px;
-            height: 30px;
-            border: 1px solid rgba(255,255,255,0.16);
-            border-radius: 999px;
-            background: rgba(255,255,255,0.11);
-            color: var(--text-primary);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.28);
-            backdrop-filter: blur(16px);
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.18s, transform 0.18s, background 0.18s, border-color 0.18s;
-        }
-        .lw-phrase-scroll-btn:hover {
-            background: rgba(124,110,240,0.24);
-            border-color: rgba(124,110,240,0.48);
-            transform: scale(1.04);
-        }
-        .lw-phrase-scroll-btn.is-disabled {
-            opacity: 0.35;
-            pointer-events: none;
-        }
-        .lw-phrase-scene-card:hover,
-        .lw-phrase-scene-card.active {
-            background: var(--accent-soft);
-            border-color: rgba(124,110,240,0.55);
-            transform: translateY(-1px);
-        }
-        .lw-phrase-scene-icon { font-size: 20px; margin-bottom: 8px; }
-        .lw-phrase-scene-zh {
-            color: var(--text-primary);
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1.3;
-        }
-        .lw-phrase-scene-en {
-            color: var(--text-tertiary);
-            font-size: 11px;
-            margin-top: 2px;
-        }
-        .lw-phrase-fullscreen {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            background: #030712;
-            color: var(--text-primary);
-            padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-            box-sizing: border-box;
-        }
-        .lw-phrase-fullscreen.hidden { display: none; }
-        .lw-phrase-fs-topbar,
-        .lw-phrase-fs-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-shrink: 0;
-        }
-        .lw-phrase-fs-index {
-            border-radius: 999px;
-            border: 1px solid var(--surface-border);
-            background: rgba(255,255,255,0.05);
-            color: var(--text-secondary);
-            padding: 6px 12px;
-            font-size: 12px;
-            font-weight: 800;
-        }
-        .lw-phrase-fs-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            gap: 22px;
-            padding: 24px min(7vw, 72px);
-            cursor: pointer;
-            user-select: text;
-        }
-        .lw-phrase-fs-zh {
-            font-size: clamp(34px, 7vw, 72px);
-            font-weight: 900;
-            line-height: 1.18;
-            letter-spacing: 0;
-            max-width: 1100px;
-            overflow-wrap: anywhere;
-        }
-        .lw-phrase-fs-en {
-            font-size: clamp(18px, 3.2vw, 36px);
-            font-weight: 700;
-            line-height: 1.3;
-            color: var(--text-secondary);
-            max-width: 980px;
-            overflow-wrap: anywhere;
-        }
-        .lw-phrase-fullscreen.large .lw-phrase-fs-zh { font-size: clamp(44px, 9vw, 96px); }
-        .lw-phrase-fullscreen.large .lw-phrase-fs-en { font-size: clamp(22px, 4vw, 44px); }
-        .lw-fs-btn {
-            min-width: 44px;
-            min-height: 44px;
-            border: 1px solid var(--surface-border);
-            border-radius: 14px;
-            background: rgba(255,255,255,0.06);
-            color: var(--text-primary);
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-        }
-        .lw-fs-btn.text {
-            padding: 0 14px;
-            font-size: 12px;
-            min-width: auto;
-        }
-        .lw-fs-btn:hover {
-            border-color: var(--accent);
-            background: var(--accent-soft);
-        }
-        .lw-phrase-fs-hint {
-            color: var(--text-tertiary);
-            font-size: 11px;
-            text-align: center;
-            flex: 1;
-        }
-        .lw-copy-btn,
-        .lw-link-btn {
-            border: 1px solid var(--surface-border);
-            border-radius: 12px;
-            background: var(--surface);
-            color: var(--text-secondary);
-            padding: 8px 10px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .lw-copy-btn:hover,
-        .lw-link-btn:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
-        .lw-tool-note {
-            margin-top: 10px;
-            color: var(--text-tertiary);
-            font-size: 11px;
-            line-height: 1.6;
-        }
-        .lw-toast {
-            position: fixed;
-            left: 50%;
-            bottom: 22px;
-            transform: translateX(-50%);
-            z-index: 1200;
-            padding: 10px 14px;
-            border-radius: 999px;
-            background: rgba(15,23,42,0.96);
-            border: 1px solid var(--surface-border);
-            color: var(--text-primary);
-            font-size: 12px;
-            box-shadow: 0 16px 32px rgba(0,0,0,0.35);
-        }
-
-        /* ====== Search Hint ====== */
-        .lw-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin: -4px 0 0;
-            font-weight: 400;
-        }
-
-        /* ====== Footer ====== */
-        .lw-footer {
-            margin-top: 24px;
-            font-size: 11px;
-            color: var(--text-disabled);
-            text-align: center;
-            line-height: 2;
-        }
-        .lw-footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            flex-wrap: wrap;
-        }
-        .lw-footer-links a {
-            color: var(--text-tertiary);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-        .lw-footer-links a:hover {
-            color: var(--text-primary);
-        }
-        .lw-footer-links .sep {
-            margin: 0 8px;
-            color: var(--text-disabled);
-        }
-
-        /* ====== Language Toggle ====== */
-        .lw-lang {
-            position: fixed;
-            top: 16px;
-            right: 24px;
-            display: flex;
-            gap: 4px;
-            z-index: 200;
-        }
-        .lw-lang-btn {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: color 0.2s, background 0.2s;
-        }
-        .lw-lang-btn.active { color: var(--text-primary); background: var(--surface); }
-
-        /* ====== Hidden utility ====== */
-        .hidden { display: none !important; }
-
-        /* ====== Responsive ====== */
-        @media (max-width: 480px) {
-            .lw-hero { min-height: 40vh; padding: 0 16px; gap: 80px; }
-            .lw-container { padding: 24px 16px 36px; gap: 20px; }
-            .lw-brand { font-size: 26px; }
-            .lw-lang { position: static; align-self: flex-end; margin: 12px 16px 0 0; }
-            .lw-tools { grid-template-columns: repeat(5, 1fr); gap: 6px; }
-            .lw-tool { padding: 10px 2px 6px; border-radius: 10px; }
-            .lw-tool-icon { width: 28px; height: 28px; font-size: 13px; }
-            .lw-tool-name { font-size: 9px; }
-            .lw-calc-grid { grid-template-columns: 1fr; }
-            .lw-tool-panel { padding: 16px; }
-            .lw-form-row,
-            .lw-mini-grid { grid-template-columns: 1fr; }
-            .lw-phrase-scenes {
-                grid-auto-columns: calc((100% - 10px) / 2);
-                padding: 2px 0 10px;
-            }
-            .lw-phrase-scroll-btn {
-                width: 28px;
-                height: 28px;
-                font-size: 18px;
-            }
-            .lw-phrase-fullscreen { padding: 12px; }
-            .lw-phrase-fs-content { padding: 18px 6px; gap: 18px; }
-            .lw-phrase-fs-zh { font-size: clamp(32px, 12vw, 58px); }
-            .lw-phrase-fs-en { font-size: clamp(18px, 6vw, 28px); }
-            .lw-phrase-fullscreen.large .lw-phrase-fs-zh { font-size: clamp(42px, 15vw, 72px); }
-            .lw-phrase-fullscreen.large .lw-phrase-fs-en { font-size: clamp(20px, 7vw, 34px); }
-            .lw-phrase-fs-bottom { gap: 8px; }
-            .lw-phrase-fs-hint { display: none; }
-            .lw-pill { font-size: 10px; padding: 4px 9px; }
-            .lw-240h-tab { font-size: 10px; padding: 5px 10px; }
-        }
-    </style>
+    <link href="home.css" rel="stylesheet">
 </head>
-<body>
-    <!-- Language Toggle -->
-    <div class="lw-lang">
-        <button id="lang-en" class="lw-lang-btn active" onclick="setLanguage('en')">EN</button>
-        <button id="lang-zh" class="lw-lang-btn" onclick="setLanguage('zh')">中文</button>
-    </div>
+<body class="lw-home-page">
+    <header class="lw-home-nav" aria-label="Primary">
+        <a class="lw-home-logo" href="/" aria-label="LAOWAITOWN home">
+            <span class="lw-logo-mark">LW</span>
+            <span>LAOWAITOWN</span>
+        </a>
+        <nav class="lw-home-links" aria-label="Site sections">
+            <a href="/visa/">Visa</a>
+            <a href="/life/">Life</a>
+            <a href="#tools">Tools</a>
+            <a href="/about.html">About</a>
+        </nav>
+        <div class="lw-lang" aria-label="Language">
+            <button id="lang-en" class="lw-lang-btn active" onclick="setLanguage('en')">EN</button>
+            <button id="lang-zh" class="lw-lang-btn" onclick="setLanguage('zh')">中文</button>
+        </div>
+    </header>
 
-    <!-- Hero: Brand + Search (centered in viewport) -->
-    <div class="lw-hero">
-        <div style="text-align:center;">
-            <h1 id="lw-brand" class="lw-brand">LAOWAITOWN</h1>
-            <p class="lw-subtitle">China Visa-Free Policy Checker & Travel Tools 2026</p>
+    <main>
+    <!-- Hero: trusted product first screen -->
+    <section class="lw-hero">
+        <span class="lw-ink-stroke" aria-hidden="true"></span>
+        <span class="lw-mountain-wash" aria-hidden="true"></span>
+        <div class="lw-hero-copy">
+            <div class="lw-hero-lockup" aria-label="LAOWAITOWN 老外 town">
+                <span class="lw-lockup-en">LAOWAITOWN</span>
+                <span class="lw-lockup-divider" aria-hidden="true"></span>
+                <span class="lw-lockup-cn"><span class="lw-calligraphy">老外</span><span>town</span></span>
+            </div>
+            <p class="lw-eyebrow">China travel & visa tool for foreign visitors</p>
+            <h1 id="lw-brand" class="lw-brand">Ask China <span class="lw-brand-highlight">before you go.</span></h1>
+            <p class="lw-subtitle">Visa-free, transit, payment, maps, SIM, emergency — quick answers for foreign visitors.</p>
         </div>
 
-        <!-- Tab + Search -->
-        <div class="lw-search-wrap" id="search-section">
-            <div class="lw-tabs">
-                <div class="lw-tab active" id="tab-country" onclick="switchTab('country')">Country</div>
-                <div class="lw-tab" id="tab-purpose" onclick="switchTab('purpose')">Purpose</div>
+        <!-- Search -->
+        <div class="lw-search-card">
+            <div class="lw-search-wrap" id="search-section">
+                <div class="lw-tabs" aria-label="Search mode">
+                    <div class="lw-tab active" id="tab-country" onclick="switchTab('country')">Passport</div>
+                    <div class="lw-tab" id="tab-purpose" onclick="switchTab('purpose')">Purpose</div>
+                </div>
+                <div class="lw-search-shell">
+                    <span class="lw-search-icon" aria-hidden="true">⌕</span>
+                    <input type="text" class="lw-search" id="search-input"
+                        placeholder="Search passport, purpose, route, or date"
+                        autocomplete="off"
+                        oninput="onSearchInput()"
+                        onkeydown="onSearchKeydown(event)"
+                        onfocus="onSearchFocus()" />
+                    <button class="lw-search-submit" type="button" onclick="onSearchFocus()" aria-label="Search">⌕</button>
+                    <span class="lw-search-clear" id="search-clear" onclick="clearSearch()">✕</span>
+                    <div class="lw-suggestions" id="suggestions"></div>
+                </div>
             </div>
-            <div style="position:relative; margin-top:8px;">
-                <input type="text" class="lw-search" id="search-input"
-                    placeholder="Enter your country to see which visa policies apply to you"
-                    autocomplete="off"
-                    oninput="onSearchInput()"
-                    onkeydown="onSearchKeydown(event)"
-                    onfocus="onSearchFocus()" />
-                <span class="lw-search-clear" id="search-clear" onclick="clearSearch()">✕</span>
-                <div class="lw-suggestions" id="suggestions"></div>
+            <div class="lw-hero-hot" aria-label="Top actions">
+                <span class="lw-hot-label">TOP ACTIONS</span>
+                <a class="lw-hot-chip is-first" href="/visa/visa-free-entry.html"><span class="lw-hot-icon">Entry</span>Visa-free entry</a>
+                <a class="lw-hot-chip" href="/visa/240-hour-transit-visa.html"><strong>Transit</strong>240h route</a>
+                <a class="lw-hot-chip" href="/life/pay-in-china-as-foreigner.html"><strong>Pay</strong>Pay setup</a>
+                <a class="lw-hot-chip" href="#calculator"><strong>Stay</strong>Stay dates</a>
+            </div>
+            <div class="lw-trust-row" aria-label="Trust notes">
+                <span>Official sources</span>
+                <span>Clear & updated</span>
+                <span>Private & secure</span>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Below hero: results + tools -->
     <div class="lw-container">
@@ -1097,6 +132,11 @@
 
         <!-- Tool Grid -->
         <div id="tools"></div>
+        <section class="lw-section-intro" aria-labelledby="tools-heading">
+            <p class="lw-eyebrow">Quick tools</p>
+            <h2 id="tools-heading">Quick tools for your China trip.</h2>
+            <p>Open the small checks visitors need after the main entry question is clear.</p>
+        </section>
         <div class="lw-tools" id="tool-grid"></div>
         <div class="lw-tool-panel hidden" id="tool-panel"></div>
 
@@ -1108,6 +148,7 @@
                     <div>© 2026 LAOWAITOWN · Independent reference · <a href="mailto:contact@laowaitown.com" class="lw-footer-links">contact@laowaitown.com</a></div>
                 </footer>
     </div>
+    </main>
 
     <!-- External Data -->
     <script src="shared/visa-data.js"></script>
@@ -1244,6 +285,19 @@
             phrase: 'phrases'
         };
 
+        const TOOL_META = {
+            stay: { short: 'ST', desc: '30/60/90-day exit dates' },
+            currency: { short: 'FX', desc: 'RMB exchange quick view' },
+            timezone: { short: 'TZ', desc: 'Home time to China time' },
+            phrases: { short: 'CN', desc: 'Show useful Chinese phrases' },
+            weather: { short: 'WX', desc: 'Check city weather fast' },
+            emergency: { short: 'SOS', desc: 'Police, ambulance, embassy basics' },
+            sim: { short: 'SIM', desc: 'eSIM and mobile data notes' },
+            vpn: { short: 'VPN', desc: 'Internet access before landing' },
+            translate: { short: 'TR', desc: 'Open translation services' },
+            maps: { short: 'MAP', desc: 'Map apps that work in China' }
+        };
+
         function handleToolHash() {
             const rawHash = (window.location.hash || '').replace(/^#/, '').toLowerCase();
             const toolId = TOOL_HASHES[rawHash];
@@ -1265,8 +319,11 @@
             const grid = document.getElementById('tool-grid');
             grid.innerHTML = TOOLS.map(t => `
                 <button class="lw-tool" type="button" data-tool="${t.id}" onclick="openTool('${t.id}')">
-                    <div class="lw-tool-icon">${t.icon}</div>
-                    <div class="lw-tool-name">${t.name}</div>
+                    <div class="lw-tool-icon">${(TOOL_META[t.id] || {}).short || t.name.slice(0, 2)}</div>
+                    <div class="lw-tool-copy">
+                        <div class="lw-tool-name">${t.name}</div>
+                        <div class="lw-tool-desc">${(TOOL_META[t.id] || {}).desc || 'Open this quick helper'}</div>
+                    </div>
                 </button>
             `).join('');
         }
@@ -2171,11 +1228,11 @@
             const input = document.getElementById('search-input');
             input.value = '';
             if (tab === 'purpose') {
-                input.placeholder = currentLang === 'zh' ? '点击选择来华目的' : 'Select your purpose of visit';
+                input.placeholder = currentLang === 'zh' ? '搜索护照、目的、路线或日期' : 'Search passport, purpose, route, or date';
                 input.readOnly = true;
                 showPurposeSuggestions(PURPOSES);
             } else {
-                input.placeholder = currentLang === 'zh' ? '输入国家名称，查看适用你的中国签证政策' : 'Enter your country to see which visa policies apply to you';
+                input.placeholder = currentLang === 'zh' ? '搜索护照、目的、路线或日期' : 'Search passport, purpose, route, or date';
                 input.readOnly = false;
                 hideSuggestions();
             }
@@ -2659,8 +1716,8 @@
             // Update subtitle
             const sub = document.querySelector('.lw-subtitle');
             if (sub) sub.textContent = lang === 'zh'
-                ? '中国免签政策查询 & 来华旅行工具 2026'
-                : 'China Visa-Free Policy Checker & Travel Tools 2026';
+                ? '免签、过境、支付、地图、SIM、应急信息，给外国访客的快速答案。'
+                : 'Visa-free, transit, payment, maps, SIM, emergency — quick answers for foreign visitors.';
 
             // Re-render result if showing
             if (selectedCountry) renderResult();
