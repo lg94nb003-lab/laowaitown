@@ -51,15 +51,8 @@
 <body class="lw-home-page">
     <header class="lw-home-nav" aria-label="Primary">
         <a class="lw-home-logo" href="/" aria-label="LAOWAITOWN home">
-            <span class="lw-logo-mark">LW</span>
-            <span>LAOWAITOWN</span>
+            <span class="lw-nav-calligraphy">老外</span><span class="lw-nav-town">town</span>
         </a>
-        <nav class="lw-home-links" aria-label="Site sections">
-            <a href="/visa/">Visa</a>
-            <a href="/life/">Life</a>
-            <a href="#tools">Tools</a>
-            <a href="/about.html">About</a>
-        </nav>
         <div class="lw-lang" aria-label="Language">
             <button id="lang-en" class="lw-lang-btn active" onclick="setLanguage('en')">EN</button>
             <button id="lang-zh" class="lw-lang-btn" onclick="setLanguage('zh')">中文</button>
@@ -77,9 +70,7 @@
                 <span class="lw-lockup-divider" aria-hidden="true"></span>
                 <span class="lw-lockup-cn"><span class="lw-calligraphy">老外</span><span>town</span></span>
             </div>
-            <p class="lw-eyebrow">China travel & visa tool for foreign visitors</p>
-            <h1 id="lw-brand" class="lw-brand">Ask China <span class="lw-brand-highlight">before you go.</span></h1>
-            <p class="lw-subtitle">Visa-free, transit, payment, maps, SIM, emergency — quick answers for foreign visitors.</p>
+            <h1 id="lw-brand" class="lw-brand">Ask China <img class="lw-brand-connector" src="shared/flight-connector.svg" alt="" aria-hidden="true"><span>before you go</span></h1>
         </div>
 
         <!-- Search -->
@@ -88,11 +79,11 @@
                 <div class="lw-tabs" aria-label="Search mode">
                     <div class="lw-tab active" id="tab-country" onclick="switchTab('country')">Passport</div>
                     <div class="lw-tab" id="tab-purpose" onclick="switchTab('purpose')">Purpose</div>
+                    <div class="lw-tab" id="tab-tools" onclick="switchTab('tools')">Tools</div>
                 </div>
                 <div class="lw-search-shell">
-                    <span class="lw-search-icon" aria-hidden="true">⌕</span>
                     <input type="text" class="lw-search" id="search-input"
-                        placeholder="Search passport, purpose, route, or date"
+                        placeholder="Search passport, transit route, payment, SIM, maps..."
                         autocomplete="off"
                         oninput="onSearchInput()"
                         onkeydown="onSearchKeydown(event)"
@@ -101,52 +92,54 @@
                     <span class="lw-search-clear" id="search-clear" onclick="clearSearch()">✕</span>
                     <div class="lw-suggestions" id="suggestions"></div>
                 </div>
+                <div id="tools" class="lw-tools-anchor"></div>
+                <div class="lw-tools lw-hero-tools hidden" id="tool-grid"></div>
+                <div class="lw-tool-panel hidden" id="tool-panel"></div>
+                <div id="result-zone" class="hidden">
+                    <div class="lw-nat-chip" id="nat-chip">
+                        <span id="nat-flag"></span>
+                        <span id="nat-name" style="font-weight:600;"></span>
+                        <span class="lw-nat-chip-close" onclick="clearNationality()">x</span>
+                    </div>
+                    <div class="lw-badge" id="badge"></div>
+                    <div class="lw-policy-list" id="policy-list"></div>
+                </div>
             </div>
-            <div class="lw-hero-hot" aria-label="Top actions">
-                <span class="lw-hot-label">TOP ACTIONS</span>
-                <a class="lw-hot-chip is-first" href="/visa/visa-free-entry.html"><span class="lw-hot-icon">Entry</span>Visa-free entry</a>
-                <a class="lw-hot-chip" href="/visa/240-hour-transit-visa.html"><strong>Transit</strong>240h route</a>
-                <a class="lw-hot-chip" href="/life/pay-in-china-as-foreigner.html"><strong>Pay</strong>Pay setup</a>
-                <a class="lw-hot-chip" href="#calculator"><strong>Stay</strong>Stay dates</a>
+            <div class="lw-hero-hot" id="top-actions" aria-label="Top actions">
+                <section class="lw-top-list" aria-labelledby="top-passports">
+                    <h2 id="top-passports">Passport</h2>
+                    <button type="button" onclick="selectCountry('US')"><span>01</span><strong>USA</strong></button>
+                    <button type="button" onclick="selectCountry('JP')"><span>02</span><strong>Japan</strong></button>
+                    <button type="button" onclick="selectCountry('GB')"><span>03</span><strong>UK</strong></button>
+                    <button type="button" onclick="selectCountry('AU')"><span>04</span><strong>Australia</strong></button>
+                </section>
+                <section class="lw-top-list" aria-labelledby="top-purposes">
+                    <h2 id="top-purposes">Purpose</h2>
+                    <button type="button" onclick="selectPurpose('transit')"><span>01</span><strong>Transit</strong></button>
+                    <a href="/visa/visa-free-entry.html"><span>02</span><strong>Visa-free</strong></a>
+                    <button type="button" onclick="selectPurpose('business')"><span>03</span><strong>Business</strong></button>
+                    <button type="button" onclick="selectPurpose('tourism')"><span>04</span><strong>Tourism</strong></button>
+                </section>
+                <section class="lw-top-list" aria-labelledby="top-tools">
+                    <h2 id="top-tools">Tools</h2>
+                    <button type="button" onclick="openTool('stay')"><span>01</span><strong>Stay Calc</strong></button>
+                    <button type="button" onclick="openTool('currency')"><span>02</span><strong>Currency</strong></button>
+                    <button type="button" onclick="openTool('phrases')"><span>03</span><strong>Phrases</strong></button>
+                    <button type="button" onclick="openTool('maps')"><span>04</span><strong>Maps</strong></button>
+                </section>
             </div>
-            <div class="lw-trust-row" aria-label="Trust notes">
-                <span>Official sources</span>
-                <span>Clear & updated</span>
-                <span>Private & secure</span>
-            </div>
+            <footer class="lw-home-foot" aria-label="Site notes">
+                <div class="lw-footer-links">
+                    <a href="/about.html">About</a><span class="sep">·</span><a href="/about.html#contact">Contact</a><span class="sep">·</span><a href="/visa/">Visa</a><span class="sep">·</span><a href="/life/">Life</a>
+                </div>
+                <div>© 2026 LAOWAITOWN · Independent reference · <a href="mailto:contact@laowaitown.com" class="lw-footer-links">contact@laowaitown.com</a></div>
+                <p class="lw-home-disclaimer">Policies can change. Confirm final requirements with official authorities before travel.</p>
+            </footer>
         </div>
     </section>
 
     <!-- Below hero: results + tools -->
     <div class="lw-container">
-        <!-- Policy Result (hidden until nationality selected) -->
-        <div id="result-zone" class="hidden" style="width:100%; display:flex; flex-direction:column; align-items:center; gap:16px;">
-            <div class="lw-nat-chip" id="nat-chip">
-                <span id="nat-flag"></span>
-                <span id="nat-name" style="font-weight:600;"></span>
-                <span class="lw-nat-chip-close" onclick="clearNationality()">✕</span>
-            </div>
-            <div class="lw-badge" id="badge"></div>
-            <div class="lw-policy-list" id="policy-list"></div>
-        </div>
-
-        <!-- Tool Grid -->
-        <div id="tools"></div>
-        <section class="lw-section-intro" aria-labelledby="tools-heading">
-            <p class="lw-eyebrow">Quick tools</p>
-            <h2 id="tools-heading">Quick tools for your China trip.</h2>
-            <p>Open the small checks visitors need after the main entry question is clear.</p>
-        </section>
-        <div class="lw-tools" id="tool-grid"></div>
-        <div class="lw-tool-panel hidden" id="tool-panel"></div>
-
-        <!-- Footer -->
-        <footer class="lw-footer">
-                    <div class="lw-footer-links">
-                        <a href="/about.html">About</a><span class="sep">·</span><a href="/about.html#contact">Contact</a><span class="sep">·</span><a href="/visa/">Visa</a><span class="sep">·</span><a href="/life/">Life</a>
-                    </div>
-                    <div>© 2026 LAOWAITOWN · Independent reference · <a href="mailto:contact@laowaitown.com" class="lw-footer-links">contact@laowaitown.com</a></div>
-                </footer>
     </div>
     </main>
 
@@ -160,7 +153,7 @@
         'use strict';
 
         // ====== State ======
-        let currentTab = 'country'; // 'country' | 'purpose'
+        let currentTab = 'country'; // 'country' | 'purpose' | 'tools'
         let currentLang = 'en';
         let selectedCountry = null; // { code, zh, en, flag }
         let sugIndex = -1;
@@ -286,25 +279,24 @@
         };
 
         const TOOL_META = {
-            stay: { short: 'ST', desc: '30/60/90-day exit dates' },
-            currency: { short: 'FX', desc: 'RMB exchange quick view' },
-            timezone: { short: 'TZ', desc: 'Home time to China time' },
-            phrases: { short: 'CN', desc: 'Show useful Chinese phrases' },
-            weather: { short: 'WX', desc: 'Check city weather fast' },
-            emergency: { short: 'SOS', desc: 'Police, ambulance, embassy basics' },
-            sim: { short: 'SIM', desc: 'eSIM and mobile data notes' },
-            vpn: { short: 'VPN', desc: 'Internet access before landing' },
-            translate: { short: 'TR', desc: 'Open translation services' },
-            maps: { short: 'MAP', desc: 'Map apps that work in China' }
+            stay: { icon: 'calendar', desc: '30/60/90-day exit dates' },
+            currency: { icon: 'exchange', desc: 'RMB exchange quick view' },
+            timezone: { icon: 'clock', desc: 'Home time to China time' },
+            phrases: { icon: 'chat', desc: 'Show useful Chinese phrases' },
+            weather: { icon: 'weather', desc: 'Check city weather fast' },
+            emergency: { icon: 'alert', desc: 'Police, ambulance, embassy basics' },
+            sim: { icon: 'sim', desc: 'eSIM and mobile data notes' },
+            vpn: { icon: 'lock', desc: 'Internet access before landing' },
+            translate: { icon: 'translate', desc: 'Open translation services' },
+            maps: { icon: 'map', desc: 'Map apps that work in China' }
         };
 
         function handleToolHash() {
             const rawHash = (window.location.hash || '').replace(/^#/, '').toLowerCase();
             const toolId = TOOL_HASHES[rawHash];
             if (!toolId) return false;
+            switchTab('tools');
             openTool(toolId);
-            const anchor = document.getElementById('tools');
-            if (anchor) anchor.scrollIntoView({ block: 'start' });
             return true;
         }
 
@@ -319,7 +311,7 @@
             const grid = document.getElementById('tool-grid');
             grid.innerHTML = TOOLS.map(t => `
                 <button class="lw-tool" type="button" data-tool="${t.id}" onclick="openTool('${t.id}')">
-                    <div class="lw-tool-icon">${(TOOL_META[t.id] || {}).short || t.name.slice(0, 2)}</div>
+                    <div class="lw-tool-icon" data-icon="${(TOOL_META[t.id] || {}).icon || 'tool'}" aria-hidden="true"></div>
                     <div class="lw-tool-copy">
                         <div class="lw-tool-name">${t.name}</div>
                         <div class="lw-tool-desc">${(TOOL_META[t.id] || {}).desc || 'Open this quick helper'}</div>
@@ -338,9 +330,9 @@
             }
             panel.innerHTML = html;
             panel.classList.remove('hidden');
+            switchTab('tools');
             document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.toggle('active', btn.dataset.tool === toolId));
             initTool(toolId);
-            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             __track('open_tool', { tool: toolId });
         };
 
@@ -516,7 +508,7 @@
 
         function renderPhrasesTool() {
             return toolShell(
-                '💬',
+                'CN',
                 'Quick Phrases',
                 '常用短语',
                 'Swipe the scene cards, then tap a phrase to show large text or copy the Chinese.',
@@ -524,8 +516,8 @@
                 `
                 <div class="lw-phrase-carousel">
                     <div class="lw-phrase-carousel-controls">
-                        <button type="button" id="phrase-scenes-prev" class="lw-phrase-scroll-btn is-disabled" onclick="scrollPhraseScenes(-1)" aria-label="${currentLang === 'zh' ? '上一组场景' : 'Previous scenes'}">‹</button>
-                        <button type="button" id="phrase-scenes-next" class="lw-phrase-scroll-btn" onclick="scrollPhraseScenes(1)" aria-label="${currentLang === 'zh' ? '下一组场景' : 'Next scenes'}">›</button>
+                        <button type="button" id="phrase-scenes-prev" class="lw-phrase-scroll-btn is-disabled" onclick="scrollPhraseScenes(-1)" aria-label="Previous scenes">&lsaquo;</button>
+                        <button type="button" id="phrase-scenes-next" class="lw-phrase-scroll-btn" onclick="scrollPhraseScenes(1)" aria-label="Next scenes">&rsaquo;</button>
                     </div>
                     <div class="lw-phrase-scenes" id="phrase-scenes" onscroll="updatePhraseScrollButtons()">
                         ${PHRASE_SCENES.map(s => `
@@ -957,7 +949,7 @@
             const [zh, en] = scene.phrases[phraseFullscreenIndex];
             document.getElementById('phrase-fs-zh').textContent = zh;
             document.getElementById('phrase-fs-en').textContent = en;
-            document.getElementById('phrase-fs-index').textContent = `${scene.icon} ${phraseFullscreenIndex + 1} / ${scene.phrases.length}`;
+            document.getElementById('phrase-fs-index').textContent = `${phraseFullscreenIndex + 1} / ${scene.phrases.length}`;
         }
 
         window.copyToolText = function(text) {
@@ -1225,16 +1217,34 @@
             currentTab = tab;
             document.getElementById('tab-country').classList.toggle('active', tab === 'country');
             document.getElementById('tab-purpose').classList.toggle('active', tab === 'purpose');
+            document.getElementById('tab-tools').classList.toggle('active', tab === 'tools');
+            const searchCard = document.querySelector('.lw-search-card');
+            const searchShell = document.querySelector('.lw-search-shell');
+            const toolGrid = document.getElementById('tool-grid');
+            if (searchCard) searchCard.classList.toggle('tools-open', tab === 'tools');
+            if (searchShell) searchShell.classList.toggle('hidden', tab === 'tools');
+            if (toolGrid) toolGrid.classList.toggle('hidden', tab !== 'tools');
             const input = document.getElementById('search-input');
             input.value = '';
-            if (tab === 'purpose') {
-                input.placeholder = currentLang === 'zh' ? '搜索护照、目的、路线或日期' : 'Search passport, purpose, route, or date';
+            if (searchCard && tab !== 'country') searchCard.classList.remove('result-open');
+            if (tab !== 'country') {
+                const result = document.getElementById('result-zone');
+                if (result) result.classList.add('hidden');
+            }
+            if (tab === 'tools') {
                 input.readOnly = true;
-                showPurposeSuggestions(PURPOSES);
+                hideSuggestions();
+            } else if (tab === 'purpose') {
+                input.placeholder = currentLang === 'zh' ? '搜索护照、过境路线、支付、SIM、地图...' : 'Search passport, transit route, payment, SIM, maps...';
+                input.readOnly = true;
+                hideSuggestions();
             } else {
-                input.placeholder = currentLang === 'zh' ? '搜索护照、目的、路线或日期' : 'Search passport, purpose, route, or date';
+                input.placeholder = currentLang === 'zh' ? '搜索护照、过境路线、支付、SIM、地图...' : 'Search passport, transit route, payment, SIM, maps...';
                 input.readOnly = false;
                 hideSuggestions();
+                const panel = document.getElementById('tool-panel');
+                if (panel) panel.classList.add('hidden');
+                document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.remove('active'));
             }
             document.getElementById('search-clear').classList.remove('show');
         };
@@ -1355,6 +1365,7 @@
         window.selectCountry = function(code) {
             const country = allCountries.find(c => c.code === code);
             if (!country) return;
+            switchTab('country');
             selectedCountry = { ...country, flag: getFlag(code) };
             // Reset 240h lookup state on new country
             lookup240hTab = 'province';
@@ -1390,8 +1401,8 @@
             selectedCountry = null;
             document.getElementById('result-zone').classList.add('hidden');
             document.getElementById('result-zone').style.display = '';
-            document.getElementById('lw-brand').classList.remove('lw-brand-small');
-            document.getElementById('lw-brand').classList.add('lw-brand');
+            const card = document.querySelector('.lw-search-card');
+            if (card) card.classList.remove('result-open');
             switchTab('country');
         };
 
@@ -1401,11 +1412,8 @@
             const zone = document.getElementById('result-zone');
             zone.classList.remove('hidden');
             zone.style.display = 'flex';
-
-            // Shrink brand
-            const brand = document.getElementById('lw-brand');
-            brand.classList.remove('lw-brand');
-            brand.classList.add('lw-brand-small');
+            const card = document.querySelector('.lw-search-card');
+            if (card) card.classList.add('result-open');
 
             // Chip
             document.getElementById('nat-flag').textContent = selectedCountry.flag;
@@ -1714,11 +1722,6 @@
             switchTab(currentTab);
 
             // Update subtitle
-            const sub = document.querySelector('.lw-subtitle');
-            if (sub) sub.textContent = lang === 'zh'
-                ? '免签、过境、支付、地图、SIM、应急信息，给外国访客的快速答案。'
-                : 'Visa-free, transit, payment, maps, SIM, emergency — quick answers for foreign visitors.';
-
             // Re-render result if showing
             if (selectedCountry) renderResult();
             const panel = document.getElementById('tool-panel');
