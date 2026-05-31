@@ -15,6 +15,7 @@ const FILES = [
 ];
 
 const DIRS = [
+  'legal',
   'life',
   'shared',
   'visa'

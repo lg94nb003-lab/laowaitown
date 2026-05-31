@@ -80,6 +80,7 @@
                     <div class="lw-tab active" id="tab-country" onclick="switchTab('country')">Passport</div>
                     <div class="lw-tab" id="tab-purpose" onclick="switchTab('purpose')">Purpose</div>
                     <div class="lw-tab" id="tab-tools" onclick="switchTab('tools')">Tools</div>
+                    <div class="lw-tab" id="tab-law" onclick="switchTab('law')">Law</div>
                 </div>
                 <div class="lw-search-shell">
                     <input type="text" class="lw-search" id="search-input"
@@ -95,6 +96,65 @@
                 <div id="tools" class="lw-tools-anchor"></div>
                 <div class="lw-tools lw-hero-tools hidden" id="tool-grid"></div>
                 <div class="lw-tool-panel hidden" id="tool-panel"></div>
+                <div class="lw-law-panel hidden" id="law-panel">
+                    <div class="lw-law-panel-head">
+                        <div>
+                            <h2>Law for foreigners in China</h2>
+                            <p>Move across the tabs to browse questions, key foreigner articles, and the China law library.</p>
+                        </div>
+                        <span class="lw-law-badge">Chinese text prevails</span>
+                    </div>
+                    <div class="lw-law-subtabs" role="tablist" aria-label="Law sections">
+                        <button class="active" id="law-subtab-qa" type="button" onmouseenter="switchLawSubtab('qa')" onfocus="switchLawSubtab('qa')" onclick="switchLawSubtab('qa')">Q&amp;A</button>
+                        <button id="law-subtab-articles" type="button" onmouseenter="switchLawSubtab('articles')" onfocus="switchLawSubtab('articles')" onclick="switchLawSubtab('articles')">Foreigner Articles</button>
+                        <button id="law-subtab-library" type="button" onmouseenter="switchLawSubtab('library')" onfocus="switchLawSubtab('library')" onclick="switchLawSubtab('library')">China Law Library</button>
+                    </div>
+
+                    <div class="lw-law-subpanel active" id="law-subpanel-qa">
+                        <a class="lw-law-preview" href="/legal/questions/can-i-work-on-tourist-visa.html">
+                            <span>01</span><div><strong>Can I work on a tourist visa?</strong><p>Usually no. Includes Exit-Entry Law Article 80 original text and English reference translation.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/questions/what-happens-if-i-overstay.html">
+                            <span>02</span><div><strong>What happens if I overstay?</strong><p>Article 78: illegal residence, daily fine cap, and detention risk in serious cases.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/questions/do-i-need-to-register-my-address.html">
+                            <span>03</span><div><strong>Do I need to register my address?</strong><p>Article 39: hotel registration and 24-hour non-hotel stay registration.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/questions/can-police-check-my-passport.html">
+                            <span>04</span><div><strong>Can police check my passport?</strong><p>Valid identity and stay documents, checks, and what to keep ready.</p></div>
+                        </a>
+                    </div>
+
+                    <div class="lw-law-subpanel" id="law-subpanel-articles">
+                        <a class="lw-law-preview" href="/legal/laws-for-foreigners/foreigner-accommodation-registration.html">
+                            <span>39</span><div><strong>Accommodation registration</strong><p>Foreigners staying outside hotels should register within 24 hours after arrival.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/laws-for-foreigners/exit-entry-administration-law.html#article-78">
+                            <span>78</span><div><strong>Illegal residence / overstay</strong><p>Warning, daily fine up to the statutory cap, or detention in serious cases.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/laws-for-foreigners/public-security-key-articles.html#drug-use">
+                            <span>84</span><div><strong>Drug use</strong><p>Public Security Administration Punishments Law: drug use can lead to detention and fines.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/laws-for-foreigners/public-security-key-articles.html#fighting">
+                            <span>51</span><div><strong>Fighting / intentional injury</strong><p>Detention and fines; heavier penalty for group fighting or vulnerable victims.</p></div>
+                        </a>
+                    </div>
+
+                    <div class="lw-law-subpanel" id="law-subpanel-library">
+                        <a class="lw-law-preview" href="/legal/library/civil-code.html">
+                            <span>CIV</span><div><strong>Civil Code</strong><p>Contracts, marriage, torts, property, personality rights, and inheritance.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/library/public-security-administration-punishments-law.html">
+                            <span>PSA</span><div><strong>Public Security Administration Punishments Law</strong><p>Public-order penalties, police procedure, fighting, drug use, gambling, and noise.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/library/#entry-residence">
+                            <span>IMM</span><div><strong>Entry, residence, work</strong><p>Exit-entry law, foreigner entry-exit regulations, nationality, work permit rules.</p></div>
+                        </a>
+                        <a class="lw-law-preview" href="/legal/library/#civil-business">
+                            <span>BIZ</span><div><strong>Civil, labor, company, FX</strong><p>General laws grouped as links for readers who want to explore further.</p></div>
+                        </a>
+                    </div>
+                </div>
                 <div id="result-zone" class="hidden">
                     <div class="lw-nat-chip" id="nat-chip">
                         <span id="nat-flag"></span>
@@ -130,7 +190,7 @@
             </div>
             <footer class="lw-home-foot" aria-label="Site notes">
                 <div class="lw-footer-links">
-                    <a href="/about.html">About</a><span class="sep">·</span><a href="/about.html#contact">Contact</a><span class="sep">·</span><a href="/visa/">Visa</a><span class="sep">·</span><a href="/life/">Life</a>
+                    <a href="/about.html">About</a><span class="sep">·</span><a href="/about.html#contact">Contact</a><span class="sep">·</span><a href="/visa/">Visa</a><span class="sep">·</span><a href="/life/">Life</a><span class="sep">·</span><a href="/legal/">Legal</a>
                 </div>
                 <div>© 2026 LAOWAITOWN · Independent reference · <a href="mailto:contact@laowaitown.com" class="lw-footer-links">contact@laowaitown.com</a></div>
                 <p class="lw-home-disclaimer">Policies can change. Confirm final requirements with official authorities before travel.</p>
@@ -153,7 +213,7 @@
         'use strict';
 
         // ====== State ======
-        let currentTab = 'country'; // 'country' | 'purpose' | 'tools'
+        let currentTab = 'country'; // 'country' | 'purpose' | 'tools' | 'law'
         let currentLang = 'en';
         let selectedCountry = null; // { code, zh, en, flag }
         let sugIndex = -1;
@@ -182,6 +242,20 @@
             { id: 'transit', en: 'Transit / Layover', zh: '过境', desc_en: '240h/24h transit, airport guide', desc_zh: '240h/24h过境、机场指南' },
             { id: 'business', en: 'Business Trip', zh: '商务', desc_en: 'Meetings, trade fairs, short-term projects', desc_zh: '会议、展会、短期项目' },
             { id: 'other', en: 'Other', zh: '其他', desc_en: 'Cruise, medical, sports, other purposes', desc_zh: '邮轮、就医、体育、其他' }
+        ];
+
+        const LEGAL_SEARCH_ITEMS = [
+            { title: 'Legal Q&A for Foreigners in China', desc: 'Common questions ranked by usefulness and popularity', href: '/legal/questions/', type: 'Q&A' },
+            { title: 'Foreigner-Related Laws', desc: 'Entry, stay, residence, work, nationality, and registration rules', href: '/legal/laws-for-foreigners/', type: 'Laws' },
+            { title: 'China Law Library', desc: 'Major Chinese laws with Chinese and English reference names', href: '/legal/library/', type: 'Library' },
+            { title: 'Can I work in China on a tourist visa?', desc: 'Short answer, legal basis, and safer next steps', href: '/legal/questions/can-i-work-on-tourist-visa.html', type: 'Question' },
+            { title: 'What happens if I overstay in China?', desc: 'Illegal residence, fines, and exit-entry consequences', href: '/legal/questions/what-happens-if-i-overstay.html', type: 'Question' },
+            { title: 'Do I need to register my address in China?', desc: 'Hotel and non-hotel accommodation registration basics', href: '/legal/questions/do-i-need-to-register-my-address.html', type: 'Question' },
+            { title: 'What should I do if I lose my passport?', desc: 'Police report, consular replacement, and exit-entry steps', href: '/legal/questions/what-if-i-lose-my-passport.html', type: 'Question' },
+            { title: 'Exit and Entry Administration Law', desc: 'Key articles on stay, registration, overstay, and employment', href: '/legal/laws-for-foreigners/exit-entry-administration-law.html', type: 'Law' },
+            { title: 'Public Security Key Articles', desc: 'Fighting, drug use, foreigner penalty add-ons, and police procedure', href: '/legal/laws-for-foreigners/public-security-key-articles.html', type: 'Law' },
+            { title: 'Nationality Law', desc: 'Nationality acquisition, loss, and restoration basics', href: '/legal/laws-for-foreigners/nationality-law.html', type: 'Law' },
+            { title: 'Civil Code', desc: 'Contracts, marriage, torts, property, and personality rights', href: '/legal/library/civil-code.html', type: 'Law' }
         ];
 
         // ====== Policy Definitions (7 types) ======
@@ -293,6 +367,10 @@
 
         function handleToolHash() {
             const rawHash = (window.location.hash || '').replace(/^#/, '').toLowerCase();
+            if (rawHash === 'law' || rawHash === 'legal') {
+                switchTab('law');
+                return true;
+            }
             const toolId = TOOL_HASHES[rawHash];
             if (!toolId) return false;
             switchTab('tools');
@@ -1218,12 +1296,15 @@
             document.getElementById('tab-country').classList.toggle('active', tab === 'country');
             document.getElementById('tab-purpose').classList.toggle('active', tab === 'purpose');
             document.getElementById('tab-tools').classList.toggle('active', tab === 'tools');
+            document.getElementById('tab-law').classList.toggle('active', tab === 'law');
             const searchCard = document.querySelector('.lw-search-card');
             const searchShell = document.querySelector('.lw-search-shell');
             const toolGrid = document.getElementById('tool-grid');
+            const lawPanel = document.getElementById('law-panel');
             if (searchCard) searchCard.classList.toggle('tools-open', tab === 'tools');
             if (searchShell) searchShell.classList.toggle('hidden', tab === 'tools');
             if (toolGrid) toolGrid.classList.toggle('hidden', tab !== 'tools');
+            if (lawPanel) lawPanel.classList.toggle('hidden', tab !== 'law');
             const input = document.getElementById('search-input');
             input.value = '';
             if (searchCard && tab !== 'country') searchCard.classList.remove('result-open');
@@ -1238,6 +1319,13 @@
                 input.placeholder = currentLang === 'zh' ? '搜索护照、过境路线、支付、SIM、地图...' : 'Search passport, transit route, payment, SIM, maps...';
                 input.readOnly = true;
                 hideSuggestions();
+            } else if (tab === 'law') {
+                input.placeholder = 'Search legal questions, laws, overstay, work, registration...';
+                input.readOnly = false;
+                hideSuggestions();
+                const panel = document.getElementById('tool-panel');
+                if (panel) panel.classList.add('hidden');
+                document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.remove('active'));
             } else {
                 input.placeholder = currentLang === 'zh' ? '搜索护照、过境路线、支付、SIM、地图...' : 'Search passport, transit route, payment, SIM, maps...';
                 input.readOnly = false;
@@ -1255,7 +1343,11 @@
             document.getElementById('search-clear').classList.toggle('show', val.length > 0);
             sugIndex = -1;
 
-            if (val.length === 0) { showPopularCountries(); return; }
+            if (val.length === 0) {
+                if (currentTab === 'law') showLegalSuggestions(LEGAL_SEARCH_ITEMS.slice(0, 6), 'Popular law links');
+                else showPopularCountries();
+                return;
+            }
 
             if (currentTab === 'country') {
                 const q = val.toLowerCase();
@@ -1269,6 +1361,14 @@
                     return aStarts - bStarts;
                 });
                 showCountrySuggestions(matches.slice(0, 6));
+            } else if (currentTab === 'law') {
+                const q = val.toLowerCase();
+                const matches = LEGAL_SEARCH_ITEMS.filter(item =>
+                    item.title.toLowerCase().includes(q) ||
+                    item.desc.toLowerCase().includes(q) ||
+                    item.type.toLowerCase().includes(q)
+                );
+                showLegalSuggestions(matches.slice(0, 7), 'Legal results');
             } else {
                 // Purpose tab: always show all options (dropdown style)
                 showPurposeSuggestions(PURPOSES);
@@ -1279,6 +1379,9 @@
             const val = document.getElementById('search-input').value.trim();
             if (currentTab === 'purpose') {
                 showPurposeSuggestions(PURPOSES);
+            } else if (currentTab === 'law') {
+                if (val.length > 0) onSearchInput();
+                else showLegalSuggestions(LEGAL_SEARCH_ITEMS.slice(0, 6), 'Popular law links');
             } else if (val.length > 0) {
                 onSearchInput();
             } else {
@@ -1354,6 +1457,22 @@
             document.getElementById('search-input').classList.add('has-suggestions');
         }
 
+        function showLegalSuggestions(matches, label) {
+            const el = document.getElementById('suggestions');
+            if (!matches.length) { hideSuggestions(); return; }
+            el.innerHTML = `<div style="padding:8px 20px 4px;font-size:10px;color:var(--text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:1px;">${label}</div>` +
+                matches.map(item => `
+                <div class="lw-sug-item" onclick="openLegalItem('${item.href}')">
+                    <div>
+                        <div class="lw-sug-name">${item.title}</div>
+                        <div class="lw-sug-desc">${item.type} · ${item.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+            el.classList.add('show');
+            document.getElementById('search-input').classList.add('has-suggestions');
+        }
+
         function hideSuggestions() {
             const el = document.getElementById('suggestions');
             el.classList.remove('show');
@@ -1394,6 +1513,22 @@
                 other: 'visa/'
             };
             window.location.href = purposeTargets[id] || 'visa/';
+        };
+
+        window.openLegalItem = function(href) {
+            hideSuggestions();
+            clearSearch();
+            __track('select_law', { href: href });
+            window.location.href = href;
+        };
+
+        window.switchLawSubtab = function(id) {
+            ['qa', 'articles', 'library'].forEach(key => {
+                const tab = document.getElementById('law-subtab-' + key);
+                const panel = document.getElementById('law-subpanel-' + key);
+                if (tab) tab.classList.toggle('active', key === id);
+                if (panel) panel.classList.toggle('active', key === id);
+            });
         };
 
         // ====== Clear Nationality ======

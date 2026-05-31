@@ -1095,6 +1095,7 @@ function main() {
   const sitemapPaths = [
     '/',
     '/#tools',
+    '/#law',
     '/#calculator',
     '/#stay',
     '/#timezone',
@@ -1104,7 +1105,24 @@ function main() {
     '/about.html',
     ...coreVisa,
     ...pages.map(p => p.urlPath),
-    '/life/'
+    '/life/',
+    '/legal/',
+    '/legal/questions/',
+    '/legal/questions/can-i-work-on-tourist-visa.html',
+    '/legal/questions/what-happens-if-i-overstay.html',
+    '/legal/questions/do-i-need-to-register-my-address.html',
+    '/legal/questions/what-if-i-lose-my-passport.html',
+    '/legal/questions/can-police-check-my-passport.html',
+    '/legal/questions/can-foreigners-get-married-in-china.html',
+    '/legal/laws-for-foreigners/',
+    '/legal/laws-for-foreigners/exit-entry-administration-law.html',
+    '/legal/laws-for-foreigners/foreigner-accommodation-registration.html',
+    '/legal/laws-for-foreigners/nationality-law.html',
+    '/legal/laws-for-foreigners/work-permit-and-illegal-employment.html',
+    '/legal/laws-for-foreigners/public-security-key-articles.html',
+    '/legal/library/',
+    '/legal/library/civil-code.html',
+    '/legal/library/public-security-administration-punishments-law.html'
   ];
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemapXml(sitemapPaths), 'utf8');
   console.log(`Generated ${pages.length + 2} pages and sitemap.xml`);

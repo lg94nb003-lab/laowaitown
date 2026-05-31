@@ -97,7 +97,7 @@ function checkLinks() {
     }
   }
 
-  const forbidden = ['/travel/', '/business/', '/education/', '/legal/'];
+  const forbidden = ['/travel/', '/business/', '/education/'];
   for (const file of htmlFiles) {
     const html = fs.readFileSync(file, 'utf8');
     for (const target of forbidden) {

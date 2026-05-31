@@ -9,14 +9,14 @@ window.LWNavData = {
         { id: 'home',      label: 'Home',     href: '/',           desc: 'Visa checker and China travel tools' },
         { id: 'visa',      label: 'Visa',     href: '/visa/',      desc: 'Visa-free entry, transit, residence' },
         { id: 'life',      label: 'Life',     href: '/life/',      desc: 'Payment, eSIM, maps, emergency basics' },
+        { id: 'legal',     label: 'Legal',    href: '/legal/',     desc: 'Laws, Q&A, and official sources' },
         { id: 'tools',     label: 'Tools',    href: '/#tools',     desc: 'Stay calculator, FX, timezone, phrases' }
     ],
 
     futureCategories: [
         { id: 'travel',    label: 'Travel',   href: '/travel/',    desc: 'Hotels, trains, attractions' },
         { id: 'business',  label: 'Business', href: '/business/',  desc: 'Trade, jobs, company setup' },
-        { id: 'education', label: 'Study',    href: '/education/', desc: 'HSK, scholarships, schools' },
-        { id: 'legal',     label: 'Legal',    href: '/legal/',     desc: 'Laws, IP, lawyers' }
+        { id: 'education', label: 'Study',    href: '/education/', desc: 'HSK, scholarships, schools' }
     ],
 
     /* Visa subpages — used on /visa/* pages for left sidebar */
@@ -40,6 +40,17 @@ window.LWNavData = {
         { href: '/life/maps-in-china.html', label: 'Maps in China' },
         { href: '/life/emergency-numbers-china.html', label: 'Emergency Numbers' },
         { href: '/life/hotel-registration-china.html', label: 'Hotel Registration' }
+    ],
+
+    legal: [
+        { href: '/legal/', label: 'Legal Hub' },
+        { href: '/legal/questions/', label: 'Legal Q&A' },
+        { href: '/legal/laws-for-foreigners/', label: 'Foreigner-Related Laws' },
+        { href: '/legal/library/', label: 'China Law Library' },
+        { href: '/legal/questions/can-i-work-on-tourist-visa.html', label: 'Work on Tourist Visa?' },
+        { href: '/legal/questions/what-happens-if-i-overstay.html', label: 'Overstay in China' },
+        { href: '/legal/questions/do-i-need-to-register-my-address.html', label: 'Address Registration' },
+        { href: '/legal/laws-for-foreigners/public-security-key-articles.html', label: 'Public Security Articles' }
     ]
 };
 
@@ -211,7 +222,12 @@ window.LWSourceLinks = {
     'National Health Commission (NHC)': 'http://en.nhc.gov.cn/',
     'Public Security Bureau Exit & Entry Administration (EEA)': 'https://en.nia.gov.cn/',
     'Ministry of Foreign Affairs (MFA) Consular Department': 'https://cs.mfa.gov.cn/',
-    'NIA Online Arrival Card portal (s.nia.gov.cn)': 'https://s.nia.gov.cn/'
+    'NIA Online Arrival Card portal (s.nia.gov.cn)': 'https://s.nia.gov.cn/',
+    'National Laws and Regulations Database': 'https://flk.npc.gov.cn/',
+    'Ministry of Justice (MOJ)': 'https://en.moj.gov.cn/',
+    'Ministry of Public Security (MPS)': 'https://www.mps.gov.cn/',
+    'Ministry of Human Resources and Social Security (MOHRSS)': 'https://www.mohrss.gov.cn/',
+    'State Administration of Foreign Exchange (SAFE)': 'https://www.safe.gov.cn/'
 };
 
 function LWEscapeHtml(value) {
