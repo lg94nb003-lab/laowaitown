@@ -10,6 +10,7 @@ const FILES = [
   'style.css',
   'home.css',
   'logo.png',
+  'laowaitown-logo-nav.webp',
   'robots.txt',
   'sitemap.xml'
 ];
