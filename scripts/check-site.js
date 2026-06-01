@@ -47,7 +47,8 @@ function existsTarget(url, fromFile) {
 
   if (clean !== '/' && clean.endsWith('/')) target = path.join(target, 'index.html');
   if (!path.extname(target) && !fs.existsSync(target)) {
-    target = path.join(target, 'index.html');
+    const htmlTarget = `${target}.html`;
+    target = fs.existsSync(htmlTarget) ? htmlTarget : path.join(target, 'index.html');
   }
   return fs.existsSync(target);
 }

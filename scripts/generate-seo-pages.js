@@ -204,7 +204,7 @@ const LIFE_PAGES = [
       'Assuming private stays have no registration requirement.'
     ],
     relatedPhrase: 'I need to register my accommodation.',
-    next: '/visa/arrival-card.html'
+    next: '/visa/arrival-card'
   }
 ];
 
@@ -233,7 +233,19 @@ function ensureDir(dir) {
 function writeFile(rel, html) {
   const full = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(full), { recursive: true });
-  fs.writeFileSync(full, html.replace(/[ \t]+$/gm, ''), 'utf8');
+  fs.writeFileSync(full, normalizePublicUrls(html).replace(/[ \t]+$/gm, ''), 'utf8');
+}
+
+function publicUrlPath(urlPath) {
+  if (!urlPath || urlPath === '/') return urlPath;
+  return urlPath.replace(/\.html(?=($|[?#]))/, '');
+}
+
+function normalizePublicUrls(html) {
+  return html
+    .replace(/https:\/\/laowaitown\.com(\/(?:about|visa|life|legal)\/?[^"'<>?#]*)\.html/g, `${SITE}$1`)
+    .replace(/(["'=]\s*)(\/(?:about|visa|life|legal)\/?[^"'<>?#]*)\.html/g, '$1$2')
+    .replace(/(["'=]\s*)((?:visa|life|legal)\/[^"'<>?#]*)\.html/g, '$1$2');
 }
 
 function sourcesBlock(sources) {
@@ -330,7 +342,7 @@ function articleJson(title, description, url) {
 }
 
 function layout({ section, relDepth = '..', urlPath, title, description, currentHref = '', body, toc = [], faqs = [], sources = [], eyebrow = 'China entry guide', summaryHtml = '' }) {
-  const canonical = SITE + urlPath;
+  const canonical = SITE + publicUrlPath(urlPath);
   const faqScript = faqs.length ? `<script type="application/ld+json">${faqJson(title, faqs)}</script>` : '';
   const navCta = section === 'life' ? '/#tools' : '/#calculator';
   const rail = sideRail({ section, toc, sources });
@@ -384,7 +396,7 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
       <a href="/visa/">Visa</a>
       <a href="/life/">Life</a>
       <a href="/#tools">Tools</a>
-      <a href="/about.html">About</a>
+      <a href="/about">About</a>
       <p>&copy; 2026 LAOWAITOWN. Independent reference site. <a href="mailto:contact@laowaitown.com" style="color:inherit;">contact@laowaitown.com</a></p>
     </footer>
   </div>
@@ -450,7 +462,7 @@ function portSummaryCard(page, province, ports) {
         </div>
         <div class="vm-actions" style="margin-top:16px;">
           <a class="vm-button primary" href="/#calculator">Calculate stay</a>
-          <a class="vm-button" href="/visa/240-hour-transit-visa.html">Full 240h guide</a>
+          <a class="vm-button" href="/visa/240-hour-transit-visa">Full 240h guide</a>
         </div>
   `;
 }
@@ -503,6 +515,7 @@ function generateCountryPage(country) {
   const title = `China Visa-Free Entry for ${country.name} Citizens 2026`;
   const description = `Visa-free China entry options for ${country.demonym}: 30-day visa-free entry, 240-hour transit, 24-hour transit, Hainan visa-free entry, common mistakes, and next steps.`;
   const pathName = `/visa/china-visa-free-entry-for-${country.slug}.html`;
+  const urlPath = publicUrlPath(pathName);
   const faqs = [
     { q: `Can ${country.demonym} enter China without a visa in 2026?`, a: flags.visaFree ? `${country.demonym} are listed in LAOWAITOWN's current 30-day visa-free dataset for ordinary passports, subject to purpose and stay limits.` : `${country.demonym} are not listed in LAOWAITOWN's current unilateral 30-day visa-free dataset, but other routes such as 240-hour transit may apply.` },
     { q: `Can ${country.demonym} use China's 240-hour transit policy?`, a: flags.transit240 ? `Yes, LAOWAITOWN's current dataset includes ${country.name} in the 240-hour transit country list, provided the route, port, documents, and onward-ticket conditions are met.` : `Not according to LAOWAITOWN's current 240-hour transit dataset.` },
@@ -572,15 +585,15 @@ function generateCountryPage(country) {
   `;
   return {
     rel: pathName.slice(1),
-    urlPath: pathName,
+    urlPath,
     title,
     description,
     html: layout({
       section: 'visa',
-      urlPath: pathName,
+      urlPath,
       title,
       description,
-      currentHref: pathName,
+      currentHref: urlPath,
       toc: [
         { id: 'answer', label: 'One-page answer' },
         { id: 'who', label: 'Who this is for' },
@@ -604,6 +617,7 @@ function generatePortPage(page) {
   const title = `${page.titleCity} 240-Hour Visa-Free Transit Guide 2026`;
   const description = `How to use China's 240-hour visa-free transit in ${page.titleCity}: eligible ports, permitted stay area, documents, common refusal reasons, and route examples.`;
   const pathName = `/visa/${page.slug}.html`;
+  const urlPath = publicUrlPath(pathName);
   const ports = province.ports.map(p => p.en || String(p));
   const shownPorts = page.highlightPort ? ports.filter(p => p.includes(page.highlightPort)) : ports;
   const faqs = [
@@ -659,7 +673,7 @@ function generatePortPage(page) {
         <section id="route">
           <h2>Example route</h2>
           <p>A simple pattern is: Country A -> ${esc(page.titleCity)} -> Country B, where Country A and Country B are different countries or regions and the traveler has a confirmed onward ticket.</p>
-          <p><a class="lw-cta" href="/#calculator">Calculate stay dates</a> <a class="lw-cta ghost" href="/visa/240-hour-transit-visa.html">Read full 240h guide</a></p>
+          <p><a class="lw-cta" href="/#calculator">Calculate stay dates</a> <a class="lw-cta ghost" href="/visa/240-hour-transit-visa">Read full 240h guide</a></p>
         </section>
 
         <section id="faq">
@@ -670,15 +684,15 @@ function generatePortPage(page) {
   `;
   return {
     rel: pathName.slice(1),
-    urlPath: pathName,
+    urlPath,
     title,
     description,
     html: layout({
       section: 'visa',
-      urlPath: pathName,
+      urlPath,
       title,
       description,
-      currentHref: pathName,
+      currentHref: urlPath,
       toc: [
         { id: 'answer', label: 'Answer' },
         { id: 'ports', label: 'Ports' },
@@ -699,6 +713,7 @@ function generatePortPage(page) {
 
 function generateRoutePage(route) {
   const pathName = `/visa/${route.slug}.html`;
+  const urlPath = publicUrlPath(pathName);
   const description = `${route.title}: whether this route can fit China's 240-hour transit rules, what documents to prepare, and what mistakes to avoid.`;
   const faqs = [
     { q: `Can the ${route.origin} -> ${route.city} -> ${route.destination} route use 240-hour transit?`, a: `It may be eligible if the traveler uses an eligible passport, the route is a true third-country or region transit, and the onward ticket is confirmed.` },
@@ -756,15 +771,15 @@ function generateRoutePage(route) {
   `;
   return {
     rel: pathName.slice(1),
-    urlPath: pathName,
+    urlPath,
     title: route.title,
     description,
     html: layout({
       section: 'visa',
-      urlPath: pathName,
+      urlPath,
       title: route.title,
       description,
-      currentHref: pathName,
+      currentHref: urlPath,
       toc: [
         { id: 'answer', label: 'Answer' },
         { id: 'applies', label: 'Applies to' },
@@ -784,6 +799,7 @@ function generateRoutePage(route) {
 
 function generateLifePage(page) {
   const pathName = `/life/${page.slug}.html`;
+  const urlPath = publicUrlPath(pathName);
   const faqs = [
     { q: `What is the short answer?`, a: page.quick },
     { q: `What phrase should I keep ready?`, a: page.relatedPhrase },
@@ -828,15 +844,15 @@ function generateLifePage(page) {
   `;
   return {
     rel: pathName.slice(1),
-    urlPath: pathName,
+    urlPath,
     title: page.title,
     description: page.description,
     html: layout({
       section: 'life',
-      urlPath: pathName,
+      urlPath,
       title: page.title,
       description: page.description,
-      currentHref: pathName,
+      currentHref: urlPath,
       toc: [
         { id: 'answer', label: 'Answer' },
         { id: 'steps', label: 'Steps' },
@@ -858,15 +874,15 @@ function card(title, href, text) {
 }
 
 function generateVisaIndex(pages) {
-  const countryChips = COUNTRY_PAGES.map(c => `<a class="chip" href="/visa/china-visa-free-entry-for-${c.slug}.html">${esc(c.name)}</a>`).join('\n        ');
+  const countryChips = COUNTRY_PAGES.map(c => `<a class="chip" href="/visa/china-visa-free-entry-for-${c.slug}">${esc(c.name)}</a>`).join('\n        ');
   const portCards = PORT_PAGES.map(p => `
-        <a class="vm-card" href="/visa/${p.slug}.html">
+        <a class="vm-card" href="/visa/${p.slug}">
           <small>City guide</small>
           <h3>${esc(p.titleCity)} 240h transit</h3>
           <p>Ports, stay area, documents, and route risks.</p>
         </a>`).join('\n');
   const routeCards = ROUTE_PAGES.map(r => `
-        <a class="vm-card" href="/visa/${r.slug}.html">
+        <a class="vm-card" href="/visa/${r.slug}">
           <small>Route example</small>
           <h3>${esc(r.origin)} -> ${esc(r.city)} -> ${esc(r.destination)}</h3>
           <p>Check third-country logic and entry explanation.</p>
@@ -918,10 +934,10 @@ function generateVisaIndex(pages) {
           </div>
         </div>
         <div class="vm-guide-grid">
-          <a class="vm-card" href="/visa/visa-free-entry.html"><small>Entry</small><h3>30-day visa-free</h3><p>Eligible passports, permitted purposes, and stay counting.</p></a>
-          <a class="vm-card" href="/visa/240-hour-transit-visa.html"><small>Transit</small><h3>240-hour transit</h3><p>Passport list, ports, stay areas, and onward-ticket rules.</p></a>
-          <a class="vm-card" href="/visa/24-hour-transit-visa.html"><small>Layover</small><h3>24-hour transit</h3><p>Short international connections and temporary entry basics.</p></a>
-          <a class="vm-card" href="/visa/hainan-visa-free.html"><small>Hainan</small><h3>Hainan visa-free</h3><p>Island-only travel, eligible countries, and practical limits.</p></a>
+          <a class="vm-card" href="/visa/visa-free-entry"><small>Entry</small><h3>30-day visa-free</h3><p>Eligible passports, permitted purposes, and stay counting.</p></a>
+          <a class="vm-card" href="/visa/240-hour-transit-visa"><small>Transit</small><h3>240-hour transit</h3><p>Passport list, ports, stay areas, and onward-ticket rules.</p></a>
+          <a class="vm-card" href="/visa/24-hour-transit-visa"><small>Layover</small><h3>24-hour transit</h3><p>Short international connections and temporary entry basics.</p></a>
+          <a class="vm-card" href="/visa/hainan-visa-free"><small>Hainan</small><h3>Hainan visa-free</h3><p>Island-only travel, eligible countries, and practical limits.</p></a>
         </div>
       </section>
 
@@ -1039,7 +1055,7 @@ function generateLifeIndex() {
         </div>
         <div class="vm-actions" style="margin-top:16px;">
           <a class="vm-button primary" href="/#tools">Open tools</a>
-          <a class="vm-button" href="/life/pay-in-china-as-foreigner.html">Payment guide</a>
+          <a class="vm-button" href="/life/pay-in-china-as-foreigner">Payment guide</a>
         </div>
     `,
     body
@@ -1047,12 +1063,12 @@ function generateLifeIndex() {
 }
 
 function sitemapXml(paths) {
-  const urls = Array.from(new Set(paths)).map(urlPath => {
-    const priority = urlPath === '/' ? '1.00' : urlPath.includes('#') ? '0.70' : '0.80';
+  const urls = Array.from(new Set(paths.map(publicUrlPath))).map(urlPath => {
+    const priority = urlPath === '/' ? '1.00' : '0.80';
     return `  <url>
     <loc>${SITE}${urlPath}</loc>
     <lastmod>${LASTMOD}</lastmod>
-    <changefreq>${urlPath.includes('#') ? 'monthly' : 'weekly'}</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
   </url>`;
   }).join('\n');
@@ -1080,49 +1096,41 @@ function main() {
 
   const coreVisa = [
     '/visa/',
-    '/visa/visa-free-entry.html',
-    '/visa/240-hour-transit-visa.html',
-    '/visa/24-hour-transit-visa.html',
-    '/visa/hainan-visa-free.html',
-    '/visa/cruise-visa-free.html',
-    '/visa/visa-types-comparison.html',
-    '/visa/residence-permit.html',
-    '/visa/permanent-residence.html',
-    '/visa/arrival-card.html',
-    '/visa/entry-medical-exam.html',
-    '/visa/visa-extension-overstay.html'
+    '/visa/visa-free-entry',
+    '/visa/240-hour-transit-visa',
+    '/visa/24-hour-transit-visa',
+    '/visa/hainan-visa-free',
+    '/visa/cruise-visa-free',
+    '/visa/visa-types-comparison',
+    '/visa/residence-permit',
+    '/visa/permanent-residence',
+    '/visa/arrival-card',
+    '/visa/entry-medical-exam',
+    '/visa/visa-extension-overstay'
   ];
   const sitemapPaths = [
     '/',
-    '/#tools',
-    '/#law',
-    '/#calculator',
-    '/#stay',
-    '/#timezone',
-    '/#currency',
-    '/#phrasebook',
-    '/#phrases',
-    '/about.html',
+    '/about',
     ...coreVisa,
     ...pages.map(p => p.urlPath),
     '/life/',
     '/legal/',
     '/legal/questions/',
-    '/legal/questions/can-i-work-on-tourist-visa.html',
-    '/legal/questions/what-happens-if-i-overstay.html',
-    '/legal/questions/do-i-need-to-register-my-address.html',
-    '/legal/questions/what-if-i-lose-my-passport.html',
-    '/legal/questions/can-police-check-my-passport.html',
-    '/legal/questions/can-foreigners-get-married-in-china.html',
+    '/legal/questions/can-i-work-on-tourist-visa',
+    '/legal/questions/what-happens-if-i-overstay',
+    '/legal/questions/do-i-need-to-register-my-address',
+    '/legal/questions/what-if-i-lose-my-passport',
+    '/legal/questions/can-police-check-my-passport',
+    '/legal/questions/can-foreigners-get-married-in-china',
     '/legal/laws-for-foreigners/',
-    '/legal/laws-for-foreigners/exit-entry-administration-law.html',
-    '/legal/laws-for-foreigners/foreigner-accommodation-registration.html',
-    '/legal/laws-for-foreigners/nationality-law.html',
-    '/legal/laws-for-foreigners/work-permit-and-illegal-employment.html',
-    '/legal/laws-for-foreigners/public-security-key-articles.html',
+    '/legal/laws-for-foreigners/exit-entry-administration-law',
+    '/legal/laws-for-foreigners/foreigner-accommodation-registration',
+    '/legal/laws-for-foreigners/nationality-law',
+    '/legal/laws-for-foreigners/work-permit-and-illegal-employment',
+    '/legal/laws-for-foreigners/public-security-key-articles',
     '/legal/library/',
-    '/legal/library/civil-code.html',
-    '/legal/library/public-security-administration-punishments-law.html'
+    '/legal/library/civil-code',
+    '/legal/library/public-security-administration-punishments-law'
   ];
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemapXml(sitemapPaths), 'utf8');
   console.log(`Generated ${pages.length + 2} pages and sitemap.xml`);

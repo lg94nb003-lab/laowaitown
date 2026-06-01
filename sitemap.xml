@@ -7,55 +7,7 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/#tools</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#law</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#calculator</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#stay</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#timezone</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#currency</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#phrasebook</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/#phrases</loc>
-    <lastmod>2026-05-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://laowaitown.com/about.html</loc>
+    <loc>https://laowaitown.com/about</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -67,223 +19,223 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/visa-free-entry.html</loc>
+    <loc>https://laowaitown.com/visa/visa-free-entry</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/240-hour-transit-visa.html</loc>
+    <loc>https://laowaitown.com/visa/240-hour-transit-visa</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/24-hour-transit-visa.html</loc>
+    <loc>https://laowaitown.com/visa/24-hour-transit-visa</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/hainan-visa-free.html</loc>
+    <loc>https://laowaitown.com/visa/hainan-visa-free</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/cruise-visa-free.html</loc>
+    <loc>https://laowaitown.com/visa/cruise-visa-free</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/visa-types-comparison.html</loc>
+    <loc>https://laowaitown.com/visa/visa-types-comparison</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/residence-permit.html</loc>
+    <loc>https://laowaitown.com/visa/residence-permit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/permanent-residence.html</loc>
+    <loc>https://laowaitown.com/visa/permanent-residence</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/arrival-card.html</loc>
+    <loc>https://laowaitown.com/visa/arrival-card</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/entry-medical-exam.html</loc>
+    <loc>https://laowaitown.com/visa/entry-medical-exam</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/visa-extension-overstay.html</loc>
+    <loc>https://laowaitown.com/visa/visa-extension-overstay</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-us-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-us-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-uk-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-uk-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-canada-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-canada-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-australia-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-australia-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-germany-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-germany-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-france-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-france-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-italy-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-italy-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-spain-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-spain-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-japan-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-japan-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-south-korea-citizens.html</loc>
+    <loc>https://laowaitown.com/visa/china-visa-free-entry-for-south-korea-citizens</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/shanghai-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/shanghai-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/beijing-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/beijing-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/guangzhou-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/guangzhou-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/shenzhen-guangdong-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/shenzhen-guangdong-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/chengdu-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/chengdu-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/xiamen-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/xiamen-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/singapore-shanghai-japan-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/singapore-shanghai-japan-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/us-beijing-thailand-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/us-beijing-thailand-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/uk-guangzhou-hong-kong-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/uk-guangzhou-hong-kong-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/australia-chengdu-korea-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/australia-chengdu-korea-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/visa/germany-shanghai-singapore-240-hour-transit.html</loc>
+    <loc>https://laowaitown.com/visa/germany-shanghai-singapore-240-hour-transit</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/life/pay-in-china-as-foreigner.html</loc>
+    <loc>https://laowaitown.com/life/pay-in-china-as-foreigner</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/life/china-esim-travel.html</loc>
+    <loc>https://laowaitown.com/life/china-esim-travel</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/life/maps-in-china.html</loc>
+    <loc>https://laowaitown.com/life/maps-in-china</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/life/emergency-numbers-china.html</loc>
+    <loc>https://laowaitown.com/life/emergency-numbers-china</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/life/hotel-registration-china.html</loc>
+    <loc>https://laowaitown.com/life/hotel-registration-china</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -307,37 +259,37 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/can-i-work-on-tourist-visa.html</loc>
+    <loc>https://laowaitown.com/legal/questions/can-i-work-on-tourist-visa</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/what-happens-if-i-overstay.html</loc>
+    <loc>https://laowaitown.com/legal/questions/what-happens-if-i-overstay</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/do-i-need-to-register-my-address.html</loc>
+    <loc>https://laowaitown.com/legal/questions/do-i-need-to-register-my-address</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/what-if-i-lose-my-passport.html</loc>
+    <loc>https://laowaitown.com/legal/questions/what-if-i-lose-my-passport</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/can-police-check-my-passport.html</loc>
+    <loc>https://laowaitown.com/legal/questions/can-police-check-my-passport</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/questions/can-foreigners-get-married-in-china.html</loc>
+    <loc>https://laowaitown.com/legal/questions/can-foreigners-get-married-in-china</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -349,31 +301,31 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/laws-for-foreigners/exit-entry-administration-law.html</loc>
+    <loc>https://laowaitown.com/legal/laws-for-foreigners/exit-entry-administration-law</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/laws-for-foreigners/foreigner-accommodation-registration.html</loc>
+    <loc>https://laowaitown.com/legal/laws-for-foreigners/foreigner-accommodation-registration</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/laws-for-foreigners/nationality-law.html</loc>
+    <loc>https://laowaitown.com/legal/laws-for-foreigners/nationality-law</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/laws-for-foreigners/work-permit-and-illegal-employment.html</loc>
+    <loc>https://laowaitown.com/legal/laws-for-foreigners/work-permit-and-illegal-employment</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/laws-for-foreigners/public-security-key-articles.html</loc>
+    <loc>https://laowaitown.com/legal/laws-for-foreigners/public-security-key-articles</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -385,13 +337,13 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/library/civil-code.html</loc>
+    <loc>https://laowaitown.com/legal/library/civil-code</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://laowaitown.com/legal/library/public-security-administration-punishments-law.html</loc>
+    <loc>https://laowaitown.com/legal/library/public-security-administration-punishments-law</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>

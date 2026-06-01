@@ -21,25 +21,25 @@ window.LWNavData = {
 
     /* Visa subpages — used on /visa/* pages for left sidebar */
     visa: [
-        { href: '/visa/visa-free-entry.html',         label: 'Visa-Free Entry' },
-        { href: '/visa/240-hour-transit-visa.html',   label: '240h Transit Visa' },
-        { href: '/visa/24-hour-transit-visa.html',    label: '24h Transit Visa' },
-        { href: '/visa/hainan-visa-free.html',        label: 'Hainan 30-Day' },
-        { href: '/visa/cruise-visa-free.html',        label: 'Cruise Visa-Free' },
-        { href: '/visa/visa-types-comparison.html',   label: 'Visa Types L/M/Z/X/S/Q/K' },
-        { href: '/visa/residence-permit.html',        label: 'Residence Permit' },
-        { href: '/visa/permanent-residence.html',     label: 'Permanent Residence' },
-        { href: '/visa/arrival-card.html',            label: 'Arrival Card' },
-        { href: '/visa/entry-medical-exam.html',      label: 'Entry Medical Exam' },
-        { href: '/visa/visa-extension-overstay.html', label: 'Extension & Overstay' }
+        { href: '/visa/visa-free-entry',         label: 'Visa-Free Entry' },
+        { href: '/visa/240-hour-transit-visa',   label: '240h Transit Visa' },
+        { href: '/visa/24-hour-transit-visa',    label: '24h Transit Visa' },
+        { href: '/visa/hainan-visa-free',        label: 'Hainan 30-Day' },
+        { href: '/visa/cruise-visa-free',        label: 'Cruise Visa-Free' },
+        { href: '/visa/visa-types-comparison',   label: 'Visa Types L/M/Z/X/S/Q/K' },
+        { href: '/visa/residence-permit',        label: 'Residence Permit' },
+        { href: '/visa/permanent-residence',     label: 'Permanent Residence' },
+        { href: '/visa/arrival-card',            label: 'Arrival Card' },
+        { href: '/visa/entry-medical-exam',      label: 'Entry Medical Exam' },
+        { href: '/visa/visa-extension-overstay', label: 'Extension & Overstay' }
     ],
 
     life: [
-        { href: '/life/pay-in-china-as-foreigner.html', label: 'Pay in China' },
-        { href: '/life/china-esim-travel.html', label: 'China eSIM' },
-        { href: '/life/maps-in-china.html', label: 'Maps in China' },
-        { href: '/life/emergency-numbers-china.html', label: 'Emergency Numbers' },
-        { href: '/life/hotel-registration-china.html', label: 'Hotel Registration' }
+        { href: '/life/pay-in-china-as-foreigner', label: 'Pay in China' },
+        { href: '/life/china-esim-travel', label: 'China eSIM' },
+        { href: '/life/maps-in-china', label: 'Maps in China' },
+        { href: '/life/emergency-numbers-china', label: 'Emergency Numbers' },
+        { href: '/life/hotel-registration-china', label: 'Hotel Registration' }
     ],
 
     legal: [
@@ -47,10 +47,10 @@ window.LWNavData = {
         { href: '/legal/questions/', label: 'Legal Q&A' },
         { href: '/legal/laws-for-foreigners/', label: 'Foreigner-Related Laws' },
         { href: '/legal/library/', label: 'China Law Library' },
-        { href: '/legal/questions/can-i-work-on-tourist-visa.html', label: 'Work on Tourist Visa?' },
-        { href: '/legal/questions/what-happens-if-i-overstay.html', label: 'Overstay in China' },
-        { href: '/legal/questions/do-i-need-to-register-my-address.html', label: 'Address Registration' },
-        { href: '/legal/laws-for-foreigners/public-security-key-articles.html', label: 'Public Security Articles' }
+        { href: '/legal/questions/can-i-work-on-tourist-visa', label: 'Work on Tourist Visa?' },
+        { href: '/legal/questions/what-happens-if-i-overstay', label: 'Overstay in China' },
+        { href: '/legal/questions/do-i-need-to-register-my-address', label: 'Address Registration' },
+        { href: '/legal/laws-for-foreigners/public-security-key-articles', label: 'Public Security Articles' }
     ]
 };
 
