@@ -17,9 +17,11 @@ function walk(dir, predicate = () => true) {
   const out = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.name === 'node_modules' || entry.name === '.git') continue;
+    if (entry.name === 'mockups') continue;
+    if (entry.name === 'public' && path.resolve(dir) === ROOT && path.basename(ROOT) !== 'public') continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) out.push(...walk(full, predicate));
-    else if (predicate(full)) out.push(full);
+    else if (entry.name !== 'index-v1-backup.html' && predicate(full)) out.push(full);
   }
   return out;
 }
@@ -127,6 +129,56 @@ function checkSitemap() {
   }
 }
 
+function checkSeoBasics() {
+  const htmlFiles = walk(ROOT, file => file.endsWith('.html'));
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (!/<title>[^<]+<\/title>/i.test(html)) {
+      fail(`Missing <title>: ${rel(file)}`);
+    }
+    if (!/<meta\s+name=["']description["']\s+content=["'][^"']+["']/i.test(html)) {
+      fail(`Missing meta description: ${rel(file)}`);
+    }
+    if (!/<link\s+rel=["']canonical["']\s+href=["']https:\/\/laowaitown\.com\/[^"']*["']/i.test(html)) {
+      fail(`Missing canonical URL: ${rel(file)}`);
+    }
+  }
+}
+
+function checkAnalytics() {
+  const analyticsPath = path.join(ROOT, 'shared', 'analytics.js');
+  if (!fs.existsSync(analyticsPath)) {
+    fail('Missing shared/analytics.js');
+    return;
+  }
+
+  const analytics = fs.readFileSync(analyticsPath, 'utf8');
+  if (!analytics.includes("gaMeasurementId: 'G-YY4T3B3MHR'")) {
+    fail('shared/analytics.js missing GA4 measurement ID G-YY4T3B3MHR');
+  }
+  const eventSource = [
+    analytics,
+    fs.existsSync(path.join(ROOT, 'index.html')) ? fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8') : '',
+    fs.existsSync(path.join(ROOT, 'shared', 'nav-data.js')) ? fs.readFileSync(path.join(ROOT, 'shared', 'nav-data.js'), 'utf8') : ''
+  ].join('\n');
+  for (const eventName of ['tool_open', 'search_submit', 'email_click', 'official_source_click', 'outbound_click', 'cta_click']) {
+    if (!eventSource.includes(eventName)) {
+      fail(`Missing analytics event support: ${eventName}`);
+    }
+  }
+
+  const htmlFiles = walk(ROOT, file => file.endsWith('.html'));
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(file, 'utf8');
+    if (!html.includes('shared/analytics.js')) {
+      fail(`HTML page missing analytics include: ${rel(file)}`);
+    }
+    if (/googletagmanager\.com\/gtag\/js\?id=G-YY4T3B3MHR/i.test(html)) {
+      fail(`HTML page still has inline GA4 loader instead of shared analytics: ${rel(file)}`);
+    }
+  }
+}
+
 function checkToolEntrypoints() {
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const toolData = fs.readFileSync(path.join(ROOT, 'shared', 'tool-config.js'), 'utf8');
@@ -218,6 +270,8 @@ function checkVisaDataConsistency() {
 checkJsSyntax();
 checkLinks();
 checkSitemap();
+checkSeoBasics();
+checkAnalytics();
 checkToolEntrypoints();
 checkPolicyTrust();
 checkVisaDataConsistency();
@@ -228,4 +282,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log('Site check passed: JS syntax, internal links, sitemap, tools, and trust modules look good.');
+console.log('Site check passed: JS syntax, internal links, sitemap, SEO basics, analytics, tools, and trust modules look good.');

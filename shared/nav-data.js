@@ -409,7 +409,10 @@ window.LWInitFeedback = function (pageId) {
     document.querySelectorAll('.lw-feedback button').forEach(btn => {
         btn.addEventListener('click', () => {
             const value = btn.dataset.value;
-            try { if (typeof gtag === 'function') gtag('event', 'page_feedback', { page_id: pageId, value }); } catch (e) {}
+            try {
+                if (typeof window.__track === 'function') window.__track('page_feedback', { page_id: pageId, feedback_value: value });
+                else if (typeof gtag === 'function') gtag('event', 'page_feedback', { page_id: pageId, feedback_value: value });
+            } catch (e) {}
             const wrap = btn.closest('.lw-feedback');
             if (wrap) wrap.innerHTML = '<span class="thanks">Thanks for your feedback!</span>';
         });

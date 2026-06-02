@@ -7,7 +7,8 @@
     "build": "npm run generate:seo && node scripts/check-site.js && node scripts/build-public.js && node scripts/check-site.js --root public",
     "check": "node scripts/check-site.js",
     "check:public": "node scripts/check-site.js --root public",
-    "generate:seo": "node scripts/generate-seo-pages.js",
+    "generate:seo": "node scripts/generate-seo-pages.js && node scripts/ensure-analytics.js",
+    "monitor:live": "node scripts/monitor-live.js",
     "preview": "node scripts/build-public.js && npx wrangler pages dev public",
     "test": "npm run check"
   },

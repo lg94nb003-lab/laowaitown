@@ -354,6 +354,7 @@ function layout({ section, relDepth = '..', urlPath, title, description, current
   <title>${esc(title)} | LAOWAITOWN</title>
   <meta name="description" content="${esc(description)}">
   <link rel="canonical" href="${canonical}">
+  <script src="${relDepth}/shared/analytics.js" defer></script>
   <link rel="stylesheet" href="${relDepth}/style.css">
   <link rel="stylesheet" href="${relDepth}/shared/site.css">
   <script type="application/ld+json">${articleJson(title, description, canonical)}</script>

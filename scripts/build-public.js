@@ -22,6 +22,10 @@ const DIRS = [
   'visa'
 ];
 
+const PRESERVED_PUBLIC_DIRS = [
+  'brand'
+];
+
 function copyFile(rel) {
   const source = path.join(ROOT, rel);
   const target = path.join(OUT, rel);
@@ -86,7 +90,7 @@ function main() {
   for (const file of FILES) copyFile(file);
   for (const dir of DIRS) copyDir(dir);
 
-  const allowedTopLevel = new Set([...FILES, ...DIRS]);
+  const allowedTopLevel = new Set([...FILES, ...DIRS, ...PRESERVED_PUBLIC_DIRS]);
   for (const entry of fs.readdirSync(OUT)) {
     if (!allowedTopLevel.has(entry)) {
       removePath(path.join(OUT, entry));

@@ -3,23 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YY4T3B3MHR"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-YY4T3B3MHR', {
-            linker: { domains: ['laowaitown.com', 'www.laowaitown.com', 'laowaitown.cn', 'www.laowaitown.cn'] },
-            anonymize_ip: true
-        });
-        window.__track = function(eventName, params){
-            try { if (typeof gtag === 'function') gtag('event', eventName, params || {}); } catch(e){}
-        };
-    </script>
-
-    <!-- SEO -->
+<!-- SEO -->
     <title>China Visa-Free Policy Tool | LAOWAITOWN - Transit Visa Calculator & Travel Guide</title>
     <meta name="description" content="LAOWAITOWN is a free China travel toolkit for foreigners: check visa-free entry policies for 100+ countries, 240h/24h transit visa eligibility, stay calculator, timezone converter, live exchange rate.">
     <meta name="keywords" content="china visa free, china visa free countries 2026, 240 hour transit visa, 24 hour transit visa, china transit visa, hainan visa free, china entry requirements, visa stay calculator, china travel tool, foreigner in china">
@@ -45,6 +29,8 @@
     <meta name="twitter:image" content="https://laowaitown.com/logo.png">
 
     <!-- Styles -->
+  <script src="shared/analytics.js" defer></script>
+
     <link href="style.css" rel="stylesheet">
     <link href="home.css" rel="stylesheet">
 </head>
@@ -223,6 +209,12 @@
         let phraseFullscreenSceneId = null;
         let phraseFullscreenIndex = 0;
         let phraseFullscreenTouchX = null;
+
+        function track(eventName, params) {
+            try {
+                if (typeof window.__track === 'function') window.__track(eventName, params || {});
+            } catch (e) {}
+        }
 
         const {
             TOOLS,
@@ -412,7 +404,7 @@
             switchTab('tools');
             document.querySelectorAll('.lw-tool').forEach(btn => btn.classList.toggle('active', btn.dataset.tool === toolId));
             initTool(toolId);
-            __track('open_tool', { tool: toolId });
+            track('tool_open', { tool_id: toolId });
         };
 
         function renderTool(toolId) {
@@ -889,6 +881,12 @@
                 ? (currentLang === 'zh' ? `实时汇率：1 ${from} = ${rate.toFixed(4)} ${to}` : `Live rate: 1 ${from} = ${rate.toFixed(4)} ${to}`)
                 : (currentLang === 'zh' ? '网络不可用，当前为内置估算汇率。' : 'Network unavailable; showing built-in estimate.');
             if (btn) btn.textContent = currentLang === 'zh' ? '刷新汇率' : 'Refresh rate';
+            track('currency_convert', {
+                tool_id: 'currency',
+                from_currency: from,
+                to_currency: to,
+                rate_source: source
+            });
         };
 
         window.scrollPhraseScenes = function(direction) {
@@ -930,6 +928,7 @@
             const list = document.getElementById('phrase-list');
             if (!list || !scene) return;
             document.querySelectorAll('[data-phrase-scene]').forEach(btn => btn.classList.toggle('active', btn.dataset.phraseScene === scene.id));
+            track('phrase_scene_select', { tool_id: 'phrases', phrase_scene: scene.id });
             list.innerHTML = scene.phrases.map(([zh, en], idx) => `
                 <div class="lw-list-item lw-phrase-row" role="button" tabindex="0" onclick="openPhraseFullscreen('${scene.id}', ${idx})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPhraseFullscreen('${scene.id}', ${idx});}">
                     <div>
@@ -951,7 +950,7 @@
             const overlay = document.getElementById('phrase-fullscreen');
             overlay.classList.remove('hidden', 'large');
             document.body.style.overflow = 'hidden';
-            __track('phrase_fullscreen_open', { scene: sceneId });
+            track('phrase_fullscreen_open', { tool_id: 'phrases', phrase_scene: sceneId });
         };
 
         window.closePhraseFullscreen = function() {
@@ -1038,6 +1037,10 @@
             } catch (e) {
                 showToolToast(decoded);
             }
+            track('phrase_copy', {
+                tool_id: 'phrases',
+                text_length: decoded.length
+            });
         };
 
         window.setWeatherCity = function(city) {
@@ -1064,6 +1067,7 @@
             const url = service === 'baidu'
                 ? `https://fanyi.baidu.com/#auto/zh/${encoded}`
                 : `https://translate.google.com/?sl=auto&tl=zh-CN&text=${encoded}&op=translate`;
+            track('translate_open', { tool_id: 'translate', service });
             window.open(url, '_blank', 'noopener');
         };
 
@@ -1071,6 +1075,7 @@
             const input = document.getElementById('map-query');
             if (!input) return;
             input.value = query;
+            track('map_query', { tool_id: 'maps', query });
             refreshMapLinks();
         };
 
@@ -1232,6 +1237,12 @@
 
             document.querySelectorAll('.lw-quick-days button').forEach(btn => {
                 btn.classList.toggle('active', parseInt(btn.dataset.days, 10) === stayDays);
+            });
+            track('stay_calculate', {
+                tool_id: 'stay',
+                stay_days: stayDays,
+                entry_date: formatDateInput(entryDate),
+                exit_date: formatDateInput(exitDate)
             });
         };
 
@@ -1495,14 +1506,14 @@
             clearSearch();
             renderResult();
             // Stay on country tab, don't auto-switch
-            __track('select_nationality', { country: code });
+            track('search_submit', { search_type: 'country', country: code });
         };
 
         // ====== Select Purpose ======
         window.selectPurpose = function(id) {
             hideSuggestions();
             clearSearch();
-            __track('select_purpose', { purpose: id });
+            track('search_submit', { search_type: 'purpose', purpose: id });
             const purposeTargets = {
                 tourism: 'visa/visa-free-entry',
                 family: 'visa/visa-types-comparison',
@@ -1519,7 +1530,7 @@
         window.openLegalItem = function(href) {
             hideSuggestions();
             clearSearch();
-            __track('select_law', { href: href });
+            track('search_submit', { search_type: 'legal', link_url: href });
             window.location.href = href;
         };
 
