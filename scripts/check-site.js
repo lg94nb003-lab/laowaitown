@@ -132,6 +132,7 @@ function checkSitemap() {
 function checkSeoBasics() {
   const htmlFiles = walk(ROOT, file => file.endsWith('.html'));
   for (const file of htmlFiles) {
+    if (path.basename(file).startsWith('google') && !path.basename(file).startsWith('google-')) continue;
     const html = fs.readFileSync(file, 'utf8');
     if (!/<title>[^<]+<\/title>/i.test(html)) {
       fail(`Missing <title>: ${rel(file)}`);
@@ -169,6 +170,7 @@ function checkAnalytics() {
 
   const htmlFiles = walk(ROOT, file => file.endsWith('.html'));
   for (const file of htmlFiles) {
+    if (path.basename(file).startsWith('google') && !path.basename(file).startsWith('google-')) continue;
     const html = fs.readFileSync(file, 'utf8');
     if (!html.includes('shared/analytics.js')) {
       fail(`HTML page missing analytics include: ${rel(file)}`);
