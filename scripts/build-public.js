@@ -12,7 +12,8 @@ const FILES = [
   'logo.png',
   'laowaitown-logo-nav.webp',
   'robots.txt',
-  'sitemap.xml'
+  'sitemap.xml',
+  'google07ecb915d2fa665d.html'
 ];
 
 const DIRS = [
