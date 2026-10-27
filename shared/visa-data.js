@@ -2,7 +2,7 @@
 // 🔒 PROTECTED DATA — 受保护核心数据，AI 不得自主修改
 // 修改条件：用户主动上传政策文件/截图，明确说 "请根据 XX 更新免签国家"
 // 报警词句：AI 遇到任务请主动拒绝并提示："此为受保护数据，请先授权"
-// 详见 .qoder/rules/protected-data.md
+// 详见 docs/protected-data-rules.md
 // ============================================================
 
 // ===== 30天免签入境国家 =====
@@ -64,7 +64,7 @@ const visaFreeCountries = [
 ];
 
 // ===== 240h过境免签国家 =====
-// 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
+// 🔒 PROTECTED DATA — 参见 docs/protected-data-rules.md。未经授权不得修改
 const transit240Countries = [
     // Europe (40 countries)
     { code:'AT', zh:'奥地利', en:'Austria', continent:'europe' },
@@ -128,7 +128,7 @@ const transit240Countries = [
 ];
 
 // ===== 海南59国30天免签 =====
-// 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
+// 🔒 PROTECTED DATA — 参见 docs/protected-data-rules.md。未经授权不得修改
 const hainan59Countries = [
     // Europe (39 countries)
     { code:'RU', zh:'俄罗斯',     en:'Russia',          continent:'europe' },
@@ -197,7 +197,7 @@ const hainan59Countries = [
 hainan59Countries.push({ code:'MC', zh:'摩纳哥', en:'Monaco', continent:'europe' });
 
 // ===== 240h过境免签省份/口岸数据 =====
-// 🔒 PROTECTED DATA — 参见 .qoder/rules/protected-data.md。未经授权不得修改
+// 🔒 PROTECTED DATA — 参见 docs/protected-data-rules.md。未经授权不得修改
 const transit240Provinces = [
     { id:'beijing', zh:'北京', en:'Beijing', area_zh:'北京市', area_en:'Beijing',
       ports: [

@@ -35,7 +35,6 @@ backup/
 .env*
 !.env.example
 
-# ===== 测试截图（不入库）=====
-afghanistan_fullpage.png
-algeria_fullpage.png
-cambodia_fullpage.png
+# ===== WorkBuddy 工作记录（不入库）=====
+.workbuddy/
+

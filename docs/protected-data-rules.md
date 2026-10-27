@@ -45,14 +45,14 @@
 1. AI 先朗读用户提供的依据，**逐条列出**计划要做的修改。
 2. 等用户回复 "确认" 才动手。
 3. 修改后 commit message **必须包含** `[approved-data-update]` 标记。
-4. 同步更新 `测试报告.md` 或 wiki 中的国家数量统计。
+4. 同步更新 `docs/` 中的国家数量统计。
 
 ### 拒绝模板
 当 AI 在非授权态下被请求修改受保护数据时，必须回复：
 
 ```
 ⚠️ 此为受保护核心数据（visaFreeCountries / transit240Countries / 等）。
-根据 .qoder/rules/protected-data.md，我无法在没有用户授权时修改它。
+根据 docs/protected-data-rules.md，我无法在没有用户授权时修改它。
 
 请按以下方式授权：
 1. 提供政策来源（截图 / PDF / 官方链接）

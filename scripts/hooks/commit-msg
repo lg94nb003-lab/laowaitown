@@ -2,7 +2,7 @@
 # ============================================================
 # Commit-msg hook: 受保护数据守门员
 # 触及 4 个免签核心数组 + 没有 [approved-data-update] 标记 → 拒绝提交
-# 配套规则文件: .qoder/rules/protected-data.md
+# 配套规则文件: docs/protected-data-rules.md
 # ============================================================
 
 COMMIT_MSG_FILE="$1"
