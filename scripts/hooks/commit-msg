@@ -8,8 +8,10 @@
 COMMIT_MSG_FILE="$1"
 COMMIT_MSG=$(cat "$COMMIT_MSG_FILE" 2>/dev/null)
 
-# 取暂存区针对 index.html 的 diff
-DIFF=$(git diff --cached --unified=0 -- index.html)
+# 取暂存区针对受保护数据文件的 diff
+# 2026-10-28 修正：原先只 diff index.html，而四个核心数组早已迁至 shared/visa-data.js，
+# 导致守门员空转。现同时覆盖两处，任一命中都需授权标记。
+DIFF=$(git diff --cached --unified=0 -- shared/visa-data.js index.html)
 
 if [ -z "$DIFF" ]; then
     exit 0
@@ -54,8 +56,8 @@ echo '      git commit -m "data(visa): add Brazil per 2026-05 policy [approved-d
 echo "" >&2
 echo "  To discard the staged change instead:" >&2
 echo "" >&2
-echo "      git reset HEAD index.html" >&2
-echo "      git checkout -- index.html" >&2
+echo "      git reset HEAD shared/visa-data.js" >&2
+echo "      git checkout -- shared/visa-data.js" >&2
 echo "" >&2
 echo "X ============================================================" >&2
 echo "" >&2
